@@ -1,0 +1,78 @@
+@extends('layouts.admin')
+
+@section('content')
+    <div class="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Danh mục dịch vụ</h3>
+                                <a class="btn btn-success btn-round ms-auto" href="{{ route('admin/category-service/create') }}">
+                                    <i class="fa fa-plus"></i>
+                                    Thêm
+                                </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Modal -->
+                        <div class="table-responsive">
+                            <table id="add-row" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên danh mục</th>
+                                        <th>Trạng thái</th>
+                                        <th style="width: 10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($category_services as $category_service)
+                                        <tr>
+                                            <td>{{ $category_service->category_id }}</td>
+                                            <td>{{ $category_service->category_name }}</td>
+                                            <td>
+                                                @if($category_service->status == 'Có sẵn')
+                                                    <span class="badge badge-success fs-6 px-3">Có sẵn</span>
+                                                @else
+                                                    <span class="badge badge-danger fs-6 px-3">Tạm ngưng</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                <button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-ellipsis"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="{{ route('admin/category-service/show', $category_service->category_id) }}"
+                                                                class="dropdown-item text-info">Xem</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('admin/category-service/edit', $category_service->category_id) }}"
+                                                                class="dropdown-item text-primary">Chỉnh sửa</a>
+                                                        </li>
+                                                        <li>
+                                                        <form action="{{ route('admin/category-service/destroy', $category_service->category_id) }}"
+                                                            method="POST">
+                                                            @csrf @method('delete')
+                                                            <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục dịch vụ này không?')">
+                                                                Xóa
+                                                            </button>
+                                                        </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

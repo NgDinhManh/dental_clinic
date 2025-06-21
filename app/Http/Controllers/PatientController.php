@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Appointment;
+use App\Models\Appointment_service;
+use App\Models\Medical_record;
+use App\Models\Patient;
+use App\Models\Service;
+use App\Models\User;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rules\Exists;
+use Illuminate\Support\Facades\DB;
+use App\Models\Prescription;
+use App\Models\Prescription_detail;
+use App\Models\Invoice;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+use function PHPUnit\Framework\isEmpty;
+
+class PatientController extends Controller
+{
+
+    public function patient_profile($userid)
+    {
+        $user = User::where('userid', $userid)->first();
+
+        return view('patient.profile', ['user' => $user]);
+        
+    }
+
+    public function patient_update(Request $request, $userid)
+    {
+        $user = User::where('userid', $userid)->first(); // tự lấy user
+
+        $data = $request->all();
+        
+        if ($request->hasFile('avatar')) {
+            $imagePath = public_path('storage/images/' . $user->avatar);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+
+            $file = $request->file('avatar');
+            $filename = 'avatar' . time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('storage/images'), $filename);
+            
+            $data['avatar'] = $filename; // Lưu đường dẫn ảnh vào database
+        }
+
+        $user->update($data);
+
+        return redirect()->route("patient/profile", $user->userid)->with('success', 'Cập nhật thông tin thành công');
+    }
+
+    public function patient_change_password($userid)
+    {
+        $user = User::findOrFail($userid);
+        return view('change_password', compact('user'));
+    }
+
+    public function patient_change_password_update(Request $request, $userid)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password',
+        ], [
+            'old_password.required' => 'Mật khẩu cũ không được để trống',
+            'password.required' => 'Mật khẩu mới không được để trống',
+            'password.min:6' => 'Mật khẩu ít nhất 6 ký tự',
+            'confirm_password.required' => 'Nhập lại mật khẩu mới không được để trống',
+            'confirm_password.same:password' => 'Vui lòng nhập lại đúng mật khẩu'
+        ]);
+
+        $user = User::findOrFail($userid);
+        $old_password = $request->old_password;
+        $password = $request->password;
+        $status = Hash::check($old_password, $user->password);
+        if($status) {
+            $user->password = bcrypt($password);
+            $user->save();
+            return back()->with('success', 'Đổi mật khẩu thành công');
+        }
+        else {
+            return back()->with('error', 'Mật khẩu cũ sai');
+        }
+
+    }
+
+    public function patient_appointment($userid)
+    {
+        $appointments = Appointment::query()->where('patient_id', $userid)->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+        $appointment_services = Appointment_service::all();
+        $services = Service::all();
+        $medical_records = Medical_record::all();
+        $user = User::findOrFail($userid);
+        return view('appointment_patient', compact('appointments', 'appointment_services', 'services', 'medical_records', 'user'));
+    }
+
+    public function patient_appointment_destroy($appointment_id)
+    {
+        $appointment = Appointment::find($appointment_id);
+        if ($appointment) {
+            $appointment->delete();
+            return redirect()->back()->with('success', 'Xóa lịch hẹn thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Không tìm thấy lịch hẹn.');
+        }
+    }
+
+    public function patient_medical_record($userid)
+    {
+        $medical_records = Medical_record::query()->where('patient_id', $userid)->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+        $users = User::all(); //Lấy thông tin để hiển thị tên bác sĩ
+        $user = User::findOrFail($userid); //Lấy thông tin bệnh nhân
+        $invoices = Invoice::all();
+        return view('medical_record', compact('medical_records', 'users', 'user', 'invoices'));
+    }
+
+    public function patient_medical_record_detail($record_id)
+    {
+        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        if (!$medical_record) {
+            return redirect()->route('patient/medical_record')->with('error', 'Không tìm thấy bệnh án');
+        }
+        $user = User::findOrFail($medical_record->patient_id);
+        $patient = DB::table('patients')
+            ->join('users', 'patients.userid', '=', 'users.userid')
+            ->where('users.roleid', 4)
+            ->where('users.userid', $medical_record->patient_id)
+            ->select('users.*', 'patients.*')
+            ->first();
+        $doctor = User::where('userid', $medical_record->doctor_id)->first();
+        $services = Service::all()->take(4);
+        $prescription = Prescription::where('record_id', $record_id)->first();
+        if (!$prescription) {
+            return view('medical_record_detail', compact('medical_record', 'user', 'patient', 'doctor', 'services'))->with('error', 'Không tìm thấy đơn thuốc');
+        }
+        $prescriptions = Prescription_detail::where('prescription_id', $prescription->prescription_id)->get(); // Lấy danh sách thuốc theo bệnh án
+
+        return view('medical_record_detail', compact('medical_record', 'user', 'patient', 'doctor', 'services', 'prescriptions'));
+    }
+
+    public function patient_invoice ($invoice_id)
+    {
+        $invoice = Invoice::findOrFail($invoice_id);
+        if (!$invoice) {
+            return redirect()->route('patient/medical-record')->with('error', 'Không tìm thấy hóa đơn');
+        }
+        $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
+        $user = User::findOrFail($medical_record->patient_id);
+        $patient = User::where('userid', $medical_record->patient_id)->first();
+        $medical_record_services = DB::table('medical_record_services')
+        ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
+        ->where('medical_record_services.record_id', $invoice->record_id)
+        ->select('services.service_name', 'services.price')
+        ->distinct()
+        ->get();
+
+        return view('invoice', compact('invoice', 'user', 'medical_record_services', 'patient'));
+    }
+
+}
