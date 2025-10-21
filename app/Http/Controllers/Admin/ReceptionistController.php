@@ -40,7 +40,7 @@ class ReceptionistController extends Controller
     {
         $receptionist = new Receptionist();
 
-        $receptionist->userid = $request->userid;
+        $receptionist->receptionist_id = $request->receptionist_id;
         $receptionist->start_date = $request->start_date;
         $receptionist->shift = $request->shift;
         $receptionist->note = $request->note;
@@ -54,7 +54,7 @@ class ReceptionistController extends Controller
      */
     public function show(Receptionist $receptionist)
     {
-        $user = User::find($receptionist->userid);
+        $user = User::find($receptionist->receptionist_id);
         return view('admin.receptionist.show', ['receptionist' => $receptionist, 'user' => $user]);
     }
 
@@ -63,7 +63,7 @@ class ReceptionistController extends Controller
      */
     public function edit(Receptionist $receptionist)
     {
-        $user = User::find($receptionist->userid);
+        $user = User::find($receptionist->receptionist_id);
         return view('admin.receptionist.edit', ['receptionist' => $receptionist, 'user' => $user]);
     }
 
@@ -91,7 +91,7 @@ class ReceptionistController extends Controller
     {
         $invoices = DB::table('invoices')
         ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.userid')
+        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
         ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
         ->distinct()
         ->get();
@@ -108,7 +108,7 @@ class ReceptionistController extends Controller
     {
         $invoice = Invoice::findOrFail($invoice_id);
         $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('userid', $medical_record->patient_id)->first();
+        $patient = User::where('user_id', $medical_record->patient_id)->first();
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
@@ -136,7 +136,7 @@ class ReceptionistController extends Controller
     public function invoice_decline(Request $request, $invoice_id)
     {
         $invoice = Invoice::find($invoice_id);
-        
+
         $notification = new Notification();
         $notification->receiver_id = $invoice->receptionist_id;
         $notification->title = 'Hủy yêu cầu mở lại hóa đơn';

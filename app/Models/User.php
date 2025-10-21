@@ -20,8 +20,8 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    protected $primaryKey = 'userid';
-    
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'name',
         'fullname',
@@ -33,7 +33,7 @@ class User extends Authenticatable
         'address',
         'avatar',
         'is_active',
-        'email_verified_at', 
+        'email_verified_at',
         'remember_token',
         'roleid',
     ];
@@ -63,21 +63,21 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'roleid'); // Cột khóa ngoại là roleid
+        return $this->belongsTo(Role::class, 'role_id'); // Cột khóa ngoại là roleid
     }
 
     public function patient()
     {
-        return $this->hasMany(Patient::class, 'userid');
+        return $this->hasMany(Patient::class, 'user_id');
     }
 
     public function doctor()
     {
-        return $this->hasMany(Doctor::class, 'userid');
+        return $this->hasMany(Doctor::class, 'user_id');
     }
 
     public function receptionist()
     {
-        return $this->hasMany(Receptionist::class, 'userid');
+        return $this->hasMany(Receptionist::class, 'user_id');
     }
 }

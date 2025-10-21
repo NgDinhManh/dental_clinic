@@ -47,9 +47,9 @@
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Trạng thái</label>
-                    <select name="isactive" id="isactive" class="form-select form-control-lg">
-                        <option value="1" {{$menu->isactive == 1 ? 'selected' : ''}}>Hiển thị</option>
-                        <option value="0" {{$menu->isactive == 0 ? 'selected' : ''}}>Ẩn</option>
+                    <select name="is_active" id="is_active" class="form-select form-control-lg">
+                        <option value="1" {{$menu->is_active == 1 ? 'selected' : ''}}>Hiển thị</option>
+                        <option value="0" {{$menu->is_active == 0 ? 'selected' : ''}}>Ẩn</option>
                     </select>
                 </div>
 

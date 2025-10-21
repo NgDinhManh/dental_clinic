@@ -18,10 +18,10 @@ class ReceptAppointmentController extends Controller
         $appointment_services = Appointment_service::all();
         $services = Service::all();
         $patients = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
             ->select('patients.*', 'users.fullname')
             ->get();
-        
+
         return view('receptionist.appointment.appointment', compact('appointments', 'appointment_services', 'services', 'patients'));
     }
 
@@ -29,13 +29,13 @@ class ReceptAppointmentController extends Controller
     {
         $services = Service::all();
         $patients = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
             ->select('patients.*', 'users.fullname')
             ->get();
 
         if ($request->has('search_phone') && $request->search_phone != '') {
             $patient = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
             ->where('users.phone', $request->search_phone)
             ->where('users.is_active', 1)
             ->select('patients.*', 'users.*')
@@ -45,11 +45,11 @@ class ReceptAppointmentController extends Controller
 
         return view('receptionist.appointment.appointment_create', compact('services'));
     }
-    
+
     public function appointment_store(Request $request)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,userid',
+            'patient_id' => 'required|exists:patients,patient_id',
             'appointment_date' => 'required',
             'appointment_time' => 'required',
             'services' => 'required|array',
@@ -84,8 +84,8 @@ class ReceptAppointmentController extends Controller
         $appointment_services_service_id = Appointment_service::where('appointment_id', $appoinment_id)->pluck('service_id')->toArray();
         $services = Service::all();
         $patient = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
-            ->where('patients.userid', $appointment->patient_id)
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
+            ->where('patients.patient_id', $appointment->patient_id)
             ->select('patients.*', 'users.*')
             ->first();
         return view('receptionist.appointment.appointment_show', compact('appointment', 'appointment_services_service_id', 'services', 'patient'));
@@ -98,8 +98,8 @@ class ReceptAppointmentController extends Controller
         $appointment_services_service_id = Appointment_service::where('appointment_id', $appoinment_id)->pluck('service_id')->toArray();
         $services = Service::all();
         $patient = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
-            ->where('patients.userid', $appointment->patient_id)
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
+            ->where('patients.patient_id', $appointment->patient_id)
             ->select('patients.*', 'users.*')
             ->first();
         return view('receptionist.appointment.appointment_edit', compact('appointment', 'appointment_services_service_id', 'services', 'patient'));
@@ -109,7 +109,7 @@ class ReceptAppointmentController extends Controller
     {
         // Cập nhật lịch hẹn trong database
         $request->validate([
-            'patient_id' => 'required|exists:patients,userid',
+            'patient_id' => 'required|exists:patients,patient_id',
             'appointment_date' => 'required',
             'appointment_time' => 'required',
             'services' => 'required|array',

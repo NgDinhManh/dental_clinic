@@ -15,7 +15,7 @@
                 @foreach ($services as $service)
                     <article class="col-md-4 p-2 col-sm-4 col-6">
                         <div class="card shadow mb-1 br-0">
-                            <a href="{{ route('home/post-detail', $service->postid)}}">
+                            <a href="{{ route('home/post-detail', $service->post_id)}}">
                                 <div class="justify-content-center d-flex">
                                     <img class="img-fluid" width="232" height="150"
                                         src="{{ asset('storage/images/services/' . $service->image)}}"

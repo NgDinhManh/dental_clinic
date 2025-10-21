@@ -70,7 +70,7 @@
                 <div class="post-container">
                     <h5 class="mb-3">Bài viết khác</h5>
                     @forelse ($relatedPosts as $related)
-                        <a href="{{ route('home/post-detail', $related->postid) }}" class="text-decoration-none text-dark">
+                        <a href="{{ route('home/post-detail', $related->post_id) }}" class="text-decoration-none text-dark">
                             <div class="related-post">
                                 @if ($related->images)
                                     <img src="{{ asset('storage/images/' . $related->images) }}" alt="Thumbnail">

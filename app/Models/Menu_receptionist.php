@@ -8,17 +8,18 @@ class Menu_receptionist extends Model
 {
     protected $table = 'menu_receptionists';
 
-    protected $primaryKey = 'menuid';
+    protected $primaryKey = 'menu_id';
 
     protected $fillable = [
-        'itemname',
-        'itemlevel',
-        'parentid',
-        'roleid',
-        'itemorder',
-        'isactive',
-        'routename',
-        'itemtarget',
-        'icon'
+        'menu_name',
+        'level',
+        'parent_id',
+        'menu_order',
+        'is_active',
+        'route_name',
+        'menu_target',
+        'icon',
+        'created_at',
+        'updated_at',
     ];
 }

@@ -155,10 +155,10 @@ Route::group(['middleware' => ['auth', 'auth.admin']], function () {
 Route::group(['middleware' => ['auth', 'auth.doctor']], function () {
     Route::get('/doctor', [AuthContronller::class, 'doctor_index'])->name('doctor/index');
 
-    Route::get('/doctor/profile/{userid}', [DoctorController::class, 'doctor_profile'])->name('doctor/profile');
+    Route::get('/doctor/profile/{doctor_id}', [DoctorController::class, 'doctor_profile'])->name('doctor/profile');
     Route::put('/doctor/update/{user}', [DoctorController::class, 'doctor_update'])->name('doctor/update');
-    Route::get('/doctor/change-password/{userid}', [DoctorController::class, 'doctor_change_password'])->name('doctor/change-password');
-    Route::put('/doctor/change-password-update/{userid}', [DoctorController::class, 'doctor_change_password_update'])->name('doctor/change-password-update');
+    Route::get('/doctor/change-password/{doctor_id}', [DoctorController::class, 'doctor_change_password'])->name('doctor/change-password');
+    Route::put('/doctor/change-password-update/{doctor_id}', [DoctorController::class, 'doctor_change_password_update'])->name('doctor/change-password-update');
 
     Route::get('/doctor/lich-lam-viec/lich-kham-hom-nay', [LichLamViecController::class, 'lich_kham_hom_nay'])->name('doctor/lich-lam-viec/lich-kham-hom-nay');
     Route::get('/doctor/lich-lam-viec/lich-kham-tuan-nay', [LichLamViecController::class, 'lich_kham_tuan_nay'])->name('doctor/lich-lam-viec/lich-kham-tuan-nay');
@@ -170,7 +170,7 @@ Route::group(['middleware' => ['auth', 'auth.doctor']], function () {
     Route::get('/doctor/benh-nhan/benh-nhan-tung-kham', [BenhNhanController::class, 'benh_nhan_tung_kham'])->name('doctor/benh-nhan/benh-nhan-tung-kham');
     Route::get('/doctor/benh-nhan/benh-nhan', [BenhNhanController::class, 'benh_nhan'])->name('doctor/benh-nhan/benh-nhan');
     Route::get('/doctor/benh-nhan/benh-nhan-benh-an/{patient_id}', [BenhNhanController::class, 'benh_nhan_benh_an'])->name('doctor/benh-nhan/benh-nhan-benh-an');
-    Route::get('/doctor/benh-nhan/benh-nhan/show/{userid}', [BenhNhanController::class, 'benh_nhan_show'])->name('doctor/benh-nhan/benh-nhan/show');
+    Route::get('/doctor/benh-nhan/benh-nhan/show/{patient_id}', [BenhNhanController::class, 'benh_nhan_show'])->name('doctor/benh-nhan/benh-nhan/show');
 
     Route::get('/doctor/benh-an/benh-an', [BenhAnController::class, 'benh_an'])->name('doctor/benh-an/benh-an');
     Route::get('/doctor/benh-an/benh-an/show/{record_id}', [BenhAnController::class, 'benh_an_show'])->name('doctor/benh-an/benh-an/show');
@@ -194,17 +194,17 @@ Route::group(['middleware' => ['auth', 'auth.doctor']], function () {
 Route::group(['middleware' => ['auth', 'auth.receptionist']], function () {
     Route::get('/receptionist', [AuthContronller::class, 'recep_index'])->name('receptionist/index');
 
-    Route::get('/receptionist/profile/{userid}', [ReceptionistController::class, 'receptionist_profile'])->name('receptionist/profile');
+    Route::get('/receptionist/profile/{receptionist_id}', [ReceptionistController::class, 'receptionist_profile'])->name('receptionist/profile');
     Route::put('/receptionist/update/{user}', [ReceptionistController::class, 'receptionist_update'])->name('receptionist/update');
-    Route::get('/receptionist/change-password/{userid}', [ReceptionistController::class, 'receptionist_change_password'])->name('receptionist/change-password');
-    Route::put('/receptionist/change-password-update/{userid}', [ReceptionistController::class, 'receptionist_change_password_update'])->name('receptionist/change-password-update');
+    Route::get('/receptionist/change-password/{receptionist_id}', [ReceptionistController::class, 'receptionist_change_password'])->name('receptionist/change-password');
+    Route::put('/receptionist/change-password-update/{receptionist_id}', [ReceptionistController::class, 'receptionist_change_password_update'])->name('receptionist/change-password-update');
 
     Route::get('/receptionist/patient', [ReceptPatientController::class, 'patient'])->name('receptionist/patient');
     Route::get('/receptionist/patient/create', [ReceptPatientController::class, 'patient_create'])->name('receptionist/patient/create');
     Route::post('/receptionist/patient/store', [ReceptPatientController::class, 'patient_store'])->name('receptionist/patient/store');
-    Route::get('/receptionist/patient/show/{userid}', [ReceptPatientController::class, 'patient_show'])->name('receptionist/patient/show');
-    Route::get('/receptionist/patient/edit/{userid}', [ReceptPatientController::class, 'patient_edit'])->name('receptionist/patient/edit');
-    Route::put('/receptionist/patient/update/{userid}', [ReceptPatientController::class, 'patient_update'])->name('receptionist/patient/update');
+    Route::get('/receptionist/patient/show/{patient_id}', [ReceptPatientController::class, 'patient_show'])->name('receptionist/patient/show');
+    Route::get('/receptionist/patient/edit/{patient_id}', [ReceptPatientController::class, 'patient_edit'])->name('receptionist/patient/edit');
+    Route::put('/receptionist/patient/update/{patient_id}', [ReceptPatientController::class, 'patient_update'])->name('receptionist/patient/update');
 
     Route::get('/receptionist/appointment', [ReceptAppointmentController::class, 'appointment'])->name('receptionist/appointment');
     Route::get('/receptionist/appointment/create', [ReceptAppointmentController::class, 'appointment_create'])->name('receptionist/appointment/create');
@@ -226,15 +226,15 @@ Route::group(['middleware' => ['auth', 'auth.receptionist']], function () {
 
 // Patient Routes
 Route::middleware(['auth', PatientMiddleware::class])->group(function () {
-    Route::get('/patient/profile/{userid}', [PatientController::class, 'patient_profile'])->name('patient/profile');
-    Route::put('/patient/update/{userid}', [PatientController::class, 'patient_update'])->name('patient/update');
-    Route::get('/patient/change-password/{userid}', [PatientController::class, 'patient_change_password'])->name('patient/change-password');
-    Route::put('/patient/change-password-update/{userid}', [PatientController::class, 'patient_change_password_update'])->name('patient/change-password-update');
+    Route::get('/patient/profile/{patient_id}', [PatientController::class, 'patient_profile'])->name('patient/profile');
+    Route::put('/patient/update/{patient_id}', [PatientController::class, 'patient_update'])->name('patient/update');
+    Route::get('/patient/change-password/{patient_id}', [PatientController::class, 'patient_change_password'])->name('patient/change-password');
+    Route::put('/patient/change-password-update/{patient_id}', [PatientController::class, 'patient_change_password_update'])->name('patient/change-password-update');
 
-    Route::get('/patient/appointment/{userid}', [PatientController::class, 'patient_appointment'])->name('patient/appointment');
+    Route::get('/patient/appointment/{patient_id}', [PatientController::class, 'patient_appointment'])->name('patient/appointment');
     Route::get('/patient/appointment-destroy/{appointment_id}', [PatientController::class, 'patient_appointment_destroy'])->name('patient/appointment-destroy');
 
-    Route::get('/patient/medical-record/{userid}', [PatientController::class, 'patient_medical_record'])->name('patient/medical-record');
+    Route::get('/patient/medical-record/{patient_id}', [PatientController::class, 'patient_medical_record'])->name('patient/medical-record');
     Route::get('/patient/medical-record-detail/{record_id}', [PatientController::class, 'patient_medical_record_detail'])->name('patient/medical-record-detail');
     Route::get('/patient/invoice/{invoice_id}', [PatientController::class, 'patient_invoice'])->name('patient/invoice');
 

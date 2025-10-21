@@ -27,20 +27,20 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    @foreach ($menus->where('level', 1)->sortBy('menuorder') as $menu)
-                        @php $submenus = $menus->where('parentid', $menu->menuid)->sortBy('menuorder') @endphp
+                    @foreach ($menus->where('level', 1)->sortBy('menu_order') as $menu)
+                        @php $submenus = $menus->where('parent_id', $menu->menu_id)->sortBy('menu_order') @endphp
                         @if ($submenus->count() == 0)
-                            <li><a href="{{ route($menu->routename) }}"
-                                    class="{{ request()->is($menu->routename) ? 'active' : '' }}">{{ $menu->menuname }}</a>
+                            <li><a href="{{ route($menu->route_name) }}"
+                                    class="{{ request()->is($menu->route_name) ? 'active' : '' }}">{{ $menu->menuname }}</a>
                             </li>
                         @else
                             <li class="dropdown"><a
-                                    href="{{ route($menu->routename) }}"><span>{{ $menu->menuname }}</span> <i
+                                    href="{{ route($menu->route_name) }}"><span>{{ $menu->menuname }}</span> <i
                                         class="bi bi-chevron-down toggle-dropdown"></i></a>
                                 <ul>
                                     @foreach ($submenus as $submenu)
-                                        <li><a href="{{ route($submenu->routename) }}"
-                                                class="{{ request()->is($submenu->routename) ? 'active' : '' }}">{{ $submenu->menuname }}</a>
+                                        <li><a href="{{ route($submenu->route_name) }}"
+                                                class="{{ request()->is($submenu->route_name) ? 'active' : '' }}">{{ $submenu->menuname }}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -73,19 +73,19 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
 
-                        @if (Auth::user()->roleid == 1)
+                        @if (Auth::user()->role_id == 1)
                             <a class="dropdown-item" href="{{ route('admin/index') }}">Quản trị</a>
-                        @elseif(Auth::user()->roleid == 2)
+                        @elseif(Auth::user()->role_id == 2)
                             <a class="dropdown-item" href="{{ route('doctor/index') }}">Quản trị</a>
-                        @elseif(Auth::user()->roleid == 3)
+                        @elseif(Auth::user()->role_id == 3)
                             <a class="dropdown-item" href="{{ route('receptionist/index') }}">Quản trị</a>
                         @else
-                            <a class="dropdown-item" href="{{ route('patient/profile', Auth::user()->userid) }}">Thông tin cá nhân</a>
-                            <a class="dropdown-item" href="{{ route('patient/appointment', Auth::user()->userid) }}">Lịch
+                            <a class="dropdown-item" href="{{ route('patient/profile', Auth::user()->user_id) }}">Thông tin cá nhân</a>
+                            <a class="dropdown-item" href="{{ route('patient/appointment', Auth::user()->user_id) }}">Lịch
                                 khám</a>
                             <a class="dropdown-item"
-                                href="{{ route('patient/medical-record', Auth::user()->userid) }}">Bệnh án</a>
-                            <a class="dropdown-item" href="{{ route('patient/change-password', Auth::user()->userid) }}">Đổi mật khẩu</a>
+                                href="{{ route('patient/medical-record', Auth::user()->user_id) }}">Bệnh án</a>
+                            <a class="dropdown-item" href="{{ route('patient/change-password', Auth::user()->user_id) }}">Đổi mật khẩu</a>
                         @endif
 
                         <form action="{{ route('logout') }}" method="POST">

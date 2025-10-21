@@ -9,12 +9,12 @@
             <div class="card-body row">
                 <div class="form-group col-md-6">
                     <label class="fs-5">Mã menu</label>
-                    <input type="text" class="form-control form-control-lg" value="{{ $menu->menuid }}">
+                    <input type="text" class="form-control form-control-lg" value="{{ $menu->menu_id }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Tên Menu</label>
-                    <input type="text" class="form-control form-control-lg" value="{{ $menu->menuname }}">
+                    <input type="text" class="form-control form-control-lg" value="{{ $menu->menu_name }}">
                 </div>
 
                 <div class="form-group col-md-6">
@@ -24,24 +24,24 @@
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Menu cha</label>
-                    <input type="text" class="form-control form-control-lg" value="{{$menu->parentid == 0 ? '---' : $menuparent->menuname}}">
+                    <input type="text" class="form-control form-control-lg" value="{{$menu->parent_id == 0 ? '---' : $menuparent->menu_name}}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Route Name</label>
-                    <input type="text" class="form-control form-control-lg" name="routename"
+                    <input type="text" class="form-control form-control-lg" name="route_name"
                         value="{{ $menu->routename }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Thứ tự</label>
-                    <input type="text" class="form-control form-control-lg" name="menuorder"
+                    <input type="text" class="form-control form-control-lg" name="menu_order"
                         value="{{ $menu->menuorder }}">
                 </div>
 
                 <div class="form-check col-md-6">
                     <label class="fs-5">Trạng thái</label>
-                    <input type="text" class="form-control form-control-lg" value="{{$menu->isactive == 1 ? 'Hiển thị' : 'Ẩn'}}">
+                    <input type="text" class="form-control form-control-lg" value="{{$menu->is_active == 1 ? 'Hiển thị' : 'Ẩn'}}">
                 </div>
 
                 <div class="col-12">

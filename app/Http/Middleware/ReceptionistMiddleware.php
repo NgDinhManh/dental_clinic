@@ -17,7 +17,7 @@ class ReceptionistMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        if (!$user || $user->roleid != 3) {
+        if (!$user || $user->role_id != 3) {
             return redirect()->route('/');
         }
         return $next($request);

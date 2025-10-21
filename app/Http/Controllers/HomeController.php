@@ -19,15 +19,15 @@ class HomeController extends Controller
     public function index()
     {
         // Lấy 5 bài viết mới nhất
-        $post_events = Post::where('isactive', 1)->where('topic', 'Tin tức & sự kiện')->take(5)->orderBy('created_at', 'desc')->get();
+        $post_events = Post::where('is_active', 1)->where('topic', 'Tin tức & sự kiện')->take(5)->orderBy('created_at', 'desc')->get();
 
         // Chia ra:
         $featuredPostEvent = $post_events->first(); // Bài viết đầu tiên (hiển thị to)
         $otherPostEvents = $post_events->slice(1);   // 4 bài còn lại (nhỏ hơn)
-        $post_knowlegdes = Post::where('isactive', 1)->where('topic', 'Kiến thức răng miệng')->take(6)->orderBy('created_at', 'desc')->get();
-        $services = Service::where('status', 'Có sẵn')->where('postid', '!=', null)->take(6)->orderBy('service_id', 'asc')->get();
+        $post_knowlegdes = Post::where('is_active', 1)->where('topic', 'Kiến thức răng miệng')->take(6)->orderBy('created_at', 'desc')->get();
+        $services = Service::where('status', 'Có sẵn')->where('post_id', '!=', null)->take(6)->orderBy('service_id', 'asc')->get();
         $doctors = DB::table('users')
-        ->join('doctors', 'users.userid', '=', 'doctors.userid')
+        ->join('doctors', 'users.user_id', '=', 'doctors.doctor_id')
         ->select('users.*', 'doctors.specialization', 'doctors.experience_years', 'doctors.education')
         ->take(6)->orderBy('doctors.experience_years', 'desc')->get();
         $faqs = Faq::where('is_active', 1)->orderBy('faq_id', 'asc')->get();
@@ -56,32 +56,32 @@ class HomeController extends Controller
         }
 
         // Lấy các bài viết khác (ngoại trừ bài viết đang xem)
-        $relatedPosts = Post::where('postid', '!=', $id)->where('topic', $post->topic)->latest()->take(10)->get();
+        $relatedPosts = Post::where('post_id', '!=', $id)->where('topic', $post->topic)->latest()->take(10)->get();
 
         return view('post_detail', compact('post', 'relatedPosts'));
     }
 
     public function post_event()
     {
-        $posts = Post::where('isactive', 1)->where('topic', 'Tin tức & sự kiện')->orderBy('created_at', 'desc')->paginate(8);
+        $posts = Post::where('is_active', 1)->where('topic', 'Tin tức & sự kiện')->orderBy('created_at', 'desc')->paginate(8);
         return view('post_event', compact('posts'));
     }
 
     public function post_knowledge()
     {
-        $posts = Post::where('isactive', 1)->where('topic', 'Kiến thức răng miệng')->orderBy('created_at', 'desc')->paginate(8);
+        $posts = Post::where('is_active', 1)->where('topic', 'Kiến thức răng miệng')->orderBy('created_at', 'desc')->paginate(8);
         return view('post_knowledge', compact('posts'));
     }
 
     public function post_service()
     {
-        $posts = Post::where('isactive', 1)->where('topic', 'Dịch vụ')->orderBy('created_at', 'desc')->paginate(8);
+        $posts = Post::where('is_active', 1)->where('topic', 'Dịch vụ')->orderBy('created_at', 'desc')->paginate(8);
         return view('post_service', compact('posts'));
     }
 
     public function service()
     {
-        $services = Service::where('status', 'Có sẵn')->where('postid', '!=', null)->orderBy('service_id', 'asc')->get();
+        $services = Service::where('status', 'Có sẵn')->where('post_id', '!=', null)->orderBy('service_id', 'asc')->get();
         return view('service', ['services' => $services]);
     }
 
@@ -132,7 +132,7 @@ class HomeController extends Controller
     public function appointment_create(Request $request)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,userid',
+            'patient_id' => 'required|exists:patients,user_id',
             'appointment_date' => 'required',
             'appointment_time' => 'required',
             'services' => 'required|array',
@@ -176,7 +176,7 @@ class HomeController extends Controller
         ]);
 
         $data = [
-            'userid' => $request->userid,
+            'user_id' => $request->user_id,
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
@@ -188,5 +188,5 @@ class HomeController extends Controller
 
         return redirect()->route('home/contact')->with('success', 'Gửi tin nhắn thành công');
     }
-    
+
 }

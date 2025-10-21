@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Menu;
-use App\Models\Menuadmin;
+use App\Models\Menu_admin;
 use App\Models\Menu_doctor;
 use App\Models\Menu_receptionist;
 use App\Models\Notification;
@@ -28,22 +28,22 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $menus = Menu::where('isactive', 1)->get();
+            $menus = Menu::where('is_active', 1)->get();
             $view->with('menus', $menus);
         });
 
         View::composer('*', function ($view) {
-            $menuadmins = Menuadmin::where('isactive', 1)->get();
-            $view->with('menuadmins', $menuadmins);
+            $menu_admins = Menu_admin::where('is_active', 1)->get();
+            $view->with('menu_admins', $menu_admins);
         });
 
         View::composer('*', function ($view) {
-            $menu_doctors = Menu_doctor::where('isactive', 1)->get();
+            $menu_doctors = Menu_doctor::where('is_active', 1)->get();
             $view->with('menu_doctors', $menu_doctors);
         });
 
         View::composer('*', function ($view) {
-            $menu_receptionists = Menu_receptionist::where('isactive', 1)->get();
+            $menu_receptionists = Menu_receptionist::where('is_active', 1)->get();
             $view->with('menu_receptionists', $menu_receptionists);
         });
 

@@ -100,8 +100,8 @@
                             <h4 class="text-section">Chức năng</h4>
                         </li>
 
-                        @foreach ($menuadmins->where('itemlevel', 1)->sortBy('menuorder') as $menu)
-                            @php $submenus = $menuadmins->where('parentid', $menu->menuid)->sortBy('itemorder'); @endphp
+                        @foreach ($menu_admins->where('itemlevel', 1)->sortBy('menuorder') as $menu)
+                            @php $submenus = $menu_admins->where('parentid', $menu->menuid)->sortBy('itemorder'); @endphp
                             @if ($submenus->count() == 0)
                                 <li class="nav-item">
                                     <a href="#">
@@ -253,7 +253,7 @@
 
     @livewireScripts
 
-    
+
     {{-- script datatables --}}
     <script>
         $(document).ready(function() {

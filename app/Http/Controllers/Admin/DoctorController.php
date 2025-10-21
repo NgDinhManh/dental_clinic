@@ -21,7 +21,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = User::where('roleid', 2)->get();
+        $doctors = User::where('role_id', 2)->get();
         $users = User::all();
         return view('admin.doctor.index', compact('doctors', 'users'));
     }
@@ -31,7 +31,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $users = User::where('roleid', 2)->whereDoesntHave('doctor')->get();
+        $users = User::where('role_id', 2)->whereDoesntHave('doctor')->get();
         return view('admin.doctor.create', ['users' => $users]);
     }
 
@@ -46,7 +46,7 @@ class DoctorController extends Controller
 
         $doctor = new Doctor();
 
-        $doctor->userid = $request->userid;
+        $doctor->doctor_id = $request->doctor_id;
         $doctor->specialization = $request->specialization;
         $doctor->experience_years = $request->experience_years;
         $doctor->education = $request->education;
@@ -77,7 +77,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        $user = User::find($doctor->userid);
+        $user = User::find($doctor->doctor_id);
         return view('admin.doctor.show', ['doctor' => $doctor, 'user' => $user]);
     }
 
@@ -86,7 +86,7 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        $user = User::find($doctor->userid);
+        $user = User::find($doctor->doctor_id);
         return view('admin.doctor.edit', ['doctor' => $doctor, 'user' => $user]);
     }
 
@@ -107,7 +107,7 @@ class DoctorController extends Controller
             $file = $request->file('certification');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images'), $filename);
-            
+
             $data['certification'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
@@ -121,7 +121,7 @@ class DoctorController extends Controller
             $file = $request->file('license');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images'), $filename);
-            
+
             $data['license'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
@@ -153,8 +153,8 @@ class DoctorController extends Controller
     public function benh_an()
     {
         $medical_records = Medical_record::all(); // Lấy danh sách bệnh án
-        $patients = User::where('roleid', 4)->get(); // Lấy danh sách bệnh nhân
-        $doctors = User::where('roleid', 2)->get(); // Lấy danh sách bác sĩ
+        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
+        $doctors = User::where('role_id', 2)->get(); // Lấy danh sách bác sĩ
         $prescriptions = Prescription::all(); // Lấy danh sách đơn thuốc
         return view('admin.doctor.benh-an', compact('medical_records', 'patients', 'doctors', 'prescriptions'));
     }
@@ -166,12 +166,12 @@ class DoctorController extends Controller
             return redirect()->back()->with('error', 'Không tìm thấy bệnh án');
         }
         $patient = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
-            ->where('users.roleid', 4)
-            ->where('users.userid', $medical_record->patient_id)
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
+            ->where('users.role_id', 4)
+            ->where('users.user_id', $medical_record->patient_id)
             ->select('users.*', 'patients.*')
             ->first();
-        $doctor = User::where('userid', $medical_record->doctor_id)->first();
+        $doctor = User::where('doctor_id', $medical_record->doctor_id)->first();
         $services = Service::all()->take(4);
         $prescription = Prescription::where('record_id', $record_id)->first();
         if (!$prescription) {
@@ -199,7 +199,7 @@ class DoctorController extends Controller
     public function benh_an_decline($record_id)
     {
         $medical_record = Medical_record::where('record_id', $record_id)->first();
-        
+
         $notification = new Notification();
         $notification->receiver_id = $medical_record->doctor_id;
         $notification->title = 'Từ chối mở lại bệnh án';

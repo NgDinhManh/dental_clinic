@@ -30,7 +30,7 @@
                                         <tr>
                                             <td>{{ $record->record_id }}</td>
                                             <td> <a href="{{ route('doctor/benh-an/benh-an/show', $record->record_id) }}"
-                                                    class="text-primary">{{ $patients->where('userid', $record->patient_id)->first()->fullname }}</a>
+                                                    class="text-primary">{{ $patients->where('patient_id', $record->patient_id)->first()->fullname }}</a>
                                             </td>
                                             <td>{{ $record->created_at->format('d/m/Y') }}</td>
                                             <td>{{ $record->diagnosis }}</td>

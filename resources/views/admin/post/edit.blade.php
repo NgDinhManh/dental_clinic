@@ -63,9 +63,9 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="hidden" name="isactive" value="0">
+                    <input type="hidden" name="is_active" value="0">
                     <input class="form-check-input fs-5" type="checkbox" value="1" id="flexCheckDefault"
-                        name="isactive" {{ old('isactive', $post->isactive) == 1 ? 'checked' : '' }}>
+                        name="is_active" {{ old('is_active', $post->is_active) == 1 ? 'checked' : '' }}>
                     <label class="form-check-label fs-5" for="flexCheckDefault">
                         Hiển thị
                     </label>

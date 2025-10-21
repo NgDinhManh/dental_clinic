@@ -30,24 +30,24 @@
                                 <tbody>
                                     @foreach ($receptionists as $receptionist)
                                         <tr>
-                                            <td>{{ $receptionist->userid }}</td>
-                                            @php $fullname = $users->where('userid', $receptionist->userid)->first()->fullname; @endphp
-                                            <td> <a href="{{ route('admin/receptionist/show', $receptionist->userid) }}"
+                                            <td>{{ $receptionist->receptionist_id }}</td>
+                                            @php $fullname = $users->where('receptionist_id', $receptionist->receptionist_id)->first()->fullname; @endphp
+                                            <td> <a href="{{ route('admin/receptionist/show', $receptionist->receptionist_id) }}"
                                                     class="text-primary">{{ $fullname }}</a></td>
                                             <td>{{ $receptionist->start_date }}</td>
                                             <td>{{ $receptionist->shift }}</td>
                                             <td>
-                                                <form action="{{ route('admin/receptionist/destroy', $receptionist->userid) }}"
+                                                <form action="{{ route('admin/receptionist/destroy', $receptionist->receptionist_id) }}"
                                                     method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $receptionist->userid }}">
+                                                    id="delete-form-{{ $receptionist->receptionist_id }}">
                                                     @csrf @method('delete')
                                                     <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/receptionist/edit', $receptionist->userid) }}">
+                                                        href="{{ route('admin/receptionist/edit', $receptionist->receptionist_id) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-link btn-danger delete-button"
                                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $receptionist->userid }}">
+                                                        data-form-id="delete-form-{{ $receptionist->receptionist_id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>

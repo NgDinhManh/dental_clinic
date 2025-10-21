@@ -16,8 +16,8 @@ class DonThuocController extends Controller
     {
         $medical_records = Medical_record::all(); // Lấy danh sách bệnh án
         $prescriptions = Prescription::all(); // Lấy danh sách đơn thuốc
-        $patients = User::where('roleid', 4)->get(); // Lấy danh sách bệnh nhân
-        $doctors = User::where('roleid', 2)->get(); // Lấy danh sách bác sĩ
+        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
+        $doctors = User::where('role_id', 2)->get(); // Lấy danh sách bác sĩ
         session(['previous_url' => url()->previous()]);
         return view('doctor.don-thuoc.don-thuoc', compact('medical_records', 'prescriptions', 'patients', 'doctors'));
     }
@@ -29,8 +29,8 @@ class DonThuocController extends Controller
             return redirect()->route('doctor/benh-an/benh-an')->with('error', 'Không tìm thấy bệnh án');
         }
         $patient = DB::table('patients')
-        ->join('users', 'patients.userid', '=', 'users.userid')
-        ->where('users.userid', $medical_record->patient_id)
+        ->join('users', 'patients.patient_id', '=', 'users.user_id')
+        ->where('users.user_id', $medical_record->patient_id)
         ->select('users.*', 'patients.*')
         ->first();
         if (!$patient) {
@@ -74,8 +74,8 @@ class DonThuocController extends Controller
         }
         $prescription_details = Prescription_detail::where('prescription_id', $prescription->prescription_id)->get();
         $patient = DB::table('patients')
-        ->join('users', 'patients.userid', '=', 'users.userid')
-        ->where('users.userid', $medical_record->patient_id)
+        ->join('users', 'patients.patient_id', '=', 'users.user_id')
+        ->where('users.user_id', $medical_record->patient_id)
         ->select('users.*', 'patients.*')
         ->first();
         if (!$patient) {
@@ -128,8 +128,8 @@ class DonThuocController extends Controller
         }
         $prescription_details = Prescription_detail::where('prescription_id', $prescription->prescription_id)->get();
         $patient = DB::table('patients')
-        ->join('users', 'patients.userid', '=', 'users.userid')
-        ->where('users.userid', $medical_record->patient_id)
+        ->join('users', 'patients.patient_id', '=', 'users.user_id')
+        ->where('users.user_id', $medical_record->patient_id)
         ->select('users.*', 'patients.*')
         ->first();
         if (!$patient) {

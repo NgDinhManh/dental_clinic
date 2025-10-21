@@ -17,7 +17,7 @@ class PatientMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        if (!$user || $user->roleid != 4) {
+        if (!$user || $user->role_id != 4) {
             return redirect()->route('/');
         }
         return $next($request);

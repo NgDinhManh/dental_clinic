@@ -11,16 +11,16 @@ class Menu extends Model
 
     protected $table = 'menus';
 
-    protected $primaryKey = 'menuid';
+    protected $primaryKey = 'menu_id';
 
     protected $fillable = [
-        'menuname',
-        'isactive',
+        'menu_name',
+        'is_active',
         'level',
-        'parentid',
-        'routename',
+        'parent_id',
+        'route_name',
         'link',
-        'menuorder',
+        'menu_order',
         'position'
     ];
 

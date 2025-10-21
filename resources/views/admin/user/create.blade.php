@@ -50,7 +50,7 @@
             <div class="form-check">
                 <input type="hidden" name="is_active" value="0">
                 <input class="form-check-input fs-5" type="checkbox" value="1" id="flexCheckDefault" name="is_active"
-                    {{ old('isactive', 0) == 1 ? 'checked' : '' }}>
+                    {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
                 <label class="form-check-label fs-5" for="flexCheckDefault">
                     Trạng thái hoạt động
                 </label>

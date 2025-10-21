@@ -18,7 +18,7 @@ class ReceptInvoiceController extends Controller
     {
         $invoices = DB::table('invoices')
         ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.userid')
+        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
         ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
         ->distinct()
         ->get();
@@ -36,7 +36,7 @@ class ReceptInvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($invoice_id);
         $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('userid', $medical_record->patient_id)->first();
+        $patient = User::where('user_id', $medical_record->patient_id)->first();
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
@@ -51,7 +51,7 @@ class ReceptInvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($invoice_id);
         $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('userid', $medical_record->patient_id)->first();
+        $patient = User::where('user_id', $medical_record->patient_id)->first();
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
@@ -63,7 +63,7 @@ class ReceptInvoiceController extends Controller
     }
 
     public function invoice_reload()
-    {   
+    {
         $invoices_record_id = Invoice::pluck('record_id')->toArray();
         $medical_records = Medical_record::where('status', 'Hoàn tất')
         ->whereNotIn('record_id', $invoices_record_id)->get();
@@ -75,7 +75,7 @@ class ReceptInvoiceController extends Controller
             foreach ($medical_records as $medical_record) {
                 $invoice = new Invoice();
                 $invoice->record_id = $medical_record->record_id;
-                $invoice->receptionist_id = Auth::user()->userid;
+                $invoice->receptionist_id = Auth::user()->user_id;
 
                 $total_price = DB::table('medical_record_services')
                 ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
@@ -83,7 +83,7 @@ class ReceptInvoiceController extends Controller
                 ->select(DB::raw('SUM(services.price) as total_price'))
                 ->first();
                 $total_price = (float) $total_price->total_price; // Ép kiểu float
-                
+
                 $invoice->total_amount = $total_price; // Hoặc giá trị mặc định khác
                 $invoice->save();
             }
@@ -91,7 +91,7 @@ class ReceptInvoiceController extends Controller
 
         $invoices = DB::table('invoices')
         ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.userid')
+        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
         ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
         ->distinct()
         ->get();
@@ -109,7 +109,7 @@ class ReceptInvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($invoice_id);
         $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('userid', $medical_record->patient_id)->first();
+        $patient = User::where('user_id', $medical_record->patient_id)->first();
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
@@ -152,7 +152,7 @@ class ReceptInvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($invoice_id);
         $notification = new Notification();
-        $notification->receiver_id = User::where('roleid', 1)->first()->userid;
+        $notification->receiver_id = User::where('roleid', 1)->first()->user_id;
         $notification->title = 'Yêu cầu mở lại hóa đơn';
         $notification->content = $invoice->receptionist->user->fullname . ' yêu cầu mở lại hóa đơn ' . $invoice->invoice_id . ' của bệnh nhân ' . $invoice->medical_record->patient->user->fullname;
         $notification->save();

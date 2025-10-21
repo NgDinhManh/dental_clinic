@@ -17,7 +17,7 @@ class DoctorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        if (!$user || $user->roleid != 2) {
+        if (!$user || $user->role_id != 2) {
             return redirect()->route('/');
         }
         return $next($request);

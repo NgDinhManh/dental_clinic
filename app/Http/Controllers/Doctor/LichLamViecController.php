@@ -21,7 +21,7 @@ class LichLamViecController extends Controller
         $appointments = Appointment::where('appointment_date', $today)->get();
         $appointment_services = Appointment_service::all();
         $services = Service::all();
-        $patients = User::where('roleid', 4)->get(); // Lấy danh sách bệnh nhân
+        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
         return view('doctor.lich-lam-viec.lich-kham-hom-nay', compact('appointments', 'appointment_services', 'services', 'patients'))->with('success', 'Đăng nhập thành công!');
     }
 
@@ -32,7 +32,7 @@ class LichLamViecController extends Controller
 
         $appointments = Appointment::whereBetween('appointment_date', [$startOfWeek, $endOfWeek])->get();
         $services = Service::all();
-        $patients = User::where('roleid', 4)->get(); // Lấy danh sách bệnh nhân
+        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
         return view('doctor.lich-lam-viec.lich-kham', compact('appointments', 'services', 'patients'));
     }
 
@@ -41,7 +41,7 @@ class LichLamViecController extends Controller
         $appointments = Appointment::all();
         $appointment_services = Appointment_service::all();
         $services = Service::all();
-        $patients = User::where('roleid', 4)->get(); // Lấy danh sách bệnh nhân
+        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
         return view('doctor.lich-lam-viec.lich-kham', compact('appointments', 'appointment_services', 'services', 'patients'));
     }
 
@@ -52,9 +52,9 @@ class LichLamViecController extends Controller
         $services = Service::all();
 
         $patient = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
-            ->where('users.roleid', 4)
-            ->where('users.userid', $appointment->patient_id)
+            ->join('users', 'patients.patient_id', '=', 'users.user_id')
+            ->where('users.role_id', 4)
+            ->where('users.user_id', $appointment->patient_id)
             ->select('users.*', 'patients.*')
             ->first();
             session(['previous_url' => url()->previous()]);

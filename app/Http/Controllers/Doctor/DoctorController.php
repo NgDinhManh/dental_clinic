@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
-    public function doctor_profile($userid)
+    public function doctor_profile($user_id)
     {
-        $user = User::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
 
         return view('doctor.profile', ['user' => $user]);
     }
 
-    public function doctor_update(Request $request, $userid)
+    public function doctor_update(Request $request, $user_id)
     {
-        $user = User::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
 
         $data = $request->all();
 
@@ -39,16 +39,16 @@ class DoctorController extends Controller
 
         $user->update($data);
 
-        return redirect()->route("doctor/profile", $user->userid);
+        return redirect()->route("doctor/profile", $user->user_id);
     }
 
-    public function doctor_change_password($userid)
+    public function doctor_change_password($user_id)
     {
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         return view('doctor.change_password', compact('user'));
     }
 
-    public function doctor_change_password_update(Request $request, $userid)
+    public function doctor_change_password_update(Request $request, $user_id)
     {
         $request->validate([
             'old_password' => 'required',
@@ -62,7 +62,7 @@ class DoctorController extends Controller
             'confirm_password.same:password' => 'Vui lòng nhập lại đúng mật khẩu'
         ]);
 
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         $old_password = $request->old_password;
         $password = $request->password;
         $status = Hash::check($old_password, $user->password);

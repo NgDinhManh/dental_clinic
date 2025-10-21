@@ -36,7 +36,7 @@
                                                     class="text-primary">{{ $menu->menuname }}</a></td>
                                             <td>{{ $menu->routename }}</td>
                                             <td>
-                                                @if ($menu->isactive == 1)
+                                                @if ($menu->is_active == 1)
                                                     <span class="badge badge-success">Hiển thị</span>
                                                 @else
                                                     <span class="badge badge-danger">Ẩn</span>

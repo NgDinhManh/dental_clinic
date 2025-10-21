@@ -12,31 +12,33 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id('roleid');
-            $table->string('rolename');
+            $table->id('role_id');
+            $table->string('role_name');
             $table->string('description');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
 
         Schema::create('users', function (Blueprint $table) {
-            $table->id('userid');
+            $table->id('user_id');
             $table->string('name');
             $table->string('fullname')->nullable();
             $table->string('gender')->nullable();
             $table->date('birthday')->nullable();
             $table->string('phone')->unique();
-            $table->text('password')->default(bcrypt('123456'));
+            $table->text('password');
             $table->string('email')->unique()->nullable();
             $table->text('address')->nullable();
             $table->string('avatar')->default('avatar_default.png');
             $table->boolean('is_active')->default(1);
             $table->timestamp('email_verified_at')->nullable();
-            $table->unsignedBigInteger('roleid')->default(4);
+            $table->unsignedBigInteger('role_id')->default(4);
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             // Thiết lập khóa ngoại
-            $table->foreign('roleid')->references('roleid')->on('roles')->onDelete('restrict');
+            $table->foreign('role_id')->references('role_id')->on('roles')->onDelete('restrict');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

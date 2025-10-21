@@ -8,9 +8,9 @@
 
         <div class="form-group">
             <label class="fs-5">Họ và tên</label>
-            <select name="userid" class="form-select form-control-lg" required>
+            <select name="receptionist_id" class="form-select form-control-lg" required>
                 @foreach ($users as $user)
-                    <option value="{{ $user->userid }}">{{ $user->fullname }}</option>
+                    <option value="{{ $user->user_id }}">{{ $user->fullname }}</option>
                 @endforeach
             </select>
         </div>

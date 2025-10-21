@@ -31,6 +31,6 @@ class Invoice extends Model
 
     public function receptionist()
     {
-        return $this->belongsTo(Receptionist::class, 'receptionist_id', 'userid');
+        return $this->belongsTo(Receptionist::class, 'receptionist_id', 'receptionist_id');
     }
 }

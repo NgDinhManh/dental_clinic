@@ -34,12 +34,12 @@ class AuthContronller extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-        $user->roleid = 4; // Mặc định là Bệnh nhân đăng ký tài khoản
+        $user->role_id = 4; // Mặc định là Bệnh nhân đăng ký tài khoản
 
         $user->save();
 
         $patient = new Patient();
-        $patient->userid = $user->userid;
+        $patient->user_id = $user->user_id;
         $patient->save();
 
         return redirect()->route('login');
@@ -65,11 +65,11 @@ class AuthContronller extends Controller
             $user = Auth::user();
             if (!$user->is_active) {
                 return back()->with('msg', 'Tài khoản bị khóa, vui lòng liên hệ quản trị viên!');
-            } else if ($user->roleid == 1) {
+            } else if ($user->role_id == 1) {
                 return redirect()->route('admin/index');
-            } else if ($user->roleid == 2) {
+            } else if ($user->role_id == 2) {
                 return redirect()->route('doctor/index');
-            } else if ($user->roleid == 3) {
+            } else if ($user->role_id == 3) {
                 return redirect()->route('receptionist/index');
             } else {
                 return redirect()->route('/');
@@ -91,11 +91,11 @@ class AuthContronller extends Controller
 
     public function admin_index(Request $request)
     {
-        $total_user = User::where('roleid', 4)->count();
-        $total_patient = User::whereIn('userid', Medical_record::pluck('patient_id'))->count();
-        $total_doctor = User::where('roleid', 2)->count();
+        $total_user = User::where('role_id', 4)->count();
+        $total_patient = User::whereIn('user_id', Medical_record::pluck('patient_id'))->count();
+        $total_doctor = User::where('role_id', 2)->count();
         $total_medical_record = Medical_record::count();
-        $new_users = User::where('roleid', 4)->orderBy('created_at', 'desc')->take(6)->get();
+        $new_users = User::where('role_id', 4)->orderBy('created_at', 'desc')->take(6)->get();
         $new_medical_records = Medical_record::orderBy('created_at', 'desc')->take(8)->get();
 
         $year = $request->input('year', now()->year);

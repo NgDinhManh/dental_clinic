@@ -31,25 +31,25 @@
                                 <tbody>
                                     @foreach ($doctors as $doctor)
                                         <tr>
-                                            <td>{{ $doctor->userid }}</td>
-                                            @php $fullname = $users->where('userid', $doctor->userid)->first()->fullname; @endphp
-                                            <td> <a href="{{ route('admin/doctor/show', $doctor->userid) }}"
+                                            <td>{{ $doctor->doctor_id }}</td>
+                                            @php $fullname = $users->where('doctor_id', $doctor->doctor_id)->first()->fullname; @endphp
+                                            <td> <a href="{{ route('admin/doctor/show', $doctor->doctor_id) }}"
                                                     class="text-primary">{{ $fullname }}</a></td>
                                             <td>{{ $doctor->specialization }}</td>
                                             <td>{{ $doctor->experience_years }}</td>
                                             <td>{{ $doctor->education }}</td>
                                             <td>
-                                                <form action="{{ route('admin/doctor/destroy', $doctor->userid) }}"
+                                                <form action="{{ route('admin/doctor/destroy', $doctor->doctor_id) }}"
                                                     method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $doctor->userid }}">
+                                                    id="delete-form-{{ $doctor->doctor_id }}">
                                                     @csrf @method('delete')
                                                     <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/doctor/edit', $doctor->userid) }}">
+                                                        href="{{ route('admin/doctor/edit', $doctor->doctor_id) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-link btn-danger delete-button"
                                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $doctor->userid }}">
+                                                        data-form-id="delete-form-{{ $doctor->doctor_id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>

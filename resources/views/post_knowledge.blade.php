@@ -42,7 +42,7 @@
                             <p class="post-category">{{ $post->topic }}</p>
 
                             <h4 class="title text-truncate-2">
-                                <a href="{{ route('home/post-detail', $post->postid) }}">{{ $post->title }}</a>
+                                <a href="{{ route('home/post-detail', $post->post_id) }}">{{ $post->title }}</a>
                             </h4>
 
                             <div class="d-flex align-items-center">

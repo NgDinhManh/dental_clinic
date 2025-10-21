@@ -54,7 +54,7 @@
 
                 <div class="form-check">
                     <input class="form-check-input fs-5" type="checkbox" value="1" id="flexCheckDefault"
-                        {{ old('isactive', $post->isactive) == 1 ? 'checked' : '' }}>
+                        {{ old('is_active', $post->is_active) == 1 ? 'checked' : '' }}>
                     <label class="form-check-label fs-5" for="flexCheckDefault">
                         Hiển thị
                     </label>

@@ -31,7 +31,7 @@ class ReceptPatientController extends Controller
 
     public function patient_store(Request $request)
     {
-        $user = User::FindOrFail($request->userid);
+        $user = User::FindOrFail($request->user_id);
         if (empty($user)) {
             //Tạo tài khoản cho bệnh nhân
             $user = new User();
@@ -45,13 +45,13 @@ class ReceptPatientController extends Controller
             $user->address = $request->address;
             $user->is_active = 1;
             $user->save();
-        
+
 
             //Tạo thông tin bệnh nhân mới
             $patient = new Patient();
-            $lastUser = User::latest('userid')->first();
-            $patient->userid = $lastUser->userid;
-            
+            $lastUser = User::latest('user_id')->first();
+            $patient->user_id = $lastUser->user_id;
+
             $patient->cccd = $request->cccd;
             $patient->bhyt = $request->bhyt;
             $patient->blood_type = $request->blood_type;
@@ -65,7 +65,7 @@ class ReceptPatientController extends Controller
             $patient->save();
         }
         else {
-            $patient = Patient::FindOrFail($request->userid);
+            $patient = Patient::FindOrFail($request->user_id);
 
             $patient->cccd = $request->cccd;
             $patient->bhyt = $request->bhyt;
@@ -83,17 +83,17 @@ class ReceptPatientController extends Controller
         return redirect()->route('receptionist/patient')->with('success', 'Lưu thông tin bệnh nhân thành công');
     }
 
-    public function patient_edit($userid)
+    public function patient_edit($user_id)
     {
-        $user = User::where('userid', $userid)->first();
-        $patient = Patient::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
+        $patient = Patient::where('user_id', $user_id)->first();
 
         return view('receptionist.patient.patient_edit', compact('user', 'patient'));
     }
 
-    public function patient_update(Request $request, $userid)
+    public function patient_update(Request $request, $user_id)
     {
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         $user->name = $request->name;
         $user->fullname = $request->fullname;
         $user->birthday = $request->birthday;
@@ -103,7 +103,7 @@ class ReceptPatientController extends Controller
         $user->address = $request->address;
         $user->save();
 
-        $patient = Patient::findOrFail($userid);
+        $patient = Patient::findOrFail($user_id);
         $patient->cccd = $request->cccd;
         $patient->bhyt = $request->bhyt;
         $patient->blood_type = $request->blood_type;
@@ -119,10 +119,10 @@ class ReceptPatientController extends Controller
         return redirect()->route('receptionist/patient')->with('success', 'Cập nhật thông tin bệnh nhân thành công');
     }
 
-    public function patient_show($userid)
+    public function patient_show($user_id)
     {
-        $user = User::where('userid', $userid)->first();
-        $patient = Patient::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
+        $patient = Patient::where('user_id', $user_id)->first();
 
         return view('receptionist.patient.patient_show', ['user' => $user, 'patient' => $patient]);
     }

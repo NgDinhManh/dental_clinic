@@ -21,16 +21,16 @@ use Illuminate\Support\Facades\Hash;
 
 class ReceptionistController extends Controller
 {
-    public function receptionist_profile($userid)
+    public function receptionist_profile($user_id)
     {
-        $user = User::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
 
         return view('receptionist.profile', ['user' => $user]);
     }
 
-    public function receptionist_update(Request $request, $userid)
+    public function receptionist_update(Request $request, $user_id)
     {
-        $user = User::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
 
         $data = $request->all();
 
@@ -49,16 +49,16 @@ class ReceptionistController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('receptionist/profile', $user->userid)->with('success', 'Cập nhật hồ sơ thành công.');
+        return redirect()->route('receptionist/profile', $user->user_id)->with('success', 'Cập nhật hồ sơ thành công.');
     }
 
-    public function receptionist_change_password($userid)
+    public function receptionist_change_password($user_id)
     {
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         return view('receptionist.change_password', compact('user'));
     }
 
-    public function receptionist_change_password_update(Request $request, $userid)
+    public function receptionist_change_password_update(Request $request, $user_id)
     {
         $request->validate([
             'old_password' => 'required',
@@ -72,7 +72,7 @@ class ReceptionistController extends Controller
             'confirm_password.same:password' => 'Vui lòng nhập lại đúng mật khẩu'
         ]);
 
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         $old_password = $request->old_password;
         $password = $request->password;
         $status = Hash::check($old_password, $user->password);
@@ -86,5 +86,5 @@ class ReceptionistController extends Controller
         }
 
     }
-    
+
 }

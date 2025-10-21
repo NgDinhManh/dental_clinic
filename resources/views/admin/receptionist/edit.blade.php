@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="page-inner">
-    <form action="{{ route('admin/receptionist/update', $receptionist->userid) }}" method="POST" class="card p-4 row">
+    <form action="{{ route('admin/receptionist/update', $receptionist->receptionist_id) }}" method="POST" class="card p-4 row">
         @csrf @method('PUT')
         <h4 class="card-title">Sửa thông tin tiếp tân</h4>
 

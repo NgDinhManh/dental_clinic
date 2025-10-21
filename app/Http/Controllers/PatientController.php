@@ -24,20 +24,20 @@ use function PHPUnit\Framework\isEmpty;
 class PatientController extends Controller
 {
 
-    public function patient_profile($userid)
+    public function patient_profile($user_id)
     {
-        $user = User::where('userid', $userid)->first();
+        $user = User::where('user_id', $user_id)->first();
 
         return view('patient.profile', ['user' => $user]);
-        
+
     }
 
-    public function patient_update(Request $request, $userid)
+    public function patient_update(Request $request, $user_id)
     {
-        $user = User::where('userid', $userid)->first(); // tự lấy user
+        $user = User::where('user_id', $user_id)->first(); // tự lấy user
 
         $data = $request->all();
-        
+
         if ($request->hasFile('avatar')) {
             $imagePath = public_path('storage/images/' . $user->avatar);
             if (File::exists($imagePath)) {
@@ -47,22 +47,22 @@ class PatientController extends Controller
             $file = $request->file('avatar');
             $filename = 'avatar' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images'), $filename);
-            
+
             $data['avatar'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
         $user->update($data);
 
-        return redirect()->route("patient/profile", $user->userid)->with('success', 'Cập nhật thông tin thành công');
+        return redirect()->route("patient/profile", $user->user_id)->with('success', 'Cập nhật thông tin thành công');
     }
 
-    public function patient_change_password($userid)
+    public function patient_change_password($user_id)
     {
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         return view('change_password', compact('user'));
     }
 
-    public function patient_change_password_update(Request $request, $userid)
+    public function patient_change_password_update(Request $request, $user_id)
     {
         $request->validate([
             'old_password' => 'required',
@@ -76,7 +76,7 @@ class PatientController extends Controller
             'confirm_password.same:password' => 'Vui lòng nhập lại đúng mật khẩu'
         ]);
 
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         $old_password = $request->old_password;
         $password = $request->password;
         $status = Hash::check($old_password, $user->password);
@@ -91,13 +91,13 @@ class PatientController extends Controller
 
     }
 
-    public function patient_appointment($userid)
+    public function patient_appointment($user_id)
     {
-        $appointments = Appointment::query()->where('patient_id', $userid)->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+        $appointments = Appointment::query()->where('patient_id', $user_id)->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
         $appointment_services = Appointment_service::all();
         $services = Service::all();
         $medical_records = Medical_record::all();
-        $user = User::findOrFail($userid);
+        $user = User::findOrFail($user_id);
         return view('appointment_patient', compact('appointments', 'appointment_services', 'services', 'medical_records', 'user'));
     }
 
@@ -112,11 +112,11 @@ class PatientController extends Controller
         }
     }
 
-    public function patient_medical_record($userid)
+    public function patient_medical_record($user_id)
     {
-        $medical_records = Medical_record::query()->where('patient_id', $userid)->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
+        $medical_records = Medical_record::query()->where('patient_id', $user_id)->orderBy('created_at', 'desc')->paginate(5)->withQueryString();
         $users = User::all(); //Lấy thông tin để hiển thị tên bác sĩ
-        $user = User::findOrFail($userid); //Lấy thông tin bệnh nhân
+        $user = User::findOrFail($user_id); //Lấy thông tin bệnh nhân
         $invoices = Invoice::all();
         return view('medical_record', compact('medical_records', 'users', 'user', 'invoices'));
     }
@@ -129,12 +129,12 @@ class PatientController extends Controller
         }
         $user = User::findOrFail($medical_record->patient_id);
         $patient = DB::table('patients')
-            ->join('users', 'patients.userid', '=', 'users.userid')
+            ->join('users', 'patients.user_id', '=', 'users.user_id')
             ->where('users.roleid', 4)
-            ->where('users.userid', $medical_record->patient_id)
+            ->where('users.user_id', $medical_record->patient_id)
             ->select('users.*', 'patients.*')
             ->first();
-        $doctor = User::where('userid', $medical_record->doctor_id)->first();
+        $doctor = User::where('user_id', $medical_record->doctor_id)->first();
         $services = Service::all()->take(4);
         $prescription = Prescription::where('record_id', $record_id)->first();
         if (!$prescription) {
@@ -153,7 +153,7 @@ class PatientController extends Controller
         }
         $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
         $user = User::findOrFail($medical_record->patient_id);
-        $patient = User::where('userid', $medical_record->patient_id)->first();
+        $patient = User::where('user_id', $medical_record->patient_id)->first();
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)

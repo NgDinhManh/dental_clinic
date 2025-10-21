@@ -16,7 +16,7 @@ class Service extends Model
         'price',
         'duration',
         'status',
-        'postid',
+        'post_id',
         'image',
         'category_id',
     ];
@@ -28,7 +28,7 @@ class Service extends Model
 
     public function post()
     {
-        return $this->belongsTo(Post::class, 'postid');
+        return $this->belongsTo(Post::class, 'post_id');
     }
 
     public function getImageUrlAttribute()

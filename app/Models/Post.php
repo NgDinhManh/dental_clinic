@@ -9,7 +9,9 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'postid';
+    protected $table = 'posts';
+
+    protected $primaryKey = 'post_id';
 
     protected $fillable = [
         'title',
@@ -19,8 +21,8 @@ class Post extends Model
         'link',
         'topic',
         'author',
-        'isactive',
-        'postorder',
+        'is_active',
+        'post_order',
         'create_at'
     ];
 
@@ -31,6 +33,6 @@ class Post extends Model
 
     public function services()
     {
-        return $this->hasMany(Service::class, 'postid');
+        return $this->hasMany(Service::class, 'post_id');
     }
 }

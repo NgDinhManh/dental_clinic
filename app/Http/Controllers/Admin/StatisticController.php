@@ -13,27 +13,27 @@ class StatisticController extends Controller
     {
         $year = $request->input('year', now()->year);
         $month = $request->input('month');
-    
+
         $query = DB::table('medical_record_services')
             ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
             ->join('medical_records', 'medical_record_services.record_id', '=', 'medical_records.record_id')
             ->where('medical_records.status', 'Hoàn tất')
             ->select('services.service_name', DB::raw('COUNT(*) as usage_count'))
             ->whereYear('medical_record_services.created_at', $year);
-    
+
         if ($month) {
             $query->whereMonth('medical_record_services.created_at', $month);
         }
-    
+
         $results = $query->groupBy('services.service_name')
             ->orderByDesc('usage_count')
             ->get();
-    
+
         $labels = $results->pluck('service_name');
         $data = $results->pluck('usage_count');
         $selectedYear = $year;
         $selectedMonth = $month;
-    
+
         return view('admin.statistic.service', compact('labels', 'data', 'selectedYear', 'selectedMonth'));
     }
 
@@ -71,7 +71,7 @@ class StatisticController extends Controller
         $selectedMonth = $month;
         $invoices = DB::table('invoices')
         ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.userid')
+        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
         ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
         ->orderBy('invoices.updated_at', 'desc')
         ->distinct()
