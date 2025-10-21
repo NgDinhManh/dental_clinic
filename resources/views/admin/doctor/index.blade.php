@@ -32,7 +32,7 @@
                                     @foreach ($doctors as $doctor)
                                         <tr>
                                             <td>{{ $doctor->doctor_id }}</td>
-                                            @php $fullname = $users->where('doctor_id', $doctor->doctor_id)->first()->fullname; @endphp
+                                            @php $fullname = $users->where('user_id', $doctor->doctor_id)->first()->fullname; @endphp
                                             <td> <a href="{{ route('admin/doctor/show', $doctor->doctor_id) }}"
                                                     class="text-primary">{{ $fullname }}</a></td>
                                             <td>{{ $doctor->specialization }}</td>

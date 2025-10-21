@@ -31,10 +31,10 @@
                                 <tbody>
                                     @foreach ($menuss as $menu)
                                         <tr>
-                                            <td>{{ $menu->menuid }}</td>
-                                            <td> <a href="{{ route('admin/menu/show', $menu->menuid) }}"
-                                                    class="text-primary">{{ $menu->menuname }}</a></td>
-                                            <td>{{ $menu->routename }}</td>
+                                            <td>{{ $menu->menu_id }}</td>
+                                            <td> <a href="{{ route('admin/menu/show', $menu->menu_id) }}"
+                                                    class="text-primary">{{ $menu->menu_name }}</a></td>
+                                            <td>{{ $menu->route_name }}</td>
                                             <td>
                                                 @if ($menu->is_active == 1)
                                                     <span class="badge badge-success">Hiển thị</span>
@@ -42,19 +42,19 @@
                                                     <span class="badge badge-danger">Ẩn</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $menu->menuorder }}</td>
+                                            <td>{{ $menu->menu_order }}</td>
                                             <td>
-                                                <form action="{{ route('admin/menu/destroy', $menu->menuid) }}"
+                                                <form action="{{ route('admin/menu/destroy', $menu->menu_id) }}"
                                                     method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $menu->menuid }}">
+                                                    id="delete-form-{{ $menu->menu_id }}">
                                                     @csrf @method('delete')
                                                     <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/menu/edit', $menu->menuid) }}">
+                                                        href="{{ route('admin/menu/edit', $menu->menu_id) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-link btn-danger delete-button"
                                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $menu->menuid }}">
+                                                        data-form-id="delete-form-{{ $menu->menu_id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>

@@ -31,16 +31,16 @@
                         @php $submenus = $menus->where('parent_id', $menu->menu_id)->sortBy('menu_order') @endphp
                         @if ($submenus->count() == 0)
                             <li><a href="{{ route($menu->route_name) }}"
-                                    class="{{ request()->is($menu->route_name) ? 'active' : '' }}">{{ $menu->menuname }}</a>
+                                    class="{{ request()->is($menu->route_name) ? 'active' : '' }}">{{ $menu->menu_name }}</a>
                             </li>
                         @else
                             <li class="dropdown"><a
-                                    href="{{ route($menu->route_name) }}"><span>{{ $menu->menuname }}</span> <i
+                                    href="{{ route($menu->route_name) }}"><span>{{ $menu->menu_name }}</span> <i
                                         class="bi bi-chevron-down toggle-dropdown"></i></a>
                                 <ul>
                                     @foreach ($submenus as $submenu)
                                         <li><a href="{{ route($submenu->route_name) }}"
-                                                class="{{ request()->is($submenu->route_name) ? 'active' : '' }}">{{ $submenu->menuname }}</a>
+                                                class="{{ request()->is($submenu->route_name) ? 'active' : '' }}">{{ $submenu->menu_name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

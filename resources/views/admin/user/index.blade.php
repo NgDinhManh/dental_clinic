@@ -30,23 +30,23 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td>{{ $user->userid }}</td>
-                                            <td> <a href="{{ route('admin/user/show', $user->userid) }}"
+                                            <td>{{ $user->user_id }}</td>
+                                            <td> <a href="{{ route('admin/user/show', $user->user_id) }}"
                                                     class="text-primary">{{ $user->name }}</a></td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->role->description }}</td>
                                             <td>
-                                                <form action="{{ route('admin/user/destroy', $user->userid) }}"
+                                                <form action="{{ route('admin/user/destroy', $user->user_id) }}"
                                                     method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $user->userid }}">
+                                                    id="delete-form-{{ $user->user_id }}">
                                                     @csrf @method('delete')
                                                     <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/user/edit', $user->userid) }}">
+                                                        href="{{ route('admin/user/edit', $user->user_id) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-link btn-danger delete-button"
                                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $user->userid }}">
+                                                        data-form-id="delete-form-{{ $user->user_id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>
