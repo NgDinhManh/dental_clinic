@@ -40,6 +40,8 @@ class ReceptAppointmentController extends Controller
             ->where('users.is_active', 1)
             ->select('patients.*', 'users.*')
             ->first();
+            dd($patient);
+            dd(DB::table('users')->where('phone', $request->search_phone)->first());
             return view('receptionist.appointment.appointment_create', compact('patient', 'services'));
         }
 

@@ -32,7 +32,7 @@
                             @csrf
                             <div class="row g-3">
                                 @if (isset($patient))
-                                    <input type="text" name="patient_id" value="{{ $patient->userid }}" hidden>
+                                    <input type="text" name="patient_id" value="{{ $patient->patient_id }}" hidden>
 
                                     <!-- Row 1 -->
                                     <div class="col-md-4">

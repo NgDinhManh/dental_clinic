@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id('invoice_id'); // Mã hóa đơn
             $table->unsignedBigInteger('record_id'); // Mã hồ sơ bệnh án
+            $table->unsignedBigInteger('receptionist_id'); // Mã tiếp tân
 
             $table->decimal('total_amount', 10, 2); // Tổng tiền
             $table->decimal('discount', 10, 2)->default(0); // Giảm giá
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->foreign('record_id')->references('record_id')->on('medical_records')
+                ->onDelete('restrict');
+            $table->foreign('receptionist_id')->references('receptionist_id')->on('receptionists')
                 ->onDelete('restrict');
         });
 

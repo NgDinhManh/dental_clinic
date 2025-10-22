@@ -28,7 +28,7 @@
                                     @foreach ($appointments as $appointment)
                                         <tr>
                                             <td>{{ $appointment->appointment_id }}</td>
-                                            @php $patient = $patients->where('userid', $appointment->patient_id)->first(); @endphp
+                                            @php $patient = $patients->where('patient_id', $appointment->patient_id)->first(); @endphp
                                             <td>{{ $patient->fullname }}</td>
                                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d/m/Y') . ' | ' . $appointment->appointment_time }}
                                             </td>

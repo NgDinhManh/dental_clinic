@@ -8,9 +8,7 @@ class Doctor extends Model
 {
     protected $table = 'doctors'; // Tên bảng trong cơ sở dữ liệu
 
-    protected $primaryKey = 'user_id'; // Khóa chính của bảng
-
-    public $incrementing = false; // Không tự động tăng (vì dùng userid làm khóa chính)
+    protected $primaryKey = 'doctor_id'; // Khóa chính của bảng
 
     protected $fillable = [
         'specialization',
@@ -23,11 +21,11 @@ class Doctor extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id'); // Cột khóa ngoại là user_id
+        return $this->belongsTo(User::class, 'doctor_id', 'user_id');
     }
 
-    public function appointment()
+    public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'doctor_id');
+        return $this->hasMany(Appointment::class, 'doctor_id', 'doctor_id');
     }
 }

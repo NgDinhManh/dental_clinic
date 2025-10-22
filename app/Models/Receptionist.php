@@ -8,9 +8,7 @@ class Receptionist extends Model
 {
     protected $table = 'receptionists'; // Tên bảng trong cơ sở dữ liệu
 
-    protected $primaryKey = 'userid'; // Khóa chính của bảng
-
-    public $incrementing = false; // Không tự động tăng (vì dùng userid làm khóa chính)
+    protected $primaryKey = 'receptionist_id'; // Khóa chính của bảng
 
     protected $fillable = [
         'start_date',
@@ -20,11 +18,11 @@ class Receptionist extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'userid', 'userid'); // Cột khóa ngoại là userid
+        return $this->belongsTo(User::class, 'receptionist_id', 'user_id');
     }
 
-    public function invoice()
+    public function invoices()
     {
-        return $this->hasMany(Invoice::class, 'receptionist_id', 'userid');
+        return $this->hasMany(Invoice::class, 'receptionist_id', 'receptionist_id');
     }
 }

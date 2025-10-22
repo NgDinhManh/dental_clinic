@@ -122,7 +122,7 @@ class ReceptPatientController extends Controller
     public function patient_show($user_id)
     {
         $user = User::where('user_id', $user_id)->first();
-        $patient = Patient::where('user_id', $user_id)->first();
+        $patient = Patient::where('patient_id', $user_id)->first();
 
         return view('receptionist.patient.patient_show', ['user' => $user, 'patient' => $patient]);
     }

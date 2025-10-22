@@ -63,21 +63,21 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id'); // Cột khóa ngoại là roleid
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
 
     public function patient()
     {
-        return $this->hasMany(Patient::class, 'user_id');
+        return $this->belongsTo(Patient::class, 'user_id', 'patient_id');
     }
 
     public function doctor()
     {
-        return $this->hasMany(Doctor::class, 'user_id');
+        return $this->belongsTo(Doctor::class, 'user_id', 'doctor_id');
     }
 
     public function receptionist()
     {
-        return $this->hasMany(Receptionist::class, 'user_id');
+        return $this->belongsTo(Receptionist::class, 'user_id', 'receptionist_id');
     }
 }

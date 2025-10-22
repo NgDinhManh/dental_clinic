@@ -90,33 +90,33 @@
                             <h4 class="text-section">Chức năng</h4>
                         </li>
 
-                        @foreach ($menu_receptionists->where('itemlevel', 1)->sortBy('menuorder') as $menu)
-                            @php $submenus = $menu_receptionists->where('parentid', $menu->menuid)->sortBy('itemorder'); @endphp
+                        @foreach ($menu_receptionists->where('level', 1)->sortBy('menu_order') as $menu)
+                            @php $submenus = $menu_receptionists->where('parent_id', $menu->menu_id)->sortBy('menu_order'); @endphp
                             @if ($submenus->count() == 0)
                                 <li class="nav-item">
                                     <a href="#">
                                         <i class="{{ $menu->icon }}"></i>
-                                        <p>{{ $menu->itemname }}</p>
+                                        <p>{{ $menu->menu_name }}</p>
                                     </a>
                                 </li>
                             @else
                                 <li
-                                    class="nav-item submenu {{ request()->is( $menu->routename. '*') ? 'active' : '' }}">
-                                    <a data-bs-toggle="collapse" href="#{{ $menu->itemtarget }}">
+                                    class="nav-item submenu {{ request()->is( $menu->route_name. '*') ? 'active' : '' }}">
+                                    <a data-bs-toggle="collapse" href="#{{ $menu->menu_target }}">
                                         <i class="{{ $menu->icon }}"></i>
-                                        <p>{{ $menu->itemname }}</p>
+                                        <p>{{ $menu->menu_name }}</p>
                                         <span class="caret"></span>
                                     </a>
-                                    <div class="collapse {{ request()->is( $menu->routename. '*') ? 'show' : '' }}" id="{{ $menu->itemtarget }}">
+                                    <div class="collapse {{ request()->is( $menu->route_name. '*') ? 'show' : '' }}" id="{{ $menu->menu_target }}">
                                          <ul class="nav nav-collapse">
                                             @foreach ($submenus as $submenu)
-                                                <li class="{{ request()->is($submenu->routename) ? 'active' : '' }}">
-                                                    <a href="{{ route($submenu->routename) }}">
-                                                        <span class="sub-item">{{ $submenu->itemname }}</span>
+                                                <li class="{{ request()->is($submenu->route_name) ? 'active' : '' }}">
+                                                    <a href="{{ route($submenu->route_name) }}">
+                                                        <span class="sub-item">{{ $submenu->menu_name }}</span>
                                                     </a>
                                                 </li>
                                             @endforeach
-                                        </ul> 
+                                        </ul>
                                     </div>
                                 </li>
                             @endif

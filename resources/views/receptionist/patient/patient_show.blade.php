@@ -6,7 +6,7 @@
             <div class="row">
                 <h4 class="card-title">Thông tin cá nhân</h4>
 
-                <input type="text" name="userid" value="{{ $user->userid }}" hidden>
+                <input type="text" name="user_id" value="{{ $user->user_id }}" hidden>
 
                 <div class="form-group col-6">
                     <label class="largeInput">Họ và tên</label>

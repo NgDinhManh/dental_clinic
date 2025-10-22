@@ -12,7 +12,7 @@ class Message extends Model
 
     protected $fillable = [
         'name',
-        'userid',
+        'user_id',
         'phone',
         'email',
         'subject',
@@ -21,5 +21,5 @@ class Message extends Model
         'created_at',
         'updated_at',
     ];
-    
+
 }

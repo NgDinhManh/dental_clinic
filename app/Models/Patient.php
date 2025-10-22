@@ -8,7 +8,7 @@ class Patient extends Model
 {
     protected $table = 'patients';
 
-    protected $primaryKey = 'userid';
+    protected $primaryKey = 'patient_id';
 
     protected $fillable = [
         'cccd',
@@ -25,11 +25,11 @@ class Patient extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'userid', 'userid'); // Cột khóa ngoại là userid
+        return $this->belongsTo(User::class, 'patient_id', 'user_id');
     }
 
-    public function appointment()
+    public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'patient_id');
+        return $this->hasMany(Appointment::class, 'patient_id', 'patient_id');
     }
 }

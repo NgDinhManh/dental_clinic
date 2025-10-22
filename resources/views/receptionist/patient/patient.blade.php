@@ -27,11 +27,10 @@
                                 <tbody>
                                     @foreach ($patients as $patient)
                                         <tr>
-                                            <td>{{ $patient->userid }}</td>
-                                            @php $user = $users->where('userid', $patient->userid)->first(); @endphp
-                                            <td>{{ $user->fullname }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($user->birthday)->format('d/m/Y') }}</td>
-                                            <td>{{ $user->phone }}</td>
+                                            <td>{{ $patient->patient_id }}</td>
+                                            <td>{{ $patient->user->fullname }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($patient->user->birthday)->format('d/m/Y') }}</td>
+                                            <td>{{ $patient->user->phone }}</td>
                                             <td>{{ $patient->bhyt }}</td>
                                             <td>
                                                 <div class="btn-group">
@@ -41,11 +40,11 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <li>
-                                                            <a href="{{ route('receptionist/patient/show', $patient->userid) }}"
+                                                            <a href="{{ route('receptionist/patient/show', $patient->patient_id) }}"
                                                                 class="dropdown-item text-info">Xem</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('receptionist/patient/edit', $patient->userid) }}"
+                                                            <a href="{{ route('receptionist/patient/edit', $patient->patient_id) }}"
                                                                 class="dropdown-item text-primary">Chỉnh sửa</a>
                                                         </li>
                                                     </ul>

@@ -7,14 +7,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Đặt lịch khám</h3>
+                            <h4 class="card-title">Lịch khám chi tiết</h3>
                         </div>
                     </div>
 
                     <div class="card-body">
                         <div class="row g-3">
                             @if (isset($patient))
-                                <input type="text" name="patient_id" value="{{ $patient->userid }}" hidden>
+                                <input type="text" name="patient_id" value="{{ $patient->patient_id }}" hidden>
 
                                 <!-- Row 1 -->
                                 <div class="col-md-4">
