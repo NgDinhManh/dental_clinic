@@ -82,7 +82,7 @@ class MenuAdminSeeder extends Seeder
                 'is_active' => 1,
                 'menu_order' => 7,
                 'menu_target' => 'service',
-                'icon' => 'fa fa-concierge-bell',
+                'icon' => 'fa fa-tooth',
             ],
             [
                 'menu_name' => 'Danh mục dịch vụ',
