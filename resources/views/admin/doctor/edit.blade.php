@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="page-inner">
-    <form action="{{ route('admin/doctor/update', $doctor->userid) }}" method="POST" class="card p-4 row" enctype="multipart/form-data">
+    <form action="{{ route('admin/doctor/update', $doctor->doctor_id) }}" method="POST" class="card p-4 row" enctype="multipart/form-data">
         @csrf @method('PUT')
         <h4 class="card-title">Sửa thông tin bác sĩ</h4>
 

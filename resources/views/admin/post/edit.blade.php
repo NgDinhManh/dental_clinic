@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-inner">
-        <form action="{{ route('admin/post/update', $post->postid) }}" method="POST" enctype="multipart/form-data"
+        <form action="{{ route('admin/post/update', $post->post_id) }}" method="POST" enctype="multipart/form-data"
             class="card">
             @csrf @method('put')
             <div class="card-header">

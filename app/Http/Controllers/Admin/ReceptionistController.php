@@ -20,8 +20,7 @@ class ReceptionistController extends Controller
     public function index()
     {
         $receptionists = Receptionist::all();
-        $users = User::all();
-        return view('admin.receptionist.index', ['receptionists' => $receptionists, 'users' => $users]);
+        return view('admin.receptionist.index', ['receptionists' => $receptionists]);
     }
 
     /**
@@ -29,7 +28,7 @@ class ReceptionistController extends Controller
      */
     public function create()
     {
-        $users = User::where('roleid', 3)->whereDoesntHave('receptionist')->get();
+        $users = User::where('role_id', 3)->whereDoesntHave('receptionist')->get();
         return view('admin.receptionist.create', ['users' => $users]);
     }
 

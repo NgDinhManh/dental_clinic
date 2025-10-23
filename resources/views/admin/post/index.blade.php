@@ -30,23 +30,23 @@
                                 <tbody>
                                     @foreach ($posts as $post)
                                         <tr>
-                                            <td>{{ $post->postid }}</td>
-                                            <td> <a href="{{ route('admin/post/show', $post->postid) }}"
+                                            <td>{{ $post->post_id }}</td>
+                                            <td> <a href="{{ route('admin/post/show', $post->post_id) }}"
                                                     class="text-primary">{{ $post->title }}</a></td>
                                             <td>{{ $post->abstract }}</td>
                                             <td>{{ $post->author }}</td>
                                             <td>
-                                                <form action="{{ route('admin/post/destroy', $post->postid) }}"
+                                                <form action="{{ route('admin/post/destroy', $post->post_id) }}"
                                                     method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $post->postid }}">
+                                                    id="delete-form-{{ $post->post_id }}">
                                                     @csrf @method('delete')
                                                     <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/post/edit', $post->postid) }}">
+                                                        href="{{ route('admin/post/edit', $post->post_id) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-link btn-danger delete-button"
                                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $post->postid }}">
+                                                        data-form-id="delete-form-{{ $post->post_id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>

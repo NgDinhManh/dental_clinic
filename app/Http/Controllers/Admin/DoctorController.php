@@ -21,9 +21,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = User::where('role_id', 2)->get();
-        $users = User::all();
-        return view('admin.doctor.index', compact('doctors', 'users'));
+        $doctors = Doctor::all();
+        return view('admin.doctor.index', compact('doctors'));
     }
 
     /**
@@ -40,9 +39,14 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'userid' => 'required',
-        // ]);
+        $request->validate([
+            'doctor_id' => 'required',
+            'specialization' => 'required',
+            'experience_years' => 'required|integer',
+            'education' => 'required',
+            'certification' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'license' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
 
         $doctor = new Doctor();
 

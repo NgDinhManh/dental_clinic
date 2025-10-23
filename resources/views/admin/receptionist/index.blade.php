@@ -31,9 +31,8 @@
                                     @foreach ($receptionists as $receptionist)
                                         <tr>
                                             <td>{{ $receptionist->receptionist_id }}</td>
-                                            @php $fullname = $users->where('receptionist_id', $receptionist->receptionist_id)->first()->fullname; @endphp
                                             <td> <a href="{{ route('admin/receptionist/show', $receptionist->receptionist_id) }}"
-                                                    class="text-primary">{{ $fullname }}</a></td>
+                                                    class="text-primary">{{ $receptionist->user->fullname }}</a></td>
                                             <td>{{ $receptionist->start_date }}</td>
                                             <td>{{ $receptionist->shift }}</td>
                                             <td>

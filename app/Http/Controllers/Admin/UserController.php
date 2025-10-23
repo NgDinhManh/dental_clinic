@@ -58,7 +58,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->address = $request->address;
         $user->is_active = $request->is_active;
-        $user->roleid = $request->roleid;
+        $user->role_id = $request->role_id;
         $user->save();
         return redirect()->route('admin/user')->with('success', 'Thêm người dùng thành công');
     }
@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $rolename = Role::where('roleid', $user->roleid)->first()->rolename;
+        $rolename = Role::where('role_id', $user->role_id)->first()->rolename;
         return view('admin.user.show', ['user' => $user, 'rolename' => $rolename]);
     }
 

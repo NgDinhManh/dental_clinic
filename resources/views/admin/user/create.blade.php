@@ -68,9 +68,9 @@
 
             <div class="form-group">
                 <label class="fs-5">Vai trò</label>
-                <select class="form-select form-control-lg" name="roleid">
+                <select class="form-select form-control-lg" name="role_id">
                     @foreach ($roles as $role)
-                        <option value="{{ $role->roleid }}">{{ $role->rolename }}</option>
+                        <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
                     @endforeach
                 </select>
             </div>

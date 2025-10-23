@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-inner">
-        <form action="{{ route('admin/user/update', $user->userid) }}" method="post" class="card p-4 row" enctype="multipart/form-data">
+        <form action="{{ route('admin/user/update', $user->user_id) }}" method="post" class="card p-4 row" enctype="multipart/form-data">
             @csrf @method('put')
             <h4 class="card-title">Sửa người dùng</h4>
 
@@ -63,10 +63,10 @@
 
             <div class="form-group">
                 <label class="fs-5">Vai trò</label>
-                <select class="form-select form-control-lg" name="roleid">
+                <select class="form-select form-control-lg" name="role_id">
                     @foreach ($roles as $role)
-                        <option value="{{ $role->roleid }}" {{ $user->roleid == $role->roleid ? 'selected' : '' }}>
-                            {{ $role->rolename }}</option>
+                        <option value="{{ $role->role_id }}" {{ $user->role_id == $role->role_id ? 'selected' : '' }}>
+                            {{ $role->role_name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -77,7 +77,7 @@
                     <i class="fa fa-arrow-left mx-2"></i>Trở về</a>
             </div>
         </form>
-        <form action="{{ route('admin/user/reset_password', $user->userid) }}" method="post" class="card p-4 row">
+        <form action="{{ route('admin/user/reset_password', $user->user_id) }}" method="post" class="card p-4 row">
             @csrf
             <div class="d-flex justify-content-center">
                 <h4 class="d-flex align-items-center m-0">Cài lại mật khẩu mặc định: 123456</h4>
