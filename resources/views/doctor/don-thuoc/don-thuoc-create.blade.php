@@ -20,7 +20,7 @@
                     </div>
                     <div>
                         <h4 class="mb-0">{{ $patient->fullname }}</h4>
-                        <p class="text-muted mb-0">ID: BN-{{ $patient->userid }}</p>
+                        <p class="text-muted mb-0">ID: BN-{{ $patient->patient_id }}</p>
                         <p class="text-muted">
                             {{ \Carbon\Carbon::parse($patient->birthday)->age . ' tuổi | ' }}
                             @if ($patient->gender == '0')
@@ -125,7 +125,7 @@
                     </button>
 
                     <input type="hidden" name="record_id" value="{{ $medical_record->record_id }}">
-                    <input type="hidden" name="doctor_id" value="{{ Auth::user()->userid }}">
+                    <input type="hidden" name="doctor_id" value="{{ Auth::user()->user_id }}">
                     <input type="text" name="notes" class="form-control mt-3" placeholder="Ghi chú thêm (nếu có)">
                 </div>
             </div>

@@ -34,7 +34,7 @@
                             </div>
                             <div>
                                 <h4 class="mb-0">{{ $patient->fullname }}</h4>
-                                <p class="text-muted mb-0">ID: BN-{{ $patient->userid }}</p>
+                                <p class="text-muted mb-0">ID: BN-{{ $patient->patient_id }}</p>
                                 <p class="text-muted">
                                     {{ \Carbon\Carbon::parse($patient->birthday)->age . ' tuổi | ' }}
                                     @if ($patient->gender == '0')
@@ -98,8 +98,8 @@
                 <!-- Cột nhập thông tin khám nha khoa -->
                 <div class="col-md-8 medical-record">
 
-                    <input type="text" name="patient_id" value="{{ $patient->userid }}" hidden>
-                    <input type="text" name="doctor_id" value="{{ Auth::user()->userid }}" hidden>
+                    <input type="text" name="patient_id" value="{{ $patient->patient_id }}" hidden>
+                    <input type="text" name="doctor_id" value="{{ Auth::user()->user_id }}" hidden>
                     <input type="text" name="appointment_id" value="{{ $appointment->appointment_id }}" hidden>
 
                     <!-- Triệu chứng -->

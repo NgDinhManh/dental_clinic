@@ -27,12 +27,10 @@
                                 <tbody>
                                     @foreach ($patients as $patient)
                                         <tr>
-                                            <td>{{ $patient->userid }}</td>
-                                            @php $user = Auth::user()->where('userid', $patient->userid)->first(); @endphp
-                                            <td> <a href="#"
-                                                    class="text-primary">{{ $user->fullname }}</a></td>
-                                            <td>{{ $user->birthday }}</td>
-                                            <td>{{ $user->phone }}</td>
+                                            <td>{{ $patient->patient_id }}</td>
+                                            <td> <a href="#" class="text-primary">{{ $patient->user->fullname }}</a></td>
+                                            <td>{{ $patient->user->birthday }}</td>
+                                            <td>{{ $patient->user->phone }}</td>
                                             <td>{{ $patient->bhyt }}</td>
                                             <td>
                                                 <div class="btn-group">
@@ -42,12 +40,12 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <li>
-                                                            <a class="dropdown-item text-info" href="{{ route('doctor/benh-nhan/benh-nhan/show', $patient->userid) }}">
+                                                            <a class="dropdown-item text-info" href="{{ route('doctor/benh-nhan/benh-nhan/show', $patient->patient_id) }}">
                                                                 Thông tin
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item text-primary" href="{{ route('doctor/benh-nhan/benh-nhan-benh-an', $patient->userid) }}">
+                                                            <a class="dropdown-item text-primary" href="{{ route('doctor/benh-nhan/benh-nhan-benh-an', $patient->patient_id) }}">
                                                                 Bệnh án
                                                             </a>
                                                         </li>

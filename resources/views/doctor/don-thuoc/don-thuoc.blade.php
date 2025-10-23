@@ -28,7 +28,7 @@
                                         <tr>
                                             <td>{{ $prescription->prescription_id }}</td>
                                             @php $medical_record = $medical_records->where('record_id', $prescription->record_id)->first(); @endphp
-                                            <td> {{ $patients->where('userid', $medical_record->patient_id)->first()->fullname }}</td>
+                                            <td> {{ $patients->where('patient_id', $medical_record->patient_id)->first()->fullname }}</td>
                                             <td>{{ $medical_record->diagnosis }}</td>
                                             <td>{{ \Carbon\Carbon::parse($prescription->created_at)->format('d/m/Y') }}</td>
                                             <td>

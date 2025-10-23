@@ -29,7 +29,7 @@
                                         <tr>
                                             <td>{{ $appointment->appointment_id }}</td>
                                             <td> <a href="#"
-                                                    class="text-primary">{{ $patients->where('userid', $appointment->patient_id)->first()->fullname }}</a>
+                                                    class="text-primary">{{ $patients->where('patient_id', $appointment->patient_id)->first()->fullname }}</a>
                                             </td>
                                             <td>{{ $appointment->appointment_date . ' | ' . $appointment->appointment_time }}
                                             </td>

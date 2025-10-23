@@ -35,7 +35,7 @@
                             </div>
                             <div>
                                 <h4 class="mb-0">{{ $patient->fullname }}</h4>
-                                <p class="text-muted mb-0">ID: BN-{{ $patient->userid }}</p>
+                                <p class="text-muted mb-0">ID: BN-{{ $patient->patient_id }}</p>
                                 <p class="text-muted">
                                     {{ \Carbon\Carbon::parse($patient->birthday)->age . ' tuổi | ' }}
                                     @if ($patient->gender == '0')
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Chọn dịch vụ -->
                     <div class="card mb-4 service-selection">
                         <div class="card-header bg-success text-white">

@@ -29,7 +29,7 @@
                                     @foreach ($medical_records as $record)
                                         <tr>
                                             <td>{{ $record->record_id }}</td>
-                                            <td>{{ $patients->where('userid', $record->patient_id)->first()->fullname }}</td>
+                                            <td>{{ $patients->where('patient_id', $record->patient_id)->first()->fullname }}</td>
                                             <td>{{ $record->created_at->format('d/m/Y') }}</td>
                                             <td>{{ $record->diagnosis }}</td>
                                             <td>

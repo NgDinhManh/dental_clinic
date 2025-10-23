@@ -19,15 +19,14 @@ class BenhNhanController extends Controller
             ->select('patients.*')
             ->distinct('patients.patient_id') // Lấy danh sách bệnh nhân đã khám
             ->get();
-        $medical_records = Medical_record::select('record_id', 'patient_id')->get();
-        return view('doctor.benh-nhan.benh-nhan', compact('patients', 'medical_records'));
+        return view('doctor.benh-nhan.benh-nhan', compact('patients'));
     }
 
     public function benh_nhan()
     {
         $patients = Patient::all(); // Lấy danh sách bệnh nhân
         $medical_records = Medical_record::select('record_id', 'patient_id')->get();
-        return view('doctor.benh-nhan.benh-nhan', compact('patients', 'medical_records'));
+        return view('doctor.benh-nhan.benh-nhan', compact('patients'));
     }
 
     public function benh_nhan_benh_an($patient_id)

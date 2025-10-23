@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            @php $user = Auth::user()->where('userid', $patient->userid)->first(); @endphp
+                            @php $user = Auth::user()->where('user_id', $patient->patient_id)->first(); @endphp
                             <h4 class="card-title">Bệnh án của bệnh nhân: {{ $user->fullname }}</h3>
                         </div>
                     </div>
