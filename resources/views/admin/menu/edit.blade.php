@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-inner">
-        <form action="{{ route('admin/menu/update', $menu->menuid) }}" method="post" class="card">
+        <form action="{{ route('admin/menu/update', $menu->menu_id) }}" method="post" class="card">
             @csrf @method('put')
             <div class="card-header">
                 <h4 class="card-title">Sửa Menu</h4>
@@ -11,7 +11,7 @@
             <div class="row card-body">
                 <div class="form-group col-md-6">
                     <label class="fs-5">Tên Menu</label>
-                    <input type="text" class="form-control form-control-lg" name="menuname" value="{{$menu->menuname}}">
+                    <input type="text" class="form-control form-control-lg" name="menu_name" value="{{$menu->menu_name}}">
                 </div>
 
                 <div class="form-group col-md-6">
@@ -25,11 +25,11 @@
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Menu cha</label>
-                    <select class="form-select form-control-lg" name="parentid">
-                        <option value="0" {{ ($menu->parentid == 0) ? 'selected' : '' }}>---</option>
+                    <select class="form-select form-control-lg" name="parent_id">
+                        <option value="0" {{ ($menu->parent_id == 0) ? 'selected' : '' }}>---</option>
                         @foreach ($menuparents as $menuparent)
-                            <option value="{{ $menuparent->menuid }}" {{ ($menu->parentid == $menuparent->menuid) ? 'selected' : '' }}>
-                                {{ $menuparent->menuname}}
+                            <option value="{{ $menuparent->menu_id }}" {{ ($menu->parent_id == $menuparent->menu_id) ? 'selected' : '' }}>
+                                {{ $menuparent->menu_name}}
                             </option>
                         @endforeach
                     </select>
@@ -37,12 +37,12 @@
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Route Name</label>
-                    <input type="text" class="form-control form-control-lg" name="routename" value="{{$menu->routename}}">
+                    <input type="text" class="form-control form-control-lg" name="route_name" value="{{$menu->route_name}}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Thứ tự</label>
-                    <input type="text" class="form-control form-control-lg" name="menuorder" value="{{$menu->menuorder}}">
+                    <input type="text" class="form-control form-control-lg" name="menu_order" value="{{$menu->menu_order}}">
                 </div>
 
                 <div class="form-group col-md-6">

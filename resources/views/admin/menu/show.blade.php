@@ -30,13 +30,13 @@
                 <div class="form-group col-md-6">
                     <label class="fs-5">Route Name</label>
                     <input type="text" class="form-control form-control-lg" name="route_name"
-                        value="{{ $menu->routename }}">
+                        value="{{ $menu->route_name }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Thứ tự</label>
                     <input type="text" class="form-control form-control-lg" name="menu_order"
-                        value="{{ $menu->menuorder }}">
+                        value="{{ $menu->menu_order }}">
                 </div>
 
                 <div class="form-check col-md-6">

@@ -12,7 +12,7 @@
             <div class="row card-body">
                 <div class="form-group col-md-6">
                     <label class="fs-5">Tên Menu</label>
-                    <input type="text" class="form-control form-control-lg" name="menuname" required>
+                    <input type="text" class="form-control form-control-lg" name="menu_name">
                 </div>
 
                 <div class="form-group col-md-6">
@@ -29,19 +29,19 @@
                     <select class="form-select form-control-lg" name="parentid">
                         <option value="0">---</option>
                         @foreach ($menuparents as $menuparent)
-                            <option value="{{ $menuparent->menuid }}">{{ $menuparent->menuname }}</option>
+                            <option value="{{ $menuparent->menu_id }}">{{ $menuparent->menu_name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Route Name</label>
-                    <input type="text" class="form-control form-control-lg" name="routename" required>
+                    <input type="text" class="form-control form-control-lg" name="route_name">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="fs-5">Thứ tự</label>
-                    <input type="text" class="form-control form-control-lg" name="menuorder" required>
+                    <input type="text" class="form-control form-control-lg" name="menu_order">
                 </div>
 
                 <div class="form-group col-md-6">
