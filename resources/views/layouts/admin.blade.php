@@ -73,7 +73,8 @@
                                 <p>Bảng điều khiển</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse {{ request()->is('admin/statistic' . '*') ? 'show' : '' }}" id="dashboard">
+                            <div class="collapse {{ request()->is('admin/statistic' . '*') ? 'show' : '' }}"
+                                id="dashboard">
                                 <ul class="nav nav-collapse">
                                     <li class="{{ request()->is('admin/statistic') ? 'active' : '' }}">
                                         <a href="{{ route('admin/index') }}">
@@ -111,20 +112,21 @@
                                 </li>
                             @else
                                 <li
-                                    class="nav-item submenu {{ request()->is( $menu->route_name. '*') ? 'active' : '' }}">
+                                    class="nav-item submenu {{ request()->is($menu->route_name . '*') ? 'active' : '' }}">
                                     <a data-bs-toggle="collapse" href="#{{ $menu->menu_target }}">
                                         <i class="{{ $menu->icon }}"></i>
                                         <p>{{ $menu->menu_name }}</p>
                                         <span class="caret"></span>
                                     </a>
-                                    <div class="collapse {{ request()->is( $menu->route_name. '*') ? 'show' : '' }}" id="{{ $menu->menu_target }}">
+                                    <div class="collapse {{ request()->is($menu->route_name . '*') ? 'show' : '' }}"
+                                        id="{{ $menu->menu_target }}">
                                         <ul class="nav nav-collapse">
                                             @foreach ($submenus as $submenu)
-                                            <li class="{{ request()->is($submenu->route_name) ? 'active' : '' }}">
-                                                <a href="{{ route($submenu->route_name) }}">
-                                                    <span class="sub-item">{{ $submenu->menu_name }}</span>
-                                                </a>
-                                            </li>
+                                                <li class="{{ request()->is($submenu->route_name) ? 'active' : '' }}">
+                                                    <a href="{{ route($submenu->route_name) }}">
+                                                        <span class="sub-item">{{ $submenu->menu_name }}</span>
+                                                    </a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -250,6 +252,46 @@
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('admin_assets/js/kaiadmin.min.js') }}"></script>
+
+    <!-- Modal Xác Nhận Xóa -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa mục này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let deleteFormId = '';
+
+            // Lắng nghe sự kiện khi click vào nút xóa
+            document.querySelectorAll('.delete-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    deleteFormId = this.getAttribute('data-form-id');
+                });
+            });
+
+            // Khi nhấn nút "Xóa" trong modal
+            document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+                if (deleteFormId) {
+                    document.getElementById(deleteFormId).submit();
+                }
+            });
+        });
+    </script>
 
     @livewireScripts
 

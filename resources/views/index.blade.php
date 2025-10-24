@@ -202,8 +202,9 @@
 
             <div class="row pt-3 mb-3 p-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="col-sm-12 col-md-6 col-lg-6">
+                    @if($featuredPostEvent)
                     <article class="col-md-12 col-sm-12 col-lg-12 transition-3d-hover col-sm-12">
-                        <a class="" href="{{ route('home/post-detail', $featuredPostEvent->post_id) }}"
+                        <a class="" href="{{ route('home/post-detail', $featuredPostEvent) }}"
                             title="{{ $featuredPostEvent->title }}">
                             <div class="col-sm-12 col-md-12 col-lg-12 p-0">
                                 <img class="rounded-3 img-fluid lazy-load" width="2254" height="1428"
@@ -223,13 +224,14 @@
                             </div>
                         </a>
                     </article>
+                    @endif
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-6">
                     @foreach ($otherPostEvents as $otherPostEvent)
                         <article class="mb-2 transition-3d-hover col-12">
                             <a class="row p-0" title="Nha Khoa Kim tuyển dụng bác sĩ nha khoa định hướng Chỉnh nha"
-                                href="{{ route('home/post-detail', $otherPostEvent->post_id) }}">
+                                href="{{ route('home/post-detail', $otherPostEvent) }}">
                                 <div class="col-5 col-sm-5 col-md-4 col-lg-4 px-1">
                                     <img class="rounded-3 img-fluid lazy-load" width="555" height="312"
                                         src="{{ asset('storage/images/' . $otherPostEvent->images) }}" alt="">
@@ -264,7 +266,7 @@
                     <article class="col-md-4 p-2 col-sm-4 col-6">
                         <div class="card shadow mb-1 br-0 transition-3d-hover">
                             <a class="transition-3d-hover" title="{{ $service->service_name }}"
-                                href="{{ route('home/post-detail', $service->post_id) }}">
+                                href="{{ route('home/post-detail', $service->post) }}">
                                 <div class="justify-content-center d-flex">
                                     <img class="img-fluid" width="232" height="150"
                                         src="{{ asset('storage/images/services/' . $service->image) }}"
@@ -292,7 +294,7 @@
                     <article class="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                         <div class="card border-0">
                             <a title="{{ $post_knowlegde->title }}"
-                                href="{{ route('home/post-detail', $post_knowlegde->post_id) }}">
+                                href="{{ route('home/post-detail', $post_knowlegde) }}">
                                 <img class="card-img img-fluid lazy-load" width="350" height="197"
                                     style="max-height:360px"
                                     src="{{ asset('storage/images/' . $post_knowlegde->images) }}"
@@ -442,9 +444,7 @@
         </div><!-- End Section Title -->
 
         <div class="container">
-
             <div class="row gy-4">
-
                 @foreach ($doctors as $doctor)
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="team-member d-flex align-items-start">
@@ -471,27 +471,20 @@
                         </div>
                     </div><!-- End Team Member -->
                 @endforeach
-
             </div>
-
         </div>
-
     </section><!-- /Doctors Section -->
 
     <!-- Faq Section -->
     <section id="faq" class="faq section light-background">
-
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Câu hỏi thường gặp</h2>
         </div><!-- End Section Title -->
 
         <div class="container">
-
             <div class="row justify-content-center">
-
                 <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
-
                     <div class="faq-container">
                         @foreach ($faqs as $faq)
                             <!-- Faq item-->
@@ -504,13 +497,9 @@
                             </div><!-- End Faq item-->
                         @endforeach
                     </div>
-
                 </div><!-- End Faq Column-->
-
             </div>
-
         </div>
-
     </section><!-- /Faq Section -->
 
     <!-- Testimonials Section -->
@@ -673,16 +662,11 @@
                                     </p>
                                 </div>
                             </div><!-- End testimonial item -->
-
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section><!-- /Testimonials Section --> --}}
 @endsection

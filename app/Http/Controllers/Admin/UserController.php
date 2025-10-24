@@ -37,14 +37,19 @@ class UserController extends Controller
         $user = new User();
 
         $request->validate([
-            'phone' => 'required',
             'name' => 'required',
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'required',
         ]);
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $filename = 'avatar' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/avatar'), $filename);
 
             $user->avatar = $filename; // Lưu đường dẫn ảnh vào database
         }
@@ -94,14 +99,14 @@ class UserController extends Controller
         ]);
 
         if ($request->hasFile('avatar')) {
-            $imagePath = public_path('storage/images/' . $user->avatar);
+            $imagePath = public_path('storage/images/avatar/' . $user->avatar);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
 
             $file = $request->file('avatar');
             $filename = 'avatar' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/avatar'), $filename);
 
             $data['avatar'] = $filename; // Lưu đường dẫn ảnh vào database
         }
@@ -123,7 +128,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $imagePath = public_path('storage/images/' . $user->avatar);
+        $imagePath = public_path('storage/images/avatar' . $user->avatar);
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }

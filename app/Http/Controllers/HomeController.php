@@ -23,7 +23,7 @@ class HomeController extends Controller
 
         // Chia ra:
         $featuredPostEvent = $post_events->first(); // Bài viết đầu tiên (hiển thị to)
-        $otherPostEvents = $post_events->slice(1);   // 4 bài còn lại (nhỏ hơn)
+        $otherPostEvents = $post_events->slice(1); // 4 bài còn lại (nhỏ hơn)
         $post_knowlegdes = Post::where('is_active', 1)->where('topic', 'Kiến thức răng miệng')->take(6)->orderBy('created_at', 'desc')->get();
         $services = Service::where('status', 'Có sẵn')->where('post_id', '!=', null)->take(6)->orderBy('service_id', 'asc')->get();
         $doctors = DB::table('users')
@@ -47,16 +47,14 @@ class HomeController extends Controller
         return view('post', compact('posts'));
     }
 
-    public function post_detail($id)
+    public function post_detail(Post $post)
     {
-        $post = Post::find($id);
-
         if (!$post) {
             return redirect()->route('home/post')->with('error', 'Không tìm thấy bài viết');
         }
 
         // Lấy các bài viết khác (ngoại trừ bài viết đang xem)
-        $relatedPosts = Post::where('post_id', '!=', $id)->where('topic', $post->topic)->latest()->take(10)->get();
+        $relatedPosts = Post::where('post_id', '!=', $post->post_id)->where('topic', $post->topic)->latest()->take(10)->get();
 
         return view('post_detail', compact('post', 'relatedPosts'));
     }

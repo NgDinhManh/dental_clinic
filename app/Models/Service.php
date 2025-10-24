@@ -23,12 +23,12 @@ class Service extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category_service::class, 'category_id');
+        return $this->belongsTo(Category_service::class, 'category_id', 'category_id');
     }
 
     public function post()
     {
-        return $this->belongsTo(Post::class, 'post_id');
+        return $this->belongsTo(Post::class, 'post_id', 'post_id');
     }
 
     public function getImageUrlAttribute()

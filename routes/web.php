@@ -37,7 +37,7 @@ Route::post('/logout', [AuthContronller::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 Route::get('/home/post', [HomeController::class, 'post'])->name('home/post');
-Route::get('/home/post-detail/{id}', [HomeController::class, 'post_detail'])->name('home/post-detail');
+Route::get('/home/post-detail/{post}', [HomeController::class, 'post_detail'])->name('home/post-detail');
 Route::get('/home/post-event', [HomeController::class, 'post_event'])->name('home/post-event');
 Route::get('/home/post-knowledge', [HomeController::class, 'post_knowledge'])->name('home/post-knowledge');
 Route::get('/home/post-service', [HomeController::class, 'post_service'])->name('home/post-service');

@@ -55,9 +55,14 @@
                                                         </li>
                                                         <li>
                                                         <form action="{{ route('admin/category-service/destroy', $category_service->category_id) }}"
-                                                            method="POST">
+                                                            class="delete-form" method="POST"
+                                                            id="delete-form-{{ $category_service->category_id }}">
                                                             @csrf @method('delete')
-                                                            <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục dịch vụ này không?')">
+                                                            <button type="button"
+                                                                class="dropdown-item text-danger delete-button"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#confirmDeleteModal"
+                                                                data-form-id="delete-form-{{ $category_service->category_id }}">
                                                                 Xóa
                                                             </button>
                                                         </form>

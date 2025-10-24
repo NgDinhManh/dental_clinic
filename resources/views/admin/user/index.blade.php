@@ -22,8 +22,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Tên người dùng</th>
-                                        <th>Email</th>
+                                        <th>Số điện thoại</th>
                                         <th>Vai trò</th>
+                                        <th>Trạng thái</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
@@ -33,23 +34,48 @@
                                             <td>{{ $user->user_id }}</td>
                                             <td> <a href="{{ route('admin/user/show', $user->user_id) }}"
                                                     class="text-primary">{{ $user->name }}</a></td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->phone }}</td>
                                             <td>{{ $user->role->description }}</td>
                                             <td>
-                                                <form action="{{ route('admin/user/destroy', $user->user_id) }}"
-                                                    method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $user->user_id }}">
-                                                    @csrf @method('delete')
-                                                    <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/user/edit', $user->user_id) }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-link btn-danger delete-button"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $user->user_id }}">
-                                                        <i class="fa fa-trash"></i>
+                                                @if ($user->is_active == 1)
+                                                    <span class="badge bg-success">Hoạt động</span>
+                                                @else
+                                                    <span class="badge bg-danger">Khóa</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-ellipsis"></i>
                                                     </button>
-                                                </form>
+
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="{{ route('admin/user/show', $user->user_id) }}"
+                                                                class="dropdown-item text-info">Xem</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('admin/user/edit', $user->user_id) }}"
+                                                                class="dropdown-item text-primary">Chỉnh sửa</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('admin/user/destroy', $user->user_id) }}"
+                                                                class="d-flex align-items-center delete-form" method="POST"
+                                                                id="delete-form-{{ $user->user_id }}">
+                                                                @csrf @method('delete')
+                                                                <button type="button"
+                                                                    class="dropdown-item text-danger delete-button"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#confirmDeleteModal"
+                                                                    data-form-id="delete-form-{{ $user->user_id }}">
+                                                                    Xóa
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -57,48 +83,6 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- Modal Xác Nhận Xóa -->
-                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Bạn có chắc chắn muốn xóa mục này không?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Xóa</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            let deleteFormId = '';
-
-                            // Lắng nghe sự kiện khi click vào nút xóa
-                            document.querySelectorAll('.delete-button').forEach(button => {
-                                button.addEventListener('click', function() {
-                                    deleteFormId = this.getAttribute('data-form-id');
-                                });
-                            });
-
-                            // Khi nhấn nút "Xóa" trong modal
-                            document.getElementById('confirmDeleteButton').addEventListener('click', function() {
-                                if (deleteFormId) {
-                                    document.getElementById(deleteFormId).submit();
-                                }
-                            });
-                        });
-                    </script>
-
                 </div>
             </div>
         </div>
