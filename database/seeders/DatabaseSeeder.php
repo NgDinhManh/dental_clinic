@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             MenuAdminSeeder::class,
             MenuDoctorSeeder::class,
             MenuReceptionistSeeder::class,
+            CategoryServiceSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }
