@@ -6,8 +6,8 @@
             <div class="card-header">
                 <h4 class="card-title">Thông tin người dùng</h4>
             </div>
-            <div class="card-body row">
 
+            <div class="card-body row">
                 <div class="col-4">
                     <div class="form-group text-center mt-4">
                         <label class="avatar-wrapper" for="avatar-input">
@@ -76,12 +76,11 @@
                             value="{{ $user->is_active == 1 ? 'Hoạt động' : 'Khóa' }}">
                     </div>
                 </div>
+            </div>
 
-                <div class="card-action mt-4 p-3 text-center">
-                    <a class="btn btn-warning mx-2" href="{{ route('admin/user') }}">
-                    <i class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                </div>
-
+            <div class="card-action mt-4 p-3 text-center">
+                <a class="btn btn-warning mx-2" href="{{ route('admin/user') }}">
+                <i class="fa fa-arrow-left mx-2"></i>Trở về</a>
             </div>
         </div>
 

@@ -4,8 +4,11 @@
     <div class="page-inner">
         <form action="{{ route('admin/user/store') }}" method="post" class="card p-4" enctype="multipart/form-data">
             @csrf
-            <h4 class="card-title">Thêm người dùng</h4>
-            <div class="row">
+            <div class="card-header">
+                <h4 class="card-title">Thêm người dùng</h4>
+            </div>
+
+            <div class="card-body row">
                 <div class="col-4">
                     <div class="form-group text-center mt-4">
                         <label class="avatar-wrapper" for="avatar-input">
@@ -82,9 +85,8 @@
             </div>
 
             <div class="card-action mt-4 p-3 text-center">
-                <button type="submit" class="btn btn-success"><i class="fa fa-save mx-2"></i>Lưu</button>
-                <a class="btn btn-warning mx-2" href="{{ route('admin/user') }}"><i class="fa fa-arrow-left mx-2"></i>
-                    Trở về</a>
+                <a class="btn btn-warning mx-2" href="{{ route('admin/user') }}"><i class="fa fa-arrow-left pe-2"></i>Trở về</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa-save pe-2"></i>Lưu</button>
             </div>
         </form>
     </div>

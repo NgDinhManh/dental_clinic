@@ -5,8 +5,12 @@
         <form action="{{ route('admin/user/update', $user->user_id) }}" method="post" class="card p-4 row"
             enctype="multipart/form-data">
             @csrf @method('put')
-            <h4 class="card-title">Sửa người dùng</h4>
-            <div class="row">
+
+            <div class="card-header">
+                <h4 class="card-title">Sửa người dùng</h4>
+            </div>
+
+            <div class="card-body row">
                 <div class="col-4">
                     <div class="form-group text-center mt-4">
                         <label class="avatar-wrapper" for="avatar-input">
@@ -86,9 +90,9 @@
             </div>
 
             <div class="card-action p-3 text-center mt-4">
-                <button type="submit" class="btn btn-success mx-2"><i class="fa fa-save mx-2"></i>Lưu</button>
                 <a class="btn btn-warning mx-2" href="{{ route('admin/user') }}">
-                    <i class="fa fa-arrow-left mx-2"></i>Trở về</a>
+                    <i class="fa fa-arrow-left pe-2"></i>Trở về</a>
+                <button type="submit" class="btn btn-success mx-2"><i class="fa fa-save pe-2"></i>Lưu</button>
             </div>
         </form>
         <form action="{{ route('admin/user/reset_password', $user->user_id) }}" method="post" class="card p-4 row">

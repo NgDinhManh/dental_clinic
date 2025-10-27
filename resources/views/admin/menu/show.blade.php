@@ -43,10 +43,10 @@
                     <label class="fs-5">Trạng thái</label>
                     <input type="text" class="form-control form-control-lg" value="{{$menu->is_active == 1 ? 'Hiển thị' : 'Ẩn'}}">
                 </div>
+            </div>
 
-                <div class="col-12">
-                    <a class="btn btn-warning fs-5 w-auto" href="{{route('admin/menu')}}"><i class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                </div>
+            <div class="card-action mt-4 p-3 text-center">
+                <a class="btn btn-warning w-auto" href="{{route('admin/menu')}}"><i class="fa fa-arrow-left pe-2"></i>Trở về</a>
             </div>
         </div>
     </div>
