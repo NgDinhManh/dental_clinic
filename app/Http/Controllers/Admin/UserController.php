@@ -40,9 +40,9 @@ class UserController extends Controller
             'name' => 'required',
             'fullname' => 'required',
             'gender' => 'required',
-            'birthday' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'birthday' => 'required|date',
+            'phone' => 'required|unique:users,phone',
+            'email' => 'nullable|email|unique:users,email',
             'address' => 'required',
         ]);
 
@@ -94,8 +94,13 @@ class UserController extends Controller
         $data = $request->all();
 
         $request->validate([
-            'phone' => 'required',
             'name' => 'required',
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'phone' => 'required|unique:users,phone,' . $user->user_id . ',user_id',
+            'email' => 'nullable|email|unique:users,email,' . $user->user_id . ',user_id',
+            'address' => 'required',
         ]);
 
         if ($request->hasFile('avatar')) {

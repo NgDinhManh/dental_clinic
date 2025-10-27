@@ -21,6 +21,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Avatar</th>
                                         <th>Tên người dùng</th>
                                         <th>Số điện thoại</th>
                                         <th>Vai trò</th>
@@ -32,6 +33,12 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>{{ $user->user_id }}</td>
+                                            <td>
+                                                <div class="avatar avatar-sm">
+                                                    <img src="{{ asset('storage/images/avatar/' . $user->avatar) }}" alt="..."
+                                                        class="avatar-img rounded-circle">
+                                                </div>
+                                            </td>
                                             <td> <a href="{{ route('admin/user/show', $user->user_id) }}"
                                                     class="text-primary">{{ $user->name }}</a></td>
                                             <td>{{ $user->phone }}</td>

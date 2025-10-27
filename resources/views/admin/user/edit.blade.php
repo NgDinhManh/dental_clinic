@@ -13,7 +13,7 @@
                             <img id="avatar-preview" src="{{ asset('storage/images/avatar/' . $user->avatar) }}"
                                 class="avatar img-thumbnail shadow-sm rounded-circle" alt="Avatar">
                         </label>
-                        <input type="file" id="avatar-input" accept="image/*"><br>
+                        <input type="file" id="avatar-input" name="avatar" accept="image/*"><br>
                         <label class="fs-5">Ảnh đại diện</label>
                     </div>
                 </div>
