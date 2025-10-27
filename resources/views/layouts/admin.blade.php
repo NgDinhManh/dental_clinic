@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('admin_assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin_assets/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin_assets/css/kaiadmin.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_assets/css/main.css') }}" />
 
     {{-- Trình soạn thảo văn bản Froala --}}
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@4.0.10/css/froala_editor.pkgd.min.css' rel='stylesheet'

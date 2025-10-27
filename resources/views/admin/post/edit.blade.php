@@ -5,30 +5,31 @@
         <form action="{{ route('admin/post/update', $post->post_id) }}" method="POST" enctype="multipart/form-data"
             class="card">
             @csrf @method('put')
+
             <div class="card-header">
                 <h4>Chỉnh sửa bài viết</h4>
             </div>
 
             <div class="card-body row">
                 <div class="form-group">
-                    <label class="fs-5">Tiêu đề</label>
+                    <label class="fs-5">Tiêu đề <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-lg" name="title" value="{{ $post->title }}"
                         required>
                 </div>
 
                 <div class="form-group">
-                    <label class="fs-5">Tóm tắt</label>
+                    <label class="fs-5">Tóm tắt <span class="text-danger">*</span></label>
                     <textarea class="form-control form-control-lg" name="abstract">{{ old('abstract', $post->abstract ?? '') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="fs-5">Nội dung</label>
+                    <label class="fs-5">Nội dung <span class="text-danger">*</span></label>
                     <textarea class="form-control form-control-lg" id="contents" name="contents">{{ old('contents', $post->contents ?? '') }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="fs-5">Ảnh bìa</label><br>
-                    <img id="previewImage" src="{{ asset('storage/images/' . $post->images) }}" alt="Xem trước ảnh"
+                    <label class="fs-5">Ảnh bìa <span class="text-danger">*</span></label><br>
+                    <img id="previewImage" src="{{ asset('storage/images/post/' . $post->images) }}" alt="Xem trước ảnh"
                         class="img-thumbnail shadow-sm rounded" style="max-width: 200px;">
                     <input type="file" class="form-control form-control-lg" id="imageInput" name="images"
                         accept="image/*">
@@ -40,7 +41,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="fs-5">Chủ đề</label>
+                    <label class="fs-5">Chủ đề <span class="text-danger">*</span></label>
                     <select class="form-select form-control-lg" name="topic">
                         <option value="Dịch vụ" {{ $post->topic == 'Dịch vụ' ? 'selected' : '' }}>Dịch vụ</option>
                         <option value="Tin tức & sự kiện" {{ $post->topic == 'Tin tức & sự kiện' ? 'selected' : '' }}>Tin
@@ -51,15 +52,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="fs-5">Tác giả</label>
+                    <label class="fs-5">Tác giả <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-lg" name="author" value="{{ $post->author }}"
                         required>
                 </div>
 
                 <div class="form-group">
-                    <label class="fs-5">Thứ tự</label>
-                    <input type="text" class="form-control form-control-lg" name="postorder"
-                        value="{{ $post->postorder }}">
+                    <label class="fs-5">Thứ tự <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-lg" name="post_order"
+                        value="{{ $post->post_order }}">
                 </div>
 
                 <div class="form-group">
@@ -71,11 +72,11 @@
                     </label>
                 </div>
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success fs-5 col-2"><i class="fa fa-save mx-2"></i>Lưu</button>
-                    <a class="btn btn-warning fs-5 col-2 mx-2" href="{{ route('admin/post') }}"><i
-                            class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                </div>
+            </div>
+
+            <div class="card-action p-3 text-center">
+                <a class="btn btn-warning mx-2" href="{{ route('admin/post') }}"><i class="fa fa-arrow-left pe-2"></i>Trở về</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa-save pe-2"></i>Lưu</button>
             </div>
         </form>
     </div>

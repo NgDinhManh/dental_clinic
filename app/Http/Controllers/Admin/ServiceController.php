@@ -36,17 +36,17 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $service = $request->all();
+        $data = $request->all();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images/services'), $filename);
 
-            $service['image'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
+            $data['image'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
         }
 
-        Service::create($service);
+        Service::create($data);
         return redirect()->route('admin/service')->with('success', 'Thêm dịch vụ thành công');
     }
 
@@ -86,7 +86,7 @@ class ServiceController extends Controller
             $file = $request->file('image');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images/services'), $filename);
-            
+
             $data['image'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 

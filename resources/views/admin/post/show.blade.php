@@ -49,7 +49,7 @@
 
                 <div class="form-group">
                     <label class="fs-5">Thứ tự</label>
-                    <input type="text" class="form-control form-control-lg" value="{{ $post->postorder }}">
+                    <input type="text" class="form-control form-control-lg" value="{{ $post->post_order }}">
                 </div>
 
                 <div class="form-check">
@@ -60,10 +60,10 @@
                     </label>
                 </div>
 
-                <div class="row">
-                    <a class="btn btn-warning fs-5 col-2 mx-2" href="{{ route('admin/post') }}"><i
-                            class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                </div>
+            </div>
+
+            <div class="card-action p-3 text-center">
+                <a class="btn btn-warning mx-2" href="{{ route('admin/post') }}"><i class="fa fa-arrow-left pe-2"></i>Trở về</a>
             </div>
         </div>
     </div>

@@ -32,12 +32,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|max:250',
+            'abstract' => 'required',
+            'contents' => 'required',
+            'images' => 'required|image|max:4096',
+            'topic' => 'required',
+            'author' => 'required',
+        ]);
+
         $data = $request->all();
 
         if ($request->hasFile('images')) {
             $file = $request->file('images');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/post'), $filename);
 
             $data['images'] = $filename; // Lưu đường dẫn ảnh vào database
         }
@@ -68,17 +77,26 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate([
+            'title' => 'required|max:250',
+            'abstract' => 'required',
+            'contents' => 'required',
+            'images' => 'sometimes|image|max:4096',
+            'topic' => 'required',
+            'author' => 'required',
+        ]);
+
         $data = $request->all();
 
         if ($request->hasFile('images')) {
-            $imagePath = public_path('storage/images/' . $post->images);
+            $imagePath = public_path('storage/images/post/' . $post->images);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
 
             $file = $request->file('images');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/post'), $filename);
 
             $data['images'] = $filename; // Lưu đường dẫn ảnh vào database
         }
@@ -94,7 +112,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         // Xóa ảnh bìa bài viết
-        $imagePath = public_path('storage/images/' . $post->images);
+        $imagePath = public_path('storage/images/post/' . $post->images);
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }
@@ -119,9 +137,9 @@ class PostController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $imagename = 'image' . time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('storage/images'), $imagename);
-            $url = asset('storage/images/' . $imagename);
-            
+            $image->move(public_path('storage/images/post'), $imagename);
+            $url = asset('storage/images/post/' . $imagename);
+
             return response()->json([
                 'link' => $url, // Trả về đường dẫn ảnh để Froala hiển thị
             ]);

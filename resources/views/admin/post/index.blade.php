@@ -21,35 +21,53 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Tiêu đề</th>
-                                        <th>Tóm tắt</th>
+                                        <th style="width: 30%">Tiêu đề</th>
+                                        <th style="width: 30%">Tóm tắt</th>
                                         <th>Tác giả</th>
+                                        <th>Ngày tạo</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($posts as $post)
                                         <tr>
-                                            <td>{{ $post->post_id }}</td>
-                                            <td> <a href="{{ route('admin/post/show', $post->post_id) }}"
-                                                    class="text-primary">{{ $post->title }}</a></td>
-                                            <td>{{ $post->abstract }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td><div class="text-truncate-2">{{ $post->title }}</div></td>
+                                            <td><div class="text-truncate-2">{{ $post->abstract }}</div></td>
                                             <td>{{ $post->author }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($post->created_at)->format('d/m/Y H:i') }}</td>
                                             <td>
-                                                <form action="{{ route('admin/post/destroy', $post->post_id) }}"
-                                                    method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $post->post_id }}">
-                                                    @csrf @method('delete')
-                                                    <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/post/edit', $post->post_id) }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-link btn-danger delete-button"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $post->post_id }}">
-                                                        <i class="fa fa-trash"></i>
+                                                <div class="btn-group">
+                                                    <button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-ellipsis"></i>
                                                     </button>
-                                                </form>
+
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="{{ route('admin/post/show', $post->post_id) }}"
+                                                                class="dropdown-item text-info">Xem</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('admin/post/edit', $post->post_id) }}"
+                                                                class="dropdown-item text-primary">Chỉnh sửa</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('admin/post/destroy', $post->post_id) }}"
+                                                                class="d-flex align-items-center delete-form" method="POST"
+                                                                id="delete-form-{{ $post->post_id }}">
+                                                                @csrf @method('delete')
+                                                                <button type="button"
+                                                                    class="dropdown-item text-danger delete-button"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#confirmDeleteModal"
+                                                                    data-form-id="delete-form-{{ $post->post_id }}">
+                                                                    Xóa
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -57,48 +75,6 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- Modal Xác Nhận Xóa -->
-                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Bạn có chắc chắn muốn xóa mục này không?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Xóa</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            let deleteFormId = '';
-
-                            // Lắng nghe sự kiện khi click vào nút xóa
-                            document.querySelectorAll('.delete-button').forEach(button => {
-                                button.addEventListener('click', function() {
-                                    deleteFormId = this.getAttribute('data-form-id');
-                                });
-                            });
-
-                            // Khi nhấn nút "Xóa" trong modal
-                            document.getElementById('confirmDeleteButton').addEventListener('click', function() {
-                                if (deleteFormId) {
-                                    document.getElementById(deleteFormId).submit();
-                                }
-                            });
-                        });
-                    </script>
-
                 </div>
             </div>
         </div>

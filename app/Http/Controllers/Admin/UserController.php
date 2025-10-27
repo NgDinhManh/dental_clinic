@@ -34,8 +34,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User();
-
         $request->validate([
             'name' => 'required',
             'fullname' => 'required',
@@ -46,25 +44,18 @@ class UserController extends Controller
             'address' => 'required',
         ]);
 
+        $data = $request->all();
+        $data['password'] = bcrypt('123456');
+
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $filename = 'avatar' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images/avatar'), $filename);
 
-            $user->avatar = $filename; // Lưu đường dẫn ảnh vào database
+            $data['avatar'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
-        $user->name = $request->name;
-        $user->fullname = $request->fullname;
-        $user->gender = $request->gender;
-        $user->birthday = $request->birthday;
-        $user->phone = $request->phone;
-        $user->password = bcrypt('123456');
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->is_active = $request->is_active;
-        $user->role_id = $request->role_id;
-        $user->save();
+        User::create($data);
         return redirect()->route('admin/user')->with('success', 'Thêm người dùng thành công');
     }
 
@@ -91,8 +82,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $data = $request->all();
-
         $request->validate([
             'name' => 'required',
             'fullname' => 'required',
@@ -102,6 +91,8 @@ class UserController extends Controller
             'email' => 'nullable|email|unique:users,email,' . $user->user_id . ',user_id',
             'address' => 'required',
         ]);
+
+        $data = $request->all();
 
         if ($request->hasFile('avatar')) {
             $imagePath = public_path('storage/images/avatar/' . $user->avatar);
