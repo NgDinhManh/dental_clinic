@@ -31,7 +31,7 @@
                                 <tbody>
                                     @foreach ($menuss as $menu)
                                         <tr>
-                                            <td>{{ $menu->menu_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $menu->menu_name }}</td>
                                             <td>{{ $menu->route_name }}</td>
                                             <td>

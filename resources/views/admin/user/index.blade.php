@@ -32,7 +32,7 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td>{{ $user->user_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td>
                                                 <div class="avatar avatar-sm">
                                                     <img src="{{ asset('storage/images/avatar/' . $user->avatar) }}" alt="..."

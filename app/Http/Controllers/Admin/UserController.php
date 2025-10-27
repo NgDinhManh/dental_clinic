@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('role')->get()->sortBy('user_id');
+        $users = User::all()->sortByDesc('created_at');
         return view('admin.user.index', ['users' => $users]);
     }
 
