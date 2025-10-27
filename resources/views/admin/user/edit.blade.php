@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Giới tính</label>
+                        <label class="fs-5">Giới tính <span class="text-danger">*</span></label>
                         <select name="gender" class="form-select form-control-lg">
                             <option value="0" {{ $user->gender == 0 ? 'selected' : '' }}>Nam</option>
                             <option value="1" {{ $user->gender == 1 ? 'selected' : '' }}>Nữ</option>
@@ -35,13 +35,13 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Ngày sinh</label>
+                        <label class="fs-5">Ngày sinh <span class="text-danger">*</span></label>
                         <input type="date" class="form-control form-control-lg" name="birthday"
                             value="{{ $user->birthday }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Số điện thoại</label>
+                        <label class="fs-5">Số điện thoại <span class="text-danger">*</span></label>
                         <input type="tel" class="form-control form-control-lg" name="phone"
                             value="{{ $user->phone }}">
                     </div>
@@ -53,13 +53,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="fs-5">Địa chỉ</label>
+                        <label class="fs-5">Địa chỉ <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-lg" name="address"
                             value="{{ $user->address }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Tên người dùng</label>
+                        <label class="fs-5">Tên người dùng <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-lg" name="name"
                             value="{{ $user->name }}">
                     </div>

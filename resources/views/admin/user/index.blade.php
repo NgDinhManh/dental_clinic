@@ -39,8 +39,7 @@
                                                         class="avatar-img rounded-circle">
                                                 </div>
                                             </td>
-                                            <td> <a href="{{ route('admin/user/show', $user->user_id) }}"
-                                                    class="text-primary">{{ $user->name }}</a></td>
+                                            <td>{{ $user->name }}</td>
                                             <td>{{ $user->phone }}</td>
                                             <td>{{ $user->role->description }}</td>
                                             <td>
