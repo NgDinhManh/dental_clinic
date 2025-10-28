@@ -18,7 +18,7 @@
                             <a href="{{ route('home/post-detail', $service->post_id)}}">
                                 <div class="justify-content-center d-flex">
                                     <img class="img-fluid" width="232" height="150"
-                                        src="{{ asset('storage/images/services/' . $service->image)}}"
+                                        src="{{ asset('storage/images/service/' . $service->image)}}"
                                         alt="{{ $service->service_name}}">
                                 </div>
                                 <h4 class="text-body mb-0 text-center py-4">{{ $service->service_name}}</h4>

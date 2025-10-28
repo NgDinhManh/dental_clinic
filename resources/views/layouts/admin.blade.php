@@ -294,6 +294,9 @@
         });
     </script>
 
+    {{-- Tải hình ảnh lên --}}
+    @include('layouts.admin_image_upload')
+
     @livewireScripts
 
 

@@ -56,7 +56,7 @@
                     <h1 class="mb-4">{{ $post->title }}</h1>
 
                     @if ($post->images)
-                        <img src="{{ asset('storage/images/' . $post->images) }}" alt="Cover Image" class="post-cover">
+                        <img src="{{ asset('storage/images/post/' . $post->images) }}" alt="Cover Image" class="post-cover">
                     @endif
 
                     <div class="post-content">
@@ -73,7 +73,7 @@
                         <a href="{{ route('home/post-detail', $related->post_id) }}" class="text-decoration-none text-dark">
                             <div class="related-post">
                                 @if ($related->images)
-                                    <img src="{{ asset('storage/images/' . $related->images) }}" alt="Thumbnail">
+                                    <img src="{{ asset('storage/images/post/' . $related->images) }}" alt="Thumbnail">
                                 @endif
                                 <div>
                                     <p class="related-title">{{ $related->title }}</p>

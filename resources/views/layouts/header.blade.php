@@ -68,7 +68,7 @@
                     </style>
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('storage/images/' . Auth::user()->avatar) }}" alt="..."
+                        <img src="{{ asset('storage/images/avatar/' . Auth::user()->avatar) }}" alt="..."
                             class="avatar-img rounded-circle"> {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -81,8 +81,7 @@
                             <a class="dropdown-item" href="{{ route('receptionist/index') }}">Quản trị</a>
                         @else
                             <a class="dropdown-item" href="{{ route('patient/profile', Auth::user()->user_id) }}">Thông tin cá nhân</a>
-                            <a class="dropdown-item" href="{{ route('patient/appointment', Auth::user()->user_id) }}">Lịch
-                                khám</a>
+                            <a class="dropdown-item" href="{{ route('patient/appointment', Auth::user()->user_id) }}">Lịch khám</a>
                             <a class="dropdown-item"
                                 href="{{ route('patient/medical-record', Auth::user()->user_id) }}">Bệnh án</a>
                             <a class="dropdown-item" href="{{ route('patient/change-password', Auth::user()->user_id) }}">Đổi mật khẩu</a>

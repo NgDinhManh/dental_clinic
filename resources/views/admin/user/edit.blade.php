@@ -13,11 +13,11 @@
             <div class="card-body row">
                 <div class="col-4">
                     <div class="form-group text-center mt-4">
-                        <label class="avatar-wrapper" for="avatar-input">
-                            <img id="avatar-preview" src="{{ asset('storage/images/avatar/' . $user->avatar) }}"
-                                class="avatar img-thumbnail shadow-sm rounded-circle" alt="Avatar">
+                        <label class="image-upload-wrapper" for="image-upload-input">
+                            <img id="image-upload-preview" src="{{ asset('storage/images/avatar/' . $user->avatar) }}"
+                                class="image-upload img-thumbnail shadow-sm rounded-circle" alt="Avatar">
                         </label>
-                        <input type="file" id="avatar-input" name="avatar" accept="image/*"><br>
+                        <input type="file" id="image-upload-input" name="avatar" accept="image/*"><br>
                         <label class="fs-5">Ảnh đại diện</label>
                     </div>
                 </div>
@@ -102,65 +102,6 @@
                 <button type="submit" class="btn btn-primary mx-3"> <i class="fa-solid fa-rotate-right mx-2"></i>
                     Cài lại mật khẩu</button>
             </div>
-
         </form>
     </div>
-
-    <style>
-        .avatar-wrapper {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .avatar {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            transition: 0.3s;
-        }
-
-        .avatar:hover {
-            opacity: 0.8;
-        }
-
-        /* Ẩn input file thật */
-        #avatar-input {
-            display: none;
-        }
-
-        /* Icon máy ảnh hiển thị khi hover */
-        .avatar-wrapper::after {
-            content: "📷";
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 5px;
-            border-radius: 50%;
-            font-size: 18px;
-            display: none;
-        }
-
-        .avatar-wrapper:hover::after {
-            display: block;
-        }
-    </style>
-
-    <script>
-        const input = document.getElementById('avatar-input');
-        const preview = document.getElementById('avatar-preview');
-
-        input.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result; // đổi ảnh hiển thị
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
 @endsection

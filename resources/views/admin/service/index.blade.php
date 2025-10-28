@@ -31,7 +31,7 @@
                                 <tbody>
                                     @foreach ($services as $service)
                                         <tr>
-                                            <td>{{ $service->service_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td> {{ $service->service_name }}</td>
                                             <td>{{ $service->category->category_name ?? 'Không có danh mục' }}</td>
                                             <td>{{ $service->price }}</td>

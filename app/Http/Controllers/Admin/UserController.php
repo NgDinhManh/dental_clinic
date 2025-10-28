@@ -96,7 +96,7 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             $imagePath = public_path('storage/images/avatar/' . $user->avatar);
-            if (File::exists($imagePath)) {
+            if (File::exists($imagePath) && $user->avatar != 'avatar_default.png') {
                 File::delete($imagePath);
             }
 

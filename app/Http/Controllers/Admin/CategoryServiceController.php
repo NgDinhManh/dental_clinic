@@ -37,8 +37,6 @@ class CategoryServiceController extends Controller
         $category_service->save();
 
         return redirect()->route('admin/category-service')->with('success', 'Thêm danh mục dịch vụ thành công');
-        
-        
     }
 
     /**

@@ -36,7 +36,7 @@
                         <article>
 
                             <div class="post-img">
-                                <img src="{{ asset('storage/images/' . $post->images) }}" alt="" class="img-fluid">
+                                <img src="{{ asset('storage/images/post/' . $post->images) }}" alt="" class="img-fluid">
                             </div>
 
                             <p class="post-category">{{ $post->topic }}</p>
@@ -46,7 +46,7 @@
                             </h4>
 
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('assets/img/avatar_default.jpg') }} " alt=""
+                                <img src="{{ asset('assets/img/avatar_default.png') }} " alt=""
                                     class="img-fluid post-author-img flex-shrink-0">
                                 <div class="post-meta">
                                     <p class="post-author">{{ $post->author }}</p>

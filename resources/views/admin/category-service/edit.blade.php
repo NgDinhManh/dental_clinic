@@ -5,8 +5,8 @@
 
         <form action="{{ route('admin/category-service/update', $category_service->category_id) }}" method="POST" class="card"
             enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+            @csrf @method('PUT')
+
             <div class="card-header">
                 <h4 class="page-title">Chỉnh sửa danh mục dịch vụ</h4>
             </div>
@@ -29,11 +29,12 @@
                         </option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <a class="btn btn-warning fs-5 col-2 mx-2" href="{{ url()->previous() }}"><i
-                            class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                    <button type="submit" class="btn btn-success fs-5 col-2"><i class="fa fa-save mx-2"></i>Lưu</button>
-                </div>
+            </div>
+
+            <div class="card-action p-3 text-center">
+                <a class="btn btn-warning mx-2" href="{{ url()->previous() }}"><i
+                        class="fa fa-arrow-left pe-2"></i>Trở về</a>
+                <button type="submit" class="btn btn-success"><i class="fa fa-save pe-2"></i>Lưu</button>
             </div>
         </form>
     </div>

@@ -22,6 +22,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Tên danh mục</th>
+                                        <th>Mô tả</th>
                                         <th>Trạng thái</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
@@ -29,13 +30,14 @@
                                 <tbody>
                                     @foreach ($category_services as $category_service)
                                         <tr>
-                                            <td>{{ $category_service->category_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $category_service->category_name }}</td>
+                                            <td>{{ $category_service->description }}</td>
                                             <td>
                                                 @if($category_service->status == 'Có sẵn')
-                                                    <span class="badge badge-success fs-6 px-3">Có sẵn</span>
+                                                    <span class="badge badge-success">Có sẵn</span>
                                                 @else
-                                                    <span class="badge badge-danger fs-6 px-3">Tạm ngưng</span>
+                                                    <span class="badge badge-danger">Tạm ngưng</span>
                                                 @endif
                                             </td>
                                             <td>

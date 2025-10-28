@@ -5,18 +5,36 @@
         <form action="{{ route('admin/service/update', $service->service_id) }}" method="post" class="card p-4"
             enctype="multipart/form-data">
             @csrf @method('put')
-            <div class="row">
+
+            <div class="card-header">
                 <h4 class="card-title">Sửa dịch vụ</h4>
+            </div>
 
-                <div class="form-group">
-                    <label class="fs-5">Tên dịch vụ</label>
-                    <input type="text" class="form-control form-control-lg" name="service_name"
-                        value="{{ $service->service_name }}" required>
-                </div>
+            <div class="card-body row">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group text-center mt-4">
+                            <label class="image-upload-wrapper" for="image-upload-input">
+                                <img id="image-upload-preview" src="{{ asset('storage/images/service/' . $service->image) }}"
+                                    class="image-upload img-thumbnail shadow-sm rounded" alt="Service Image Preview">
+                            </label>
+                            <input type="file" id="image-upload-input" name="image" accept="image/*"><br>
+                            <label class="fs-5">Ảnh dịch vụ</label>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label class="fs-5">Mô tả</label>
-                    <textarea name="description" class="form-control form-control-lg" rows="5">{{ old('description', $service->description ?? '') }}</textarea>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="fs-5">Tên dịch vụ</label>
+                            <input type="text" class="form-control form-control-lg" name="service_name"
+                                value="{{ $service->service_name }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fs-5">Mô tả</label>
+                            <textarea name="description" class="form-control form-control-lg" rows="5">{{ old('description', $service->description ?? '') }}</textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group col-6">
@@ -45,17 +63,11 @@
                     <label class="fs-5">Bài viết</label>
                     <input type="text" class="form-control form-control-lg" value="{{ $service->post->title ?? 'Không có bài viết' }}">
                 </div>
+            </div>
 
-                <div class="form-group col-6">
-                    <label class="fs-5">Ảnh</label><br>
-                    <img id="previewImage" src=" {{ asset('storage/images/services/' . $service->image) }} "
-                        alt="Xem trước ảnh" class="img-thumbnail shadow-sm rounded" style="max-width: 200px;">
-                </div>
-
-                <div class="row">
-                    <a class="btn btn-warning fs-5 col-2 mx-2" href="{{ route('admin/service') }}"><i
-                            class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                </div>
+            <div class="card-action p-3 text-center">
+                <a class="btn btn-warning" href="{{ route('admin/service') }}"><i
+                        class="fa fa-arrow-left pe-2"></i>Trở về</a>
             </div>
         </form>
     </div>

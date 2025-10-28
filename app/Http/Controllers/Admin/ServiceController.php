@@ -36,12 +36,21 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'service_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'duration' => 'required|string|max:100',
+            'status' => 'required|string|in:Có sẵn,Tạm ngưng',
+            'category_id' => 'required|exists:category_services,category_id',
+            'image' => 'required|image|max:2048',
+        ]);
+
         $data = $request->all();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images/services'), $filename);
+            $file->move(public_path('storage/images/service'), $filename);
 
             $data['image'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
         }
@@ -78,14 +87,14 @@ class ServiceController extends Controller
 
         // Lưu ảnh mới nếu có
         if ($request->hasFile('image')) {
-            $imagePath = public_path('storage/images/services' . $service->image);
+            $imagePath = public_path('storage/images/service' . $service->image);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
 
             $file = $request->file('image');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images/services'), $filename);
+            $file->move(public_path('storage/images/service'), $filename);
 
             $data['image'] = $filename; // Lưu đường dẫn ảnh vào database
         }
