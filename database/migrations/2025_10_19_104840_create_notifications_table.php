@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title', 255); // Tiêu đề thông báo
             $table->text('content'); // Nội dung thông báo
             $table->boolean('is_read')->default(false); // Đã đọc hay chưa (0 = chưa, 1 = đã đọc)
+            $table->boolean('is_deleted')->default(false); // Đã đọc hay chưa (0 = chưa, 1 = đã đọc)
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 

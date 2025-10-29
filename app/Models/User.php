@@ -24,18 +24,14 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
-        'fullname',
-        'gender',
-        'birthday',
         'phone',
         'password',
         'email',
-        'address',
         'avatar',
         'is_active',
         'email_verified_at',
         'remember_token',
-        'roleid',
+        'role_id',
     ];
 
     /**
@@ -68,16 +64,16 @@ class User extends Authenticatable
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'user_id', 'patient_id');
+        return $this->belongsTo(Patient::class, 'user_id', 'user_id');
     }
 
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class, 'user_id', 'doctor_id');
+        return $this->belongsTo(Doctor::class, 'user_id', 'user_id');
     }
 
     public function receptionist()
     {
-        return $this->belongsTo(Receptionist::class, 'user_id', 'receptionist_id');
+        return $this->belongsTo(Receptionist::class, 'user_id', 'user_id');
     }
 }

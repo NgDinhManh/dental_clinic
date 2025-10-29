@@ -11,6 +11,11 @@ class Receptionist extends Model
     protected $primaryKey = 'receptionist_id'; // Khóa chính của bảng
 
     protected $fillable = [
+        'fullname',
+        'gender',
+        'birthday',
+        'address',
+        'user_id',
         'start_date',
         'shift',
         'note',
@@ -18,7 +23,7 @@ class Receptionist extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'receptionist_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function invoices()

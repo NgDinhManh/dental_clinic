@@ -11,6 +11,11 @@ class Doctor extends Model
     protected $primaryKey = 'doctor_id'; // Khóa chính của bảng
 
     protected $fillable = [
+        'fullname',
+        'gender',
+        'birthday',
+        'address',
+        'user_id',
         'specialization',
         'experience_years',
         'education',
@@ -21,7 +26,7 @@ class Doctor extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'doctor_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function appointments()

@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             // Khóa chính trùng với user_id trong bảng users
-            $table->unsignedBigInteger('doctor_id')->primary();
+            $table->id('doctor_id');
+            $table->string('fullname');
+            $table->string('gender');
+            $table->date('birthday');
+            $table->text('address');
+            $table->unsignedBigInteger('user_id')->nullable();
 
             // Các cột thông tin
             $table->string('specialization', 255); // Chuyên môn
@@ -26,7 +31,7 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             // Khóa ngoại tới bảng users
-            $table->foreign('doctor_id')->references('user_id')->on('users')
+            $table->foreign('user_id')->references('user_id')->on('users')
                   ->onDelete('restrict');
         });
     }

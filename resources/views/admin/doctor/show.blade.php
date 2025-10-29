@@ -21,7 +21,7 @@
                         <option value="2" {{ $user->gender == 2 ? 'selected' : '' }}>Khác</option>
                     </select>
                 </div>
-    
+
                 <div class="form-group col-3">
                     <label class="fs-5">Ngày sinh</label>
                     <input type="date" class="form-control form-control-lg" value="{{ $user->birthday }}">
@@ -64,6 +64,14 @@
                     <label class="fs-5">Bằng cấp chuyên môn</label><br>
                     <img id="previewCertification" src=" {{ asset('storage/images/' . $doctor->certification) }} "
                         alt="Xem trước ảnh" class="img-thumbnail shadow-sm rounded" style="max-width: 200px;">
+                    <div class="form-group text-center mt-4">
+                        <label class="image-upload-wrapper" for="image-upload-input">
+                            <img id="image-upload-preview" src="{{ asset('storage/images/service/' . $service->image) }}"
+                                class="image-upload img-thumbnail shadow-sm rounded" alt="Service Image Preview">
+                        </label>
+                        <input type="file" id="image-upload-input" name="image" accept="image/*"><br>
+                        <label class="fs-5">Ảnh dịch vụ</label>
+                    </div>
                 </div>
 
                 <div class="form-group col-md-6">

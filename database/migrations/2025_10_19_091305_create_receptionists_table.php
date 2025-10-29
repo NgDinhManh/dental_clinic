@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('receptionists', function (Blueprint $table) {
             $table->unsignedBigInteger('receptionist_id')->primary(); // Khóa chính, liên kết users
+            $table->string('fullname');
+            $table->string('gender');
+            $table->date('birthday');
+            $table->text('address');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->date('start_date');                   // Ngày bắt đầu làm việc
             $table->enum('shift', ['Sáng', 'Chiều', 'Tối']); // Ca làm việc
             $table->text('note')->nullable();                         // Ghi chú thêm
@@ -20,9 +25,7 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             // Khóa ngoại liên kết đến bảng users
-            $table->foreign('receptionist_id')
-                ->references('user_id')
-                ->on('users')
+            $table->foreign('user_id')->references('user_id')->on('users')
                 ->onDelete('restrict');
         });
     }

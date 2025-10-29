@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             // Khóa chính trùng với user_id từ bảng users
-            $table->unsignedBigInteger('patient_id')->primary();
+            $table->id('patient_id');
+            $table->string('fullname');
+            $table->string('gender');
+            $table->date('birthday');
+            $table->text('address');
+            $table->unsignedBigInteger('user_id')->nullable();
 
             // Thông tin y tế
             $table->char('cccd', 50); // Số CCCD
@@ -35,7 +40,7 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             // Khóa ngoại tới bảng users
-            $table->foreign('patient_id')->references('user_id')->on('users')
+            $table->foreign('user_id')->references('user_id')->on('users')
                     ->onDelete('restrict'); // Không cho xóa user nếu có bệnh nhân
         });
     }

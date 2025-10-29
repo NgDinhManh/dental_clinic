@@ -22,13 +22,9 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
             $table->string('name');
-            $table->string('fullname')->nullable();
-            $table->string('gender')->nullable();
-            $table->date('birthday')->nullable();
             $table->string('phone')->unique();
             $table->text('password');
             $table->string('email')->unique()->nullable();
-            $table->text('address')->nullable();
             $table->string('avatar')->default('avatar_default.png');
             $table->boolean('is_active')->default(1);
             $table->timestamp('email_verified_at')->nullable();
@@ -62,9 +58,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
+        // Drop tables in reverse order of dependencies to avoid foreign key constraint errors
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('roles');
     }
 };
