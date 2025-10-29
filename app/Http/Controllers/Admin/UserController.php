@@ -36,12 +36,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'fullname' => 'required',
-            'gender' => 'required',
-            'birthday' => 'required|date',
             'phone' => 'required|unique:users,phone',
             'email' => 'nullable|email|unique:users,email',
-            'address' => 'required',
         ]);
 
         $data = $request->all();
@@ -84,12 +80,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'fullname' => 'required',
-            'gender' => 'required',
-            'birthday' => 'required|date',
             'phone' => 'required|unique:users,phone,' . $user->user_id . ',user_id',
             'email' => 'nullable|email|unique:users,email,' . $user->user_id . ',user_id',
-            'address' => 'required',
         ]);
 
         $data = $request->all();
@@ -113,10 +105,10 @@ class UserController extends Controller
 
     public function reset_password(User $user)
     {
-        // Cập nhật mật khẩu mới
+        // Cài lại mật khẩu
         $user->password = bcrypt('123456');
         $user->save();
-        return redirect()->route('admin/user')->with('success', 'Cập nhật mật khẩu thành công');
+        return redirect()->route('admin/user')->with('success', 'Mật khẩu mới là: 123456');
     }
 
     /**

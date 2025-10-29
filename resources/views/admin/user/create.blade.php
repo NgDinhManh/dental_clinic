@@ -21,23 +21,9 @@
                 </div>
 
                 <div class="col row">
-                    <div class="form-group">
-                        <label class="fs-5">Họ và tên <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-lg" name="fullname">
-                    </div>
-
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Giới tính <span class="text-danger">*</span></label>
-                        <select name="gender" class="form-select form-control-lg">
-                            <option value="0" selected>Nam</option>
-                            <option value="1">Nữ</option>
-                            <option value="2">Khác</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="fs-5">Ngày sinh <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control form-control-lg" name="birthday">
+                        <label class="fs-5">Tên người dùng <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-lg" name="name">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -50,16 +36,6 @@
                         <input type="email" class="form-control form-control-lg" name="email">
                     </div>
 
-                    <div class="form-group">
-                        <label class="fs-5">Địa chỉ <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-lg" name="address">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="fs-5">Tên người dùng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-lg" name="name">
-                    </div>
-
                     <div class="form-group col-md-6">
                         <label class="fs-5">Mật khẩu <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-lg" value="123456" disabled>
@@ -69,7 +45,7 @@
                         <label class="fs-5">Vai trò</label>
                         <select class="form-select form-control-lg" name="role_id">
                             @foreach ($roles as $role)
-                                <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
+                                <option value="{{ $role->role_id }}">{{ $role->description }}</option>
                             @endforeach
                         </select>
                     </div>

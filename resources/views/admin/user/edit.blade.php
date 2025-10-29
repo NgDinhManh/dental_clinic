@@ -23,25 +23,10 @@
                 </div>
 
                 <div class="col row">
-                    <div class="form-group">
-                        <label class="fs-5">Họ và tên <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-lg" name="fullname"
-                            value="{{ $user->fullname }}">
-                    </div>
-
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Giới tính <span class="text-danger">*</span></label>
-                        <select name="gender" class="form-select form-control-lg">
-                            <option value="0" {{ $user->gender == 0 ? 'selected' : '' }}>Nam</option>
-                            <option value="1" {{ $user->gender == 1 ? 'selected' : '' }}>Nữ</option>
-                            <option value="2" {{ $user->gender == 2 ? 'selected' : '' }}>Khác</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="fs-5">Ngày sinh <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control form-control-lg" name="birthday"
-                            value="{{ $user->birthday }}">
+                        <label class="fs-5">Tên người dùng <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-lg" name="name"
+                            value="{{ $user->name }}">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -54,18 +39,6 @@
                         <label class="fs-5">Email</label>
                         <input type="email" class="form-control form-control-lg" name="email"
                             value="{{ $user->email }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="fs-5">Địa chỉ <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-lg" name="address"
-                            value="{{ $user->address }}">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="fs-5">Tên người dùng <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-lg" name="name"
-                            value="{{ $user->name }}">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -89,18 +62,10 @@
                 </div>
             </div>
 
-            <div class="card-action p-3 text-center mt-4">
+            <div class="card-action p-3 text-center">
                 <a class="btn btn-warning mx-2" href="{{ route('admin/user') }}">
                     <i class="fa fa-arrow-left pe-2"></i>Trở về</a>
-                <button type="submit" class="btn btn-success mx-2"><i class="fa fa-save pe-2"></i>Lưu</button>
-            </div>
-        </form>
-        <form action="{{ route('admin/user/reset_password', $user->user_id) }}" method="post" class="card p-4 row">
-            @csrf
-            <div class="d-flex justify-content-center">
-                <h4 class="d-flex align-items-center m-0">Cài lại mật khẩu mặc định: 123456</h4>
-                <button type="submit" class="btn btn-primary mx-3"> <i class="fa-solid fa-rotate-right mx-2"></i>
-                    Cài lại mật khẩu</button>
+                <button type="submit" class="btn btn-success"><i class="fa fa-save pe-2"></i>Lưu</button>
             </div>
         </form>
     </div>

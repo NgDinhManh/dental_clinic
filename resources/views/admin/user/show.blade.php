@@ -19,25 +19,10 @@
                 </div>
 
                 <div class="col row">
-                    <div class="form-group">
-                        <label class="fs-5">Họ và tên</label>
-                        <input type="text" class="form-control form-control-lg" name="fullname"
-                            value="{{ $user->fullname }}">
-                    </div>
-
                     <div class="form-group col-md-6">
-                        <label class="fs-5">Giới tính</label>
-                        <select name="gender" class="form-select form-control-lg">
-                            <option value="0" {{ $user->gender == 0 ? 'selected' : '' }}>Nam</option>
-                            <option value="1" {{ $user->gender == 1 ? 'selected' : '' }}>Nữ</option>
-                            <option value="2" {{ $user->gender == 2 ? 'selected' : '' }}>Khác</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="fs-5">Ngày sinh</label>
-                        <input type="date" class="form-control form-control-lg" name="birthday"
-                            value="{{ $user->birthday }}">
+                        <label class="fs-5">Tên người dùng</label>
+                        <input type="text" class="form-control form-control-lg" name="name"
+                            value="{{ $user->name }}">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -50,18 +35,6 @@
                         <label class="fs-5">Email</label>
                         <input type="email" class="form-control form-control-lg" name="email"
                             value="{{ $user->email }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="fs-5">Địa chỉ</label>
-                        <input type="text" class="form-control form-control-lg" name="address"
-                            value="{{ $user->address }}">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label class="fs-5">Tên người dùng</label>
-                        <input type="text" class="form-control form-control-lg" name="name"
-                            value="{{ $user->name }}">
                     </div>
 
                     <div class="form-group col-md-6">

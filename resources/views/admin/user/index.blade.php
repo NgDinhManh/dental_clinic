@@ -66,6 +66,13 @@
                                                                 class="dropdown-item text-primary">Chỉnh sửa</a>
                                                         </li>
                                                         <li>
+                                                            <form action="{{ route('admin/user/reset_password', $user->user_id) }}"
+                                                                class="d-flex align-items-center" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item text-warning">Cài lại mật khẩu</button>
+                                                            </form>
+                                                        </li>
+                                                        <li>
                                                             <form action="{{ route('admin/user/destroy', $user->user_id) }}"
                                                                 class="d-flex align-items-center delete-form" method="POST"
                                                                 id="delete-form-{{ $user->user_id }}">
@@ -81,7 +88,6 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-
                                             </td>
                                         </tr>
                                     @endforeach
