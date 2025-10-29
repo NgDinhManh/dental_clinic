@@ -36,8 +36,16 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required|unique:users,phone',
+            'phone' => ['required', 'unique:users,phone','regex:/^(0|\+84)(\d{9})$/'],
             'email' => 'nullable|email|unique:users,email',
+        ],
+        [
+            'name.required' => 'Tên người dùng không được để trống',
+            'phone.required' => 'Số điện thoại không được để trống',
+            'phone.unique' => 'Số điện thoại đã tồn tại',
+            'phone.regex' => 'Số điện thoại không đúng định dạng',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
         ]);
 
         $data = $request->all();
@@ -80,8 +88,16 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required|unique:users,phone,' . $user->user_id . ',user_id',
+            'phone' => ['required', 'unique:users,phone,' . $user->user_id . ',user_id','regex:/^(0|\+84)(\d{9})$/'],
             'email' => 'nullable|email|unique:users,email,' . $user->user_id . ',user_id',
+        ],
+        [
+            'name.required' => 'Tên người dùng không được để trống',
+            'phone.required' => 'Số điện thoại không được để trống',
+            'phone.unique' => 'Số điện thoại đã tồn tại',
+            'phone.regex' => 'Số điện thoại không đúng định dạng',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
         ]);
 
         $data = $request->all();
