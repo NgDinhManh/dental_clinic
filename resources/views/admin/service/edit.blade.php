@@ -15,10 +15,10 @@
                     <div class="col-md-4">
                         <div class="form-group text-center mt-4">
                             <label class="image-upload-wrapper" for="image-upload-input">
-                                <img id="image-upload-preview" src="{{ asset('storage/images/service/' . $service->image) }}"
+                                <img data-preview src="{{ asset('storage/images/service/' . $service->image) }}"
                                     class="image-upload img-thumbnail shadow-sm rounded" alt="Service Image Preview">
                             </label>
-                            <input type="file" id="image-upload-input" name="image" accept="image/*"><br>
+                            <input type="file" class="image-upload-input" id="image-upload-input" name="image" accept="image/*"><br>
                             <label class="fs-5">Ảnh dịch vụ <span class="text-danger">*</span></label>
                         </div>
                     </div>

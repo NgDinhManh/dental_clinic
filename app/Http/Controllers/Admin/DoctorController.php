@@ -30,8 +30,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $users = User::where('role_id', 2)->whereDoesntHave('doctor')->get();
-        return view('admin.doctor.create', ['users' => $users]);
+        return view('admin.doctor.create');
     }
 
     /**
@@ -40,27 +39,36 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'doctor_id' => 'required',
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'address' => 'required',
+            'phone' => ['required', 'unique:users,phone', 'regex:/^(0|\+84)(\d{9})$/'],
             'specialization' => 'required',
             'experience_years' => 'required|integer',
             'education' => 'required',
-            'certification' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'license' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'certification' => 'sometimes|image',
+            'license' => 'sometimes|image',
         ]);
 
-        $doctor = new Doctor();
+        $data = $request->all();
 
-        $doctor->doctor_id = $request->doctor_id;
-        $doctor->specialization = $request->specialization;
-        $doctor->experience_years = $request->experience_years;
-        $doctor->education = $request->education;
+        // Tạo tài khoản cho bác sĩ
+        User::create([
+            'name' => $request->fullname,
+            'phone' => $request->phone,
+            'password' => bcrypt('123456'),
+            'role_id' => 2,
+        ]);
+
+        $data['user_id'] = User::where('phone', $request->phone)->first()->user_id;
 
         if ($request->hasFile('certification')) {
             $file = $request->file('certification');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images'), $filename);
 
-            $doctor->certification = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
+            $data['certification'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
         }
 
         if ($request->hasFile('license')) {
@@ -68,10 +76,10 @@ class DoctorController extends Controller
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('storage/images'), $filename);
 
-            $doctor->license = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
+            $data['license'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
         }
 
-        $doctor->save();
+        Doctor::create($data);
 
         return redirect()->route('admin/doctor')->with('success', 'Thêm bác sĩ thành công');
     }
@@ -99,6 +107,19 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
+       $request->validate([
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'address' => 'required',
+            'phone' => ['required', 'unique:users,phone,' . $doctor->user_id . ',user_id','regex:/^(0|\+84)(\d{9})$/'],
+            'specialization' => 'required',
+            'experience_years' => 'required|integer',
+            'education' => 'required',
+            'certification' => 'sometimes|image',
+            'license' => 'sometimes|image',
+        ]);
+
         $data = $request->all();
 
         // Lưu ảnh chứng chỉ
@@ -129,6 +150,10 @@ class DoctorController extends Controller
             $data['license'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
+        $user = $doctor->user;
+        $user->phone = $data['phone'];
+        $user->save();
+
         $doctor->update($data);
         return redirect()->route('admin/doctor')->with('success', 'Cập nhật bác sĩ thành công');
     }
@@ -150,7 +175,9 @@ class DoctorController extends Controller
             File::delete($imagePath);
         }
 
+        $user = $doctor->user;
         $doctor->delete();
+        $user->delete();
         return redirect()->route('admin/doctor')->with('success', 'Xóa bác sĩ thành công');
     }
 

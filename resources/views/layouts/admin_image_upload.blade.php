@@ -17,7 +17,7 @@
     }
 
     /* Ẩn input file thật */
-    #image-upload-input {
+    .image-upload-input {
         display: none;
     }
 
@@ -41,17 +41,18 @@
 </style>
 
 <script>
-    const input = document.getElementById('image-upload-input');
-    const preview = document.getElementById('image-upload-preview');
+    document.addEventListener("change", function(e) {
+        if (e.target.matches('.image-upload-input')) {
+            const file = e.target.files[0];
+            const preview = e.target.closest('.form-group').querySelector('[data-preview]');
 
-    input.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result; // đổi ảnh hiển thị
-            };
-            reader.readAsDataURL(file);
+            if (file && preview) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
         }
     });
 </script>

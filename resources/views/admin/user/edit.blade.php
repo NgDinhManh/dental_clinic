@@ -14,10 +14,10 @@
                 <div class="col-4">
                     <div class="form-group text-center mt-4">
                         <label class="image-upload-wrapper" for="image-upload-input">
-                            <img id="image-upload-preview" src="{{ asset('storage/images/avatar/' . $user->avatar) }}"
+                            <img data-preview src="{{ asset('storage/images/avatar/' . $user->avatar) }}"
                                 class="image-upload img-thumbnail shadow-sm rounded-circle" alt="Avatar">
                         </label>
-                        <input type="file" id="image-upload-input" name="avatar" accept="image/*"><br>
+                        <input type="file" class="image-upload-input" id="image-upload-input" name="avatar" accept="image/*"><br>
                         <label class="fs-5">Ảnh đại diện</label>
                     </div>
                 </div>

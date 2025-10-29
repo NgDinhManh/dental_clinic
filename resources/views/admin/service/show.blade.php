@@ -7,18 +7,17 @@
             @csrf @method('put')
 
             <div class="card-header">
-                <h4 class="card-title">Sửa dịch vụ</h4>
+                <h4 class="card-title">Chi tiết dịch vụ</h4>
             </div>
 
             <div class="card-body row">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group text-center mt-4">
-                            <label class="image-upload-wrapper" for="image-upload-input">
+                            <label>
                                 <img id="image-upload-preview" src="{{ asset('storage/images/service/' . $service->image) }}"
-                                    class="image-upload img-thumbnail shadow-sm rounded" alt="Service Image Preview">
-                            </label>
-                            <input type="file" id="image-upload-input" name="image" accept="image/*"><br>
+                                    class="img-thumbnail shadow-sm rounded" alt="Service Image Preview">
+                            </label><br>
                             <label class="fs-5">Ảnh dịch vụ</label>
                         </div>
                     </div>

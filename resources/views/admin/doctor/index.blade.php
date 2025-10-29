@@ -32,7 +32,7 @@
                                     @foreach ($doctors as $doctor)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $doctor->user->fullname }}</td>
+                                            <td>{{ $doctor->fullname }}</td>
                                             <td>{{ $doctor->specialization }}</td>
                                             <td>{{ $doctor->experience_years }}</td>
                                             <td>{{ $doctor->education }}</td>
