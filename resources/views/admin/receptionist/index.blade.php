@@ -30,26 +30,42 @@
                                 <tbody>
                                     @foreach ($receptionists as $receptionist)
                                         <tr>
-                                            <td>{{ $receptionist->receptionist_id }}</td>
-                                            <td> <a href="{{ route('admin/receptionist/show', $receptionist->receptionist_id) }}"
-                                                    class="text-primary">{{ $receptionist->user->fullname }}</a></td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $receptionist->fullname }}</td>
                                             <td>{{ $receptionist->start_date }}</td>
                                             <td>{{ $receptionist->shift }}</td>
                                             <td>
-                                                <form action="{{ route('admin/receptionist/destroy', $receptionist->receptionist_id) }}"
-                                                    method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $receptionist->receptionist_id }}">
-                                                    @csrf @method('delete')
-                                                    <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/receptionist/edit', $receptionist->receptionist_id) }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-link btn-danger delete-button"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $receptionist->receptionist_id }}">
-                                                        <i class="fa fa-trash"></i>
+                                                <div class="btn-group">
+                                                    <button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-ellipsis"></i>
                                                     </button>
-                                                </form>
+
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="{{ route('admin/receptionist/show', $receptionist->receptionist_id) }}"
+                                                                class="dropdown-item text-info">Xem</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('admin/receptionist/edit', $receptionist->receptionist_id) }}"
+                                                                class="dropdown-item text-primary">Chỉnh sửa</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('admin/receptionist/destroy', $receptionist->receptionist_id) }}"
+                                                                class="d-flex align-items-center delete-form" method="POST"
+                                                                id="delete-form-{{ $receptionist->receptionist_id }}">
+                                                                @csrf @method('delete')
+                                                                <button type="button"
+                                                                    class="dropdown-item text-danger delete-button"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#confirmDeleteModal"
+                                                                    data-form-id="delete-form-{{ $receptionist->receptionist_id }}">
+                                                                    Xóa
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

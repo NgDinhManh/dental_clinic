@@ -21,7 +21,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::all();
+        $doctors = Doctor::all()->sortByDesc('created_at');
         return view('admin.doctor.index', compact('doctors'));
     }
 

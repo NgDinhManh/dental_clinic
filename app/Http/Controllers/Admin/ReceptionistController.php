@@ -19,7 +19,7 @@ class ReceptionistController extends Controller
      */
     public function index()
     {
-        $receptionists = Receptionist::all();
+        $receptionists = Receptionist::all()->sortByDesc('created_at');
         return view('admin.receptionist.index', ['receptionists' => $receptionists]);
     }
 
@@ -28,8 +28,7 @@ class ReceptionistController extends Controller
      */
     public function create()
     {
-        $users = User::where('role_id', 3)->whereDoesntHave('receptionist')->get();
-        return view('admin.receptionist.create', ['users' => $users]);
+        return view('admin.receptionist.create');
     }
 
     /**
@@ -37,15 +36,30 @@ class ReceptionistController extends Controller
      */
     public function store(Request $request)
     {
-        $receptionist = new Receptionist();
+        $request->validate([
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'address' => 'required',
+            'phone' => ['required', 'unique:users,phone', 'regex:/^(0|\+84)(\d{9})$/'],
+            'start_date' => 'required|date',
+            'shift' => 'required',
+        ]);
 
-        $receptionist->receptionist_id = $request->receptionist_id;
-        $receptionist->start_date = $request->start_date;
-        $receptionist->shift = $request->shift;
-        $receptionist->note = $request->note;
+        $data = $request->all();
 
-        $receptionist->save();
-        return redirect()->route('admin/receptionist');
+        // Tạo tài khoản cho tiếp tân
+        User::create([
+            'name' => $request->fullname,
+            'phone' => $request->phone,
+            'password' => bcrypt('123456'),
+            'role_id' => 3,
+        ]);
+
+        $data['user_id'] = User::where('phone', $request->phone)->first()->user_id;
+
+        Receptionist::create($data);
+        return redirect()->route('admin/receptionist')->with('success', 'Thêm tiếp tân thành công');
     }
 
     /**
@@ -53,8 +67,7 @@ class ReceptionistController extends Controller
      */
     public function show(Receptionist $receptionist)
     {
-        $user = User::find($receptionist->receptionist_id);
-        return view('admin.receptionist.show', ['receptionist' => $receptionist, 'user' => $user]);
+        return view('admin.receptionist.show', ['receptionist' => $receptionist]);
     }
 
     /**
@@ -71,10 +84,24 @@ class ReceptionistController extends Controller
      */
     public function update(Request $request, Receptionist $receptionist)
     {
+        $request->validate([
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'address' => 'required',
+            'phone' => ['required', 'unique:users,phone,' . $receptionist->user_id . ',user_id','regex:/^(0|\+84)(\d{9})$/'],
+            'start_date' => 'required|date',
+            'shift' => 'required',
+        ]);
+
         $data = $request->all();
 
+        $user = $receptionist->user;
+        $user->phone = $data['phone'];
+        $user->save();
+
         $receptionist->update($data);
-        return redirect()->route('admin/receptionist');
+        return redirect()->route('admin/receptionist')->with('success', 'Cập nhật tiếp tân thành công');
     }
 
     /**
@@ -82,8 +109,10 @@ class ReceptionistController extends Controller
      */
     public function destroy(Receptionist $receptionist)
     {
+        $user = $receptionist->user;
         $receptionist->delete();
-        return redirect()->route('admin/receptionist');
+        $user->delete();
+        return redirect()->route('admin/receptionist')->with('success', 'Xóa tiếp tân thành công');
     }
 
     public function invoice()

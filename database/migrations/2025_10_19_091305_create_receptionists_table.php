@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('receptionists', function (Blueprint $table) {
-            $table->unsignedBigInteger('receptionist_id')->primary(); // Khóa chính, liên kết users
+            $table->id('receptionist_id'); // Khóa chính, liên kết users
             $table->string('fullname');
             $table->string('gender');
             $table->date('birthday');

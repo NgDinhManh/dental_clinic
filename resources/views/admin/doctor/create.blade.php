@@ -6,7 +6,7 @@
             @csrf
 
             <div class="card-header">
-                <h4 class="card-title">Thêm thông tin bác sĩ</h4>
+                <h4 class="card-title">Thêm bác sĩ mới</h4>
             </div>
 
             <div class="card-body row">
