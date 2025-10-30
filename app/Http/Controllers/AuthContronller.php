@@ -22,10 +22,14 @@ class AuthContronller extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|unique:users,phone',
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password',
-        ], [
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'address' => 'required',
+        ],[
             'min:6' => 'Mật khẩu ít nhất 6 ký tự',
             'same:password' => 'Vui lòng nhập lại đúng mật khẩu'
         ]);
@@ -35,10 +39,13 @@ class AuthContronller extends Controller
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
         $user->role_id = 4; // Mặc định là Bệnh nhân đăng ký tài khoản
-
         $user->save();
 
         $patient = new Patient();
+        $patient->fullname = $request->fullname;
+        $patient->gender = $request->gender;
+        $patient->birthday = $request->birthday;
+        $patient->address = $request->address;
         $patient->user_id = $user->user_id;
         $patient->save();
 

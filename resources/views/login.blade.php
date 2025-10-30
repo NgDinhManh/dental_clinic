@@ -115,7 +115,7 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <button type="submit" class="btn btn-theme">Đăng nhập</button>
                                                 <p class="text-muted text-center m-0">Bạn chưa có tài khoản?
-                                                    <a href="{{ route('register') }}" class="text-primary ml-1">Đăng
+                                                    <a href="{{ route('register') }}" class="text-theme ml-1">Đăng
                                                         ký</a>
                                                 </p>
                                             </div>

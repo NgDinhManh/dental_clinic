@@ -21,9 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
 
             // Thông tin y tế
-            $table->char('cccd', 50); // Số CCCD
-            $table->char('bhyt', 50); // Số bảo hiểm y tế
-            $table->enum('blood_type', ['A', 'B', 'AB', 'O']); // Nhóm máu
+            $table->char('cccd', 50)->nullable(); // Số CCCD
+            $table->char('bhyt', 50)->nullable(); // Số bảo hiểm y tế
+            $table->enum('blood_type', ['A', 'B', 'AB', 'O'])->nullable(); // Nhóm máu
 
             // Tiền sử và dị ứng
             $table->text('allergies')->nullable(); // Dị ứng
@@ -32,9 +32,9 @@ return new class extends Migration
             $table->text('current_medications')->nullable(); // Thuốc đang sử dụng
 
             // Liên hệ khẩn cấp
-            $table->string('emergency_contact', 255); // Người liên hệ khẩn cấp
-            $table->char('emergency_contact_phone', 20); // SĐT liên hệ khẩn cấp
-            $table->text('emergency_contact_address'); // Địa chỉ liên hệ khẩn cấp
+            $table->string('emergency_contact', 255)->nullable(); // Người liên hệ khẩn cấp
+            $table->char('emergency_contact_phone', 20)->nullable(); // SĐT liên hệ khẩn cấp
+            $table->text('emergency_contact_address')->nullable(); // Địa chỉ liên hệ khẩn cấp
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

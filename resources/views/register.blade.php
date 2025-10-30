@@ -77,7 +77,7 @@
     <div class="d-flex justify-content-center align-items-center min-vh-100">
         <div id="main-wrapper" class="container">
             <div class="row justify-content-center">
-                <div class="col-xl-5">
+                <div class="col-xl-10">
                     <div class="card border-0">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
@@ -85,50 +85,95 @@
                                     <div class="p-5">
                                         <div class="mb-3 row">
                                             <a href="{{ route('/') }}"
-                                                class="text-theme col-3 d-flex align-items-center">Trang
-                                                chủ</a>
+                                                class="text-theme col-3 d-flex align-items-center">Trang chủ</a>
                                             <h3 class="h4 font-weight-bold text-theme text-center col-6">ĐĂNG KÝ</h3>
                                         </div>
 
                                         <h6 class="h5 mb-3">Chào mừng bạn!</h6>
 
-                                        <form action="" method="POST" role="form">
+                                        <form action="" method="POST" role="form" class="row">
                                             @csrf
-                                            <div class="form-group">
-                                                <label for="name">Tên</label>
-                                                <input type="text" name="name" class="form-control"
-                                                    id="name">
-                                                @error('name')
-                                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i>
-                                                    <small>{{ $message }}</small>
-                                                @enderror
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Tên tài khoản</label>
+                                                    <input type="text" name="name" class="form-control"
+                                                        id="name">
+                                                    @error('name')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label for="password">Mật khẩu</label>
+                                                    <input type="password" name="password" class="form-control"
+                                                        id="password">
+                                                    @error('password')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label for="confirm_password">Nhập lại mật khẩu</label>
+                                                    <input type="password" name="confirm_password" class="form-control"
+                                                        id="confirm_password">
+                                                    @error('confirm_password')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group mt-3 mb-4">
+                                                    <label for="phone">Số điện thoại</label>
+                                                    <input type="tel" name="phone" class="form-control"
+                                                        id="phone">
+                                                    @error('phone')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                            <div class="form-group mt-3">
-                                                <label for="password">Mật khẩu</label>
-                                                <input type="password" name="password" class="form-control"
-                                                    id="password">
-                                                @error('password')
-                                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i>
-                                                    <small>{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group mt-3">
-                                                <label for="confirm_password">Nhập lại mật khẩu</label>
-                                                <input type="password" name="confirm_password" class="form-control"
-                                                    id="confirm_password">
-                                                @error('confirm_password')
-                                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i>
-                                                    <small>{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group mt-3 mb-4">
-                                                <label for="phone">Số điện thoại</label>
-                                                <input type="tel" name="phone" class="form-control"
-                                                    id="phone">
-                                                @error('phone')
-                                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i>
-                                                    <small>{{ $message }}</small>
-                                                @enderror
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="fullname">Họ và tên</label>
+                                                    <input type="text" name="fullname" class="form-control" id="fullname">
+                                                    @error('fullname')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-3">
+                                                    <label for="gender">Giới tính</label>
+                                                    <select name="gender" id="gender" class="form-control">
+                                                        <option value="Nam">Nam</option>
+                                                        <option value="Nữ">Nữ</option>
+                                                        <option value="Khác">Khác</option>
+                                                    </select>
+                                                    @error('gender')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-3">
+                                                    <label for="birthday">Ngày sinh</label>
+                                                    <input type="date" name="birthday" class="form-control"
+                                                        id="birthday">
+                                                    @error('birthday')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-3">
+                                                    <label for="address">Địa chỉ</label>
+                                                    <input type="text" name="address" class="form-control"
+                                                        id="address">
+                                                    @error('address')
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                        <small>{{ $message }}</small>
+                                                    @enderror
+                                                </div>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <button type="submit" class="btn btn-theme">Đăng ký</button>
