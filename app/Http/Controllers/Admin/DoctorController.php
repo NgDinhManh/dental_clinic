@@ -66,7 +66,7 @@ class DoctorController extends Controller
         if ($request->hasFile('certification')) {
             $file = $request->file('certification');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/doctor'), $filename);
 
             $data['certification'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
         }
@@ -74,7 +74,7 @@ class DoctorController extends Controller
         if ($request->hasFile('license')) {
             $file = $request->file('license');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/doctor'), $filename);
 
             $data['license'] = $filename; // Lưu đường dẫn ảnh chứng chỉ vào database
         }
@@ -124,28 +124,28 @@ class DoctorController extends Controller
 
         // Lưu ảnh chứng chỉ
         if ($request->hasFile('certification')) {
-            $imagePath = public_path('storage/images/' . $doctor->certification);
+            $imagePath = public_path('storage/images/doctor/' . $doctor->certification);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
 
             $file = $request->file('certification');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/doctor'), $filename);
 
             $data['certification'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
         // Lưu ảnh giấy phép
         if ($request->hasFile('license')) {
-            $imagePath = public_path('storage/images/' . $doctor->license);
+            $imagePath = public_path('storage/images/doctor/' . $doctor->license);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
 
             $file = $request->file('license');
             $filename = 'image' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/doctor'), $filename);
 
             $data['license'] = $filename; // Lưu đường dẫn ảnh vào database
         }
@@ -164,13 +164,13 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor)
     {
         // Xóa ảnh chứng chỉ
-        $imagePath = public_path('storage/images/' . $doctor->certification);
+        $imagePath = public_path('storage/images/doctor/' . $doctor->certification);
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }
 
         // Xóa ảnh giấy phép
-        $imagePath = public_path('storage/images/' . $doctor->license);
+        $imagePath = public_path('storage/images/doctor/' . $doctor->license);
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }
