@@ -323,7 +323,7 @@
                 @foreach ($doctors as $doctor)
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="team-member d-flex align-items-start">
-                            <div class="pic"><img src="{{ asset('storage/images/' . $doctor->avatar) }}"
+                            <div class="pic"><img src="{{ asset('storage/images/avatar/' . $doctor->user->avatar) }}"
                                     class="img-fluid avatar-doctor" alt=""></div>
                             <style>
                                 .doctors .team-member .pic {

@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Menu;
 use App\Models\Service;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Appointment;
 use App\Models\Appointment_service;
 use App\Models\Faq;
@@ -26,10 +27,7 @@ class HomeController extends Controller
         $otherPostEvents = $post_events->slice(1); // 4 bài còn lại (nhỏ hơn)
         $post_knowlegdes = Post::where('is_active', 1)->where('topic', 'Kiến thức răng miệng')->take(6)->orderBy('created_at', 'desc')->get();
         $services = Service::where('status', 'Có sẵn')->where('post_id', '!=', null)->take(6)->orderBy('service_id', 'asc')->get();
-        $doctors = DB::table('users')
-        ->join('doctors', 'users.user_id', '=', 'doctors.doctor_id')
-        ->select('users.*', 'doctors.specialization', 'doctors.experience_years', 'doctors.education')
-        ->take(6)->orderBy('doctors.experience_years', 'desc')->get();
+        $doctors = Doctor::all();
         $faqs = Faq::where('is_active', 1)->orderBy('faq_id', 'asc')->get();
         return view('index', compact('post_events', 'featuredPostEvent', 'otherPostEvents', 'post_knowlegdes', 'services', 'doctors', 'faqs'));
     }

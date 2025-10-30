@@ -8,7 +8,7 @@
           </a>
           <div class="footer-contact pt-3">
             <p>Số 12, Trương Văn Lĩnh</p>
-            <p>Hà Huy Tập, Tp. Vinh</p>
+            <p>Vinh Phú, Tp. Vinh</p>
             <p class="mt-3"><strong>Phone:</strong> <span>+84 344 518 332</span></p>
             <p><strong>Email:</strong> <span>nhakhoavinh@gmail.com</span></p>
           </div>
@@ -63,7 +63,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Thiết kế, Xây dựng và phân phối bởi <a href="#">Nguyễn Đình Mạnh</a>
+        Thiết kế, Xây dựng và phân phối bởi <a href="https://github.com/NgDinhManh" target="_blank">Nguyễn Đình Mạnh</a>
       </div>
     </div>
 

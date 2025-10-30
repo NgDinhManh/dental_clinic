@@ -98,11 +98,11 @@
                             @foreach ($new_users as $user)
                                 <div class="item-list">
                                     <div class="avatar">
-                                        <img src="{{ asset('storage/images/' . ($user->avatar ?? 'defaul-avatar.jpg')) }}" alt="..."
+                                        <img src="{{ asset('storage/images/avatar/' . ($user->avatar ?? 'defaul-avatar.jpg')) }}" alt="..."
                                             class="avatar-img rounded-circle" />
                                     </div>
                                     <div class="info-user ms-3">
-                                        <div class="username">{{ $user->fullname }}</div>
+                                        <div class="username">{{ $user->name }}</div>
                                         <div class="status">Người dùng mới</div>
                                     </div>
 
