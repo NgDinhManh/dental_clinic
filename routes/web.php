@@ -226,15 +226,17 @@ Route::group(['middleware' => ['auth', 'auth.receptionist']], function () {
 
 // Patient Routes
 Route::middleware(['auth', PatientMiddleware::class])->group(function () {
-    Route::get('/patient/profile/{patient_id}', [PatientController::class, 'patient_profile'])->name('patient/profile');
-    Route::put('/patient/update/{patient_id}', [PatientController::class, 'patient_update'])->name('patient/update');
-    Route::get('/patient/change-password/{patient_id}', [PatientController::class, 'patient_change_password'])->name('patient/change-password');
-    Route::put('/patient/change-password-update/{patient_id}', [PatientController::class, 'patient_change_password_update'])->name('patient/change-password-update');
+    Route::get('/patient/account/{user}', [PatientController::class, 'patient_account'])->name('patient/account');
+    Route::put('/patient/account/update/{user}', [PatientController::class, 'patient_account_update'])->name('patient/account/update');
+    Route::get('/patient/profile/{user}', [PatientController::class, 'patient_profile'])->name('patient/profile');
+    Route::put('/patient/profile/update/{user}', [PatientController::class, 'patient_profile_update'])->name('patient/profile/update');
+    Route::get('/patient/change-password/{user}', [PatientController::class, 'patient_change_password'])->name('patient/change-password');
+    Route::put('/patient/change-password-update/{user}', [PatientController::class, 'patient_change_password_update'])->name('patient/change-password-update');
 
-    Route::get('/patient/appointment/{patient_id}', [PatientController::class, 'patient_appointment'])->name('patient/appointment');
+    Route::get('/patient/appointment/{patient}', [PatientController::class, 'patient_appointment'])->name('patient/appointment');
     Route::get('/patient/appointment-destroy/{appointment_id}', [PatientController::class, 'patient_appointment_destroy'])->name('patient/appointment-destroy');
 
-    Route::get('/patient/medical-record/{patient_id}', [PatientController::class, 'patient_medical_record'])->name('patient/medical-record');
+    Route::get('/patient/medical-record/{patient}', [PatientController::class, 'patient_medical_record'])->name('patient/medical-record');
     Route::get('/patient/medical-record-detail/{record_id}', [PatientController::class, 'patient_medical_record_detail'])->name('patient/medical-record-detail');
     Route::get('/patient/invoice/{invoice_id}', [PatientController::class, 'patient_invoice'])->name('patient/invoice');
 

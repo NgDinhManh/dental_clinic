@@ -24,45 +24,72 @@ use function PHPUnit\Framework\isEmpty;
 class PatientController extends Controller
 {
 
-    public function patient_profile($user_id)
+    public function patient_account(User $user)
     {
-        $user = User::where('user_id', $user_id)->first();
-
-        return view('patient.profile', ['user' => $user]);
-
+        return view('patient.account', ['user' => $user]);
     }
 
-    public function patient_update(Request $request, $user_id)
+    public function patient_account_update(Request $request, User $user)
     {
-        $user = User::where('user_id', $user_id)->first(); // tự lấy user
+        $request->validate([
+            'name' => 'required',
+            'phone' => ['required', 'unique:users,phone,' . $user->user_id . ',user_id','regex:/^(0|\+84)(\d{9})$/'],
+            'email' => 'nullable|email|unique:users,email,' . $user->user_id . ',user_id',
+        ]);
 
         $data = $request->all();
 
         if ($request->hasFile('avatar')) {
-            $imagePath = public_path('storage/images/' . $user->avatar);
+            $imagePath = public_path('storage/images/avatar/' . $user->avatar);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
 
             $file = $request->file('avatar');
             $filename = 'avatar' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/images'), $filename);
+            $file->move(public_path('storage/images/avatar'), $filename);
 
             $data['avatar'] = $filename; // Lưu đường dẫn ảnh vào database
         }
 
         $user->update($data);
 
-        return redirect()->route("patient/profile", $user->user_id)->with('success', 'Cập nhật thông tin thành công');
+        return redirect()->route("patient/account", $user->user_id)->with('success', 'Cập nhật tải khoản thành công');
     }
 
-    public function patient_change_password($user_id)
+    public function patient_profile(User $user)
     {
-        $user = User::findOrFail($user_id);
+        $patient = $user->patient;
+        return view('patient.profile', compact('patient', 'user'));
+    }
+
+    public function patient_profile_update(Request $request, User $user)
+    {
+        $patient = $user->patient;
+
+        $request->validate([
+            'fullname' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|date',
+            'address' => 'required',
+            'cccd' => 'required',
+            'bhyt' => 'required',
+            'blood_type' => '',
+            'emergency_contact' => 'required',
+            'emergency_contact_phone' => 'required',
+        ]);
+
+        $data = $request->all();
+        $patient->update($data);
+        return redirect()->route("patient/profile", $user->user_id)->with('success', 'Cập nhật thông tin hồ sơ thành công');
+    }
+
+    public function patient_change_password(User $user)
+    {
         return view('change_password', compact('user'));
     }
 
-    public function patient_change_password_update(Request $request, $user_id)
+    public function patient_change_password_update(Request $request, User $user)
     {
         $request->validate([
             'old_password' => 'required',
@@ -76,7 +103,6 @@ class PatientController extends Controller
             'confirm_password.same:password' => 'Vui lòng nhập lại đúng mật khẩu'
         ]);
 
-        $user = User::findOrFail($user_id);
         $old_password = $request->old_password;
         $password = $request->password;
         $status = Hash::check($old_password, $user->password);

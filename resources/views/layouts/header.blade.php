@@ -80,6 +80,7 @@
                         @elseif(Auth::user()->role_id == 3)
                             <a class="dropdown-item" href="{{ route('receptionist/index') }}">Quản trị</a>
                         @else
+                            <a class="dropdown-item" href="{{ route('patient/account', Auth::user()->user_id) }}">Thông tin tài khoản</a>
                             <a class="dropdown-item" href="{{ route('patient/profile', Auth::user()->user_id) }}">Thông tin cá nhân</a>
                             <a class="dropdown-item" href="{{ route('patient/appointment', Auth::user()->user_id) }}">Lịch khám</a>
                             <a class="dropdown-item"

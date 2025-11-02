@@ -14,7 +14,7 @@
                         <h4 class="mb-0">Đổi mật khẩu</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('patient/change-password-update', $user->userid) }}" method="POST"
+                        <form action="{{ route('patient/change-password-update', $user->user_id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf @method('PUT')
                             <div class="row">
