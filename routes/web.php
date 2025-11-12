@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\PatientMiddleware;
+use App\Http\Controllers\ChatbotController;
 
 Route::get('/register', [AuthContronller::class, 'register'])->name('register');
 Route::post('/register', [AuthContronller::class, 'check_register']);
@@ -54,6 +55,9 @@ Route::post('/home/appointment/create', [HomeController::class, 'appointment_cre
 Route::get('/notification/{id}', [NotificationController::class, 'notificationDetail'])->name('notification/detail');
 Route::put('/notification/markAsRead/{notification}', [NotificationController::class, 'markAsRead'])->name('notification/markAsRead');
 Route::put('/notification/markAsDeleted/{notification}', [NotificationController::class, 'markAsDeleted'])->name('notification/markAsDeleted');
+
+// Route cho Chatbot
+Route::post('/chat-message', [ChatbotController::class, 'handleMessage']);
 
 // Admin Routes
 Route::group(['middleware' => ['auth', 'auth.admin']], function () {

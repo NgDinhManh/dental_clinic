@@ -41,7 +41,7 @@
 </head>
 
 <body class="index-page">
-  
+
   @include('layouts.alerts') <!-- Đây là nơi hiển thị thông báo -->
 
   @include('layouts.header') <!-- Đây là nơi header sẽ hiển thị -->
@@ -54,7 +54,7 @@
 
   @include('layouts.footer') <!-- Đây là nơi footer sẽ hiển thị -->
 
-  
+  @include('layouts.chat_bot') <!-- Đây là nơi chat bot hiển thị -->
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
