@@ -27,9 +27,9 @@
                                 <tbody>
                                     @foreach ($patients as $patient)
                                         <tr>
-                                            <td>{{ $patient->patient_id }}</td>
-                                            <td> <a href="#" class="text-primary">{{ $patient->user->fullname }}</a></td>
-                                            <td>{{ $patient->user->birthday }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $patient->fullname }}</a></td>
+                                            <td>{{ $patient->birthday }}</td>
                                             <td>{{ $patient->user->phone }}</td>
                                             <td>{{ $patient->bhyt }}</td>
                                             <td>

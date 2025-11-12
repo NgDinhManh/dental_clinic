@@ -7,8 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            @php $user = Auth::user()->where('user_id', $patient->patient_id)->first(); @endphp
-                            <h4 class="card-title">Bệnh án của bệnh nhân: {{ $user->fullname }}</h3>
+                            <h4 class="card-title">Bệnh án của bệnh nhân: {{ $patient->fullname }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -29,7 +28,7 @@
                                     @foreach ($medical_records as $medical_record)
                                         <tr>
                                             <td>{{ $medical_record->record_id }}</td>
-                                            <td> <a href="#" class="text-primary">{{ $user->fullname }}</a></td>
+                                            <td>{{ $patient->fullname }}</a></td>
                                             <td>{{ $medical_record->created_at->format('d/m/Y') }}</td>
                                             <td>{{ $medical_record->diagnosis }}</td>
                                             <td>
