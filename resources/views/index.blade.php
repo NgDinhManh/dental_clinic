@@ -55,7 +55,7 @@
 
                             <div class="col-xl-4 d-flex align-items-stretch">
                                 <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
-                                    <i class="bi bi-inboxes"></i>
+                                    <i class="bi bi-heart-half"></i>
                                     <h4>Tin cậy</h4>
                                     <p>Với hàng ngàn ca điều trị thành công và sự tin tưởng từ cộng đồng, phòng khám tự hào
                                         là điểm đến lý tưởng để bạn an tâm chăm sóc sức khỏe răng miệng lâu dài</p>

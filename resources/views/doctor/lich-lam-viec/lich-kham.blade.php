@@ -27,10 +27,8 @@
                                 <tbody>
                                     @foreach ($appointments as $appointment)
                                         <tr>
-                                            <td>{{ $appointment->appointment_id }}</td>
-                                            <td> <a href="#"
-                                                    class="text-primary">{{ $patients->where('patient_id', $appointment->patient_id)->first()->fullname }}</a>
-                                            </td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $appointment->patient->fullname }}</td>
                                             <td>{{ $appointment->appointment_date . ' | ' . $appointment->appointment_time }}
                                             </td>
                                             <td class="text-truncate" style="max-width: 220px;">

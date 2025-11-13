@@ -21,8 +21,7 @@ class LichLamViecController extends Controller
         $appointments = Appointment::where('appointment_date', $today)->get();
         $appointment_services = Appointment_service::all();
         $services = Service::all();
-        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
-        return view('doctor.lich-lam-viec.lich-kham-hom-nay', compact('appointments', 'appointment_services', 'services', 'patients'))->with('success', 'Đăng nhập thành công!');
+        return view('doctor.lich-lam-viec.lich-kham-hom-nay', compact('appointments', 'appointment_services', 'services'));
     }
 
     public function lich_kham_tuan_nay()
@@ -32,8 +31,7 @@ class LichLamViecController extends Controller
 
         $appointments = Appointment::whereBetween('appointment_date', [$startOfWeek, $endOfWeek])->get();
         $services = Service::all();
-        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
-        return view('doctor.lich-lam-viec.lich-kham', compact('appointments', 'services', 'patients'));
+        return view('doctor.lich-lam-viec.lich-kham', compact('appointments', 'services'));
     }
 
     public function lich_kham()
@@ -41,8 +39,7 @@ class LichLamViecController extends Controller
         $appointments = Appointment::all();
         $appointment_services = Appointment_service::all();
         $services = Service::all();
-        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
-        return view('doctor.lich-lam-viec.lich-kham', compact('appointments', 'appointment_services', 'services', 'patients'));
+        return view('doctor.lich-lam-viec.lich-kham', compact('appointments', 'appointment_services', 'services'));
     }
 
     public function kham_benh_lich($appointment_id)

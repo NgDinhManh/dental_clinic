@@ -28,7 +28,7 @@
                                 <tbody>
                                     @foreach ($medical_records as $record)
                                         <tr>
-                                            <td>{{ $record->record_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $record->patient->fullname }}</td>
                                             <td>{{ $record->created_at->format('d/m/Y') }}</td>
                                             <td>{{ $record->diagnosis }}</td>

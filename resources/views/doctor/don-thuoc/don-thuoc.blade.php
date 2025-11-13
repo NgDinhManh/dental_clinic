@@ -26,7 +26,7 @@
                                 <tbody>
                                     @foreach ($prescriptions as $prescription)
                                         <tr>
-                                            <td>{{ $prescription->prescription_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $prescription->medicalRecord->patient->fullname }}</td>
                                             <td>{{ $prescription->medicalRecord->diagnosis }}</td>
                                             <td>{{ \Carbon\Carbon::parse($prescription->created_at)->format('d/m/Y') }}</td>
