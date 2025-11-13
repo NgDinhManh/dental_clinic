@@ -27,8 +27,8 @@
                                 <tbody>
                                     @foreach ($patients as $patient)
                                         <tr>
-                                            <td>{{ $patient->patient_id }}</td>
-                                            <td>{{ $patient->user->fullname }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $patient->fullname }}</td>
                                             <td>{{ \Carbon\Carbon::parse($patient->user->birthday)->format('d/m/Y') }}</td>
                                             <td>{{ $patient->user->phone }}</td>
                                             <td>{{ $patient->bhyt }}</td>

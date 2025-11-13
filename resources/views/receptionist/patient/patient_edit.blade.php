@@ -2,14 +2,16 @@
 
 @section('content')
     <div class="page-inner">
-        <form action="{{ route('receptionist/patient/update', $user->userid) }}" method="POST" class="card p-4">
+        <form action="{{ route('receptionist/patient/update', $patient->patient_id) }}" method="POST" class="card">
             @csrf @method('PUT')
-            <div class="row">
+            <div class="card-header">
                 <h4 class="card-title">Thông tin cá nhân</h4>
+            </div>
 
+            <div class="card-body row">
                 <div class="form-group col-6">
                     <label class="largeInput">Họ và tên</label>
-                    <input type="text" class="form-control form-control" name="fullname" value="{{ $user->fullname }}">
+                    <input type="text" class="form-control form-control" name="fullname" value="{{ $patient->fullname }}">
                 </div>
 
                 <div class="form-group col-6">
@@ -19,15 +21,15 @@
 
                 <div class="form-group col-3">
                     <label class="largeInput">Ngày sinh</label>
-                    <input type="date" class="form-control form-control" name="birthday" value="{{ $user->birthday }}">
+                    <input type="date" class="form-control form-control" name="birthday" value="{{ $patient->birthday }}">
                 </div>
 
                 <div class="form-group col-3">
                     <label class="largeInput">Giới tính</label>
                     <select class="form-select" name="gender" id="">
-                        <option value="0" {{ $user->gender == 0 ? 'selected' : '' }}>Nam</option>
-                        <option value="1" {{ $user->gender == 1 ? 'selected' : '' }}>Nữ</option>
-                        <option value="2" {{ $user->gender == 2 ? 'selected' : '' }}>Khác</option>
+                        <option value="Nam" {{ $patient->gender == 'Nam' ? 'selected' : '' }}>Nam</option>
+                        <option value="Nữ" {{ $patient->gender == 'Nữ' ? 'selected' : '' }}>Nữ</option>
+                        <option value="Khác" {{ $patient->gender == 'Khác' ? 'selected' : '' }}>Khác</option>
                     </select>
                 </div>
 
@@ -43,11 +45,15 @@
 
                 <div class="form-group col-6">
                     <label class="largeInput">Địa chỉ</label>
-                    <input type="text" class="form-control form-control" name="address" value="{{ $user->address }}">
+                    <input type="text" class="form-control form-control" name="address" value="{{ $patient->address }}">
                 </div>
+            </div>
 
+            <div class="card-header">
                 <h4 class="card-title mt-4">Thông tin y tế</h4>
+            </div>
 
+            <div class="card-body row">
                 <div class="form-group col-6">
                     <label class="largeInput">Số CCCD</label>
                     <input type="number" class="form-control form-control" name="cccd" value="{{ $patient->cccd }}">
@@ -105,13 +111,13 @@
                     <input type="text" class="form-control form-control" name="emergency_contact_address"
                         value="{{ $patient->emergency_contact_address }}">
                 </div>
+            </div>
 
-                <div class="row">
-                    <a class="btn btn-warning largeInput col-2 mx-2" href="{{ route('receptionist/patient') }}"><i
-                            class="fa fa-arrow-left mx-2"></i>Trở về</a>
-                    <button type="submit" class="btn btn-success largeInput col-2"><i
-                        class="fa fa-save mx-2"></i>Lưu</button>
-                </div>
+            <div class="card-action text-center p-3">
+                <a class="btn btn-warning mx-2" href="{{ route('receptionist/patient') }}"><i
+                        class="fa fa-arrow-left me-2"></i>Trở về</a>
+                <button type="submit" class="btn btn-success"><i
+                    class="fa fa-save me-2"></i>Lưu</button>
             </div>
         </form>
     </div>
