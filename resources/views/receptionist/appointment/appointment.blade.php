@@ -27,15 +27,16 @@
                                 <tbody>
                                     @foreach ($appointments as $appointment)
                                         <tr>
-                                            <td>{{ $appointment->appointment_id }}</td>
-                                            @php $patient = $patients->where('patient_id', $appointment->patient_id)->first(); @endphp
-                                            <td>{{ $patient->fullname }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $appointment->patient->fullname }}</td>
                                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d/m/Y') . ' | ' . $appointment->appointment_time }}
                                             </td>
-                                            @php $service_ids = $appointment_services->where('appointment_id', $appointment->appointment_id)->pluck('service_id');  @endphp
-                                            <td class="text-truncate" style="max-width: 250px;"> @foreach ($services->whereIn('service_id', $service_ids) as $service)
-                                                {{ $service->service_name . ', ' }}
-                                            @endforeach </td>
+                                            {{-- @php $service_ids = $appointment_services->where('appointment_id', $appointment->appointment_id)->pluck('service_id');  @endphp --}}
+                                            <td class="text-truncate" style="max-width: 250px;">
+                                                @foreach ($appointment->appointment_services as $appointment_service)
+                                                    {{ $appointment_service->service->service_name . ', ' }}
+                                                @endforeach
+                                            </td>
                                             <td><span
                                                     class="badge
                                                         @if ($appointment->status == 'Chờ khám') bg-warning text-dark

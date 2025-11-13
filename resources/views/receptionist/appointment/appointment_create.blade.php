@@ -44,12 +44,12 @@
                                     <div class="col-md-4">
                                         <label for="email" class="form-label fs-5">Email</label>
                                         <input type="email" class="form-control shadow-sm" id="email"
-                                            value="{{ $patient->email }}" placeholder="Nhập email">
+                                            value="{{ $user->email }}" placeholder="Nhập email">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="phone" class="form-label fs-5">Số điện thoại</label>
                                         <input type="tel" class="form-control shadow-sm" id="phone"
-                                            value="{{ $patient->phone }}" placeholder="0987 654 321">
+                                            value="{{ $user->phone }}" placeholder="0987 654 321">
                                     </div>
                                 @endif
 
@@ -87,14 +87,14 @@
 
                                 <div class="col-md-12">
                                     <label for="notes" class="form-label fs-5">Ghi chú/Ghi chú yêu cầu</label>
-                                    <textarea class="form-control shadow-sm" name="notes" id="notes" rows="2"
+                                    <textarea class="form-control" name="notes" id="notes" rows="2"
                                         placeholder="Mô tả triệu chứng hoặc yêu cầu thêm..."></textarea>
                                 </div>
+                            </div>
 
-                                <div class="col-md-12">
-                                    <a href="{{ url()->previous() }}" class="btn btn-warning"><i></i>Quay lại</a>
-                                    <button type="submit" class="btn btn-primary">Đặt lịch</button>
-                                </div>
+                            <div class="card-action text-center p-3">
+                                <a href="{{ url()->previous() }}" class="btn btn-warning"><i></i>Quay lại</a>
+                                <button type="submit" class="btn btn-primary">Đặt lịch</button>
                             </div>
                         </form>
                     </div>

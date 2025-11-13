@@ -29,4 +29,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'doctor_id');
     }
+
+    public function appointment_services()
+    {
+        return $this->hasMany(Appointment_service::class, 'appointment_id', 'appointment_id');
+    }
 }

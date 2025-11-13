@@ -4,7 +4,9 @@
     <div class="page-inner">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <form action="{{ route('receptionist/appointment/update', $appointment->appointment_id) }}" method="POST" role="form"
+                    class="needs-validation card" novalidate>
+                    @csrf @method('PUT')
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Cập nhật lịch khám</h3>
@@ -12,80 +14,75 @@
                     </div>
 
                     <div class="card-body">
+                        <div class="row g-3">
+                            @if (isset($patient))
+                                <input type="text" name="patient_id" value="{{ $patient->patient_id }}" hidden>
 
-                        <form action="{{ route('receptionist/appointment/update', $appointment->appointment_id) }}" method="POST" role="form"
-                            class="needs-validation" novalidate>
-                            @csrf @method('PUT')
-                            <div class="row g-3">
-                                @if (isset($patient))
-                                    <input type="text" name="patient_id" value="{{ $patient->patient_id }}" hidden>
-
-                                    <!-- Row 1 -->
-                                    <div class="col-md-4">
-                                        <label for="fullname" class="form-label">Họ và tên</label>
-                                        <input type="text" class="form-control shadow-sm" id="fullname"
-                                            value="{{ $patient->fullname }}" placeholder="Nguyễn Văn A">
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control shadow-sm" id="email"
-                                            value="{{ $patient->email }}" placeholder="Nhập email">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="phone" class="form-label">Số điện thoại</label>
-                                        <input type="tel" class="form-control shadow-sm" id="phone"
-                                            value="{{ $patient->phone }}">
-                                    </div>
-                                @endif
-
-                                <!-- Row 2 -->
+                                <!-- Row 1 -->
                                 <div class="col-md-4">
-                                    <label for="appointment-date" class="form-label">Chọn ngày khám</label>
-                                    <div class="input-group">
-                                        <input type="date" class="form-control shadow-sm datepicker"
-                                            id="appointment-date" name="appointment_date"
-                                            value="{{ $appointment->appointment_date }}" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <label class="form-label">Khung giờ khả dụng</label>
-                                    <div id="slots-container" class="row">
-                                    </div>
+                                    <label for="fullname" class="form-label">Họ và tên</label>
+                                    <input type="text" class="form-control" id="fullname"
+                                        value="{{ $patient->fullname }}" placeholder="Nguyễn Văn A">
                                 </div>
 
-                                <!-- Row 3 -->
-                                <div class="col-md-12">
-                                    <label for="service" class="form-label">Dịch vụ</label>
-                                    <div class="row border border-secondary-subtle mx-1 rounded shadow-sm p-3">
-                                        @foreach ($services as $service)
-                                            <div class="form-check mb-2 col-4">
-                                                <input class="form-check-input" type="checkbox"
-                                                    name="services[{{ $loop->index + 1 }}]"
-                                                    value="{{ $service->service_id }}" id="service{{ $loop->index + 1 }}"
-                                                    {{ in_array($service->service_id, $appointment_services_service_id) ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="service{{ $loop->index + 1 }}">
-                                                    {{ $service->service_name }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                <div class="col-md-4">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email"
+                                        value="{{ $patient->email }}" placeholder="Nhập email">
                                 </div>
-
-                                <div class="col-md-12">
-                                    <label for="notes" class="form-label">Ghi chú/Ghi chú yêu cầu</label>
-                                    <textarea class="form-control shadow-sm" name="notes" id="notes" rows="2"
-                                        placeholder="Mô tả triệu chứng hoặc yêu cầu thêm..."></textarea>
+                                <div class="col-md-4">
+                                    <label for="phone" class="form-label">Số điện thoại</label>
+                                    <input type="tel" class="form-control" id="phone"
+                                        value="{{ $patient->phone }}">
                                 </div>
+                            @endif
 
-                                <div class="col-md-12">
-                                    <a href="{{ url()->previous() }}" class="btn btn-warning">Trở lại</a>
-                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            <!-- Row 2 -->
+                            <div class="col-md-4">
+                                <label for="appointment-date" class="form-label">Chọn ngày khám</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control datepicker"
+                                        id="appointment-date" name="appointment_date"
+                                        value="{{ $appointment->appointment_date }}" required>
                                 </div>
                             </div>
-                        </form>
+                            <div class="col-md-8">
+                                <label class="form-label">Khung giờ khả dụng</label>
+                                <div id="slots-container" class="row">
+                                </div>
+                            </div>
+
+                            <!-- Row 3 -->
+                            <div class="col-md-12">
+                                <label for="service" class="form-label">Dịch vụ</label>
+                                <div class="row border border-secondary-subtle mx-1 rounded p-3">
+                                    @foreach ($services as $service)
+                                        <div class="form-check mb-2 col-4">
+                                            <input class="form-check-input" type="checkbox"
+                                                name="services[{{ $loop->index + 1 }}]"
+                                                value="{{ $service->service_id }}" id="service{{ $loop->index + 1 }}"
+                                                {{ in_array($service->service_id, $appointment_services_service_id) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="service{{ $loop->index + 1 }}">
+                                                {{ $service->service_name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="notes" class="form-label">Ghi chú/Ghi chú yêu cầu</label>
+                                <textarea class="form-control" name="notes" id="notes" rows="2"
+                                    placeholder="Mô tả triệu chứng hoặc yêu cầu thêm..."></textarea>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="card-action text-center p-3">
+                        <a href="{{ url()->previous() }}" class="btn btn-warning">Trở lại</a>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

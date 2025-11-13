@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('appointment_id'); // Tạo khóa chính tự tăng
 
             $table->unsignedBigInteger('patient_id'); // Khóa ngoại đến bảng patients
-            $table->unsignedBigInteger('doctor_id');  // Khóa ngoại đến bảng doctors
+            $table->unsignedBigInteger('doctor_id')->nullable();  // Khóa ngoại đến bảng doctors
 
             $table->date('appointment_date'); // Ngày hẹn
             $table->time('appointment_time'); // Giờ hẹn

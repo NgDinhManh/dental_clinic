@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Appointment_service;
+use App\Models\Patient;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ReceptAppointmentController extends Controller
@@ -15,34 +17,17 @@ class ReceptAppointmentController extends Controller
     public function appointment()
     {
         $appointments = Appointment::all();
-        $appointment_services = Appointment_service::all();
-        $services = Service::all();
-        $patients = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->select('patients.*', 'users.fullname')
-            ->get();
-
-        return view('receptionist.appointment.appointment', compact('appointments', 'appointment_services', 'services', 'patients'));
+        return view('receptionist.appointment.appointment', compact('appointments'));
     }
 
     public function appointment_create(Request $request)
     {
         $services = Service::all();
-        $patients = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->select('patients.*', 'users.fullname')
-            ->get();
 
         if ($request->has('search_phone') && $request->search_phone != '') {
-            $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('users.phone', $request->search_phone)
-            ->where('users.is_active', 1)
-            ->select('patients.*', 'users.*')
-            ->first();
-            dd($patient);
-            dd(DB::table('users')->where('phone', $request->search_phone)->first());
-            return view('receptionist.appointment.appointment_create', compact('patient', 'services'));
+            $user = User::where('phone', $request->search_phone)->firstOrFail();
+            $patient = Patient::where('user_id', $user->user_id)->firstOrFail();
+            return view('receptionist.appointment.appointment_create', compact('user', 'patient', 'services'));
         }
 
         return view('receptionist.appointment.appointment_create', compact('services'));
@@ -85,11 +70,7 @@ class ReceptAppointmentController extends Controller
         $appointment = Appointment::findOrFail($appoinment_id);
         $appointment_services_service_id = Appointment_service::where('appointment_id', $appoinment_id)->pluck('service_id')->toArray();
         $services = Service::all();
-        $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('patients.patient_id', $appointment->patient_id)
-            ->select('patients.*', 'users.*')
-            ->first();
+        $patient = $appointment->patient;
         return view('receptionist.appointment.appointment_show', compact('appointment', 'appointment_services_service_id', 'services', 'patient'));
     }
 
