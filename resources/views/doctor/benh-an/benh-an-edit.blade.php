@@ -29,8 +29,8 @@
                     <div class="col-md-4 patient-info">
                         <!-- Header thông tin -->
                         <div class="d-flex align-items-center mb-4">
-                            <div class="avatar avatar-xxl">
-                                <img src="{{ asset('storage/images/' . $patient->avatar) }}"
+                            <div class="avatar avatar-xxl me-2">
+                                <img src="{{ asset('storage/images/avatar/' . $patient->user->avatar) }}"
                                     class="avatar-img rounded-circle me-3" alt="avatar">
                             </div>
                             <div>
@@ -57,7 +57,7 @@
                                     <li class="mb-2">Ngày sinh:
                                         {{ Carbon::parse($patient->birthday)->format('d/m/Y') }}
                                     </li>
-                                    <li class="mb-2">SĐT: {{ $patient->phone }}</li>
+                                    <li class="mb-2">SĐT: {{ $patient->user->phone }}</li>
                                     <li class="mb-2">Địa chỉ: {{ $patient->address }}
                                     </li>
                                     <li class="mb-2">CCCD: {{ $patient->cccd }}</li>

@@ -14,8 +14,8 @@
             <div class="row">
                 <!-- Header thông tin -->
                 <div class="d-flex align-items-center card mb-4 p-0 col-md-6">
-                    <div class="avatar avatar-xxl">
-                        <img src="{{ asset('storage/images/' . $patient->avatar) }}" class="avatar-img rounded-circle me-3"
+                    <div class="avatar avatar-xxl my-3">
+                        <img src="{{ asset('storage/images/avatar/' . $patient->user->avatar) }}" class="avatar-img rounded-circle"
                             alt="avatar">
                     </div>
                     <div>
@@ -42,7 +42,7 @@
                             <li class="mb-2">Ngày sinh:
                                 {{ \Carbon\Carbon::parse($patient->birthday)->format('d/m/Y') }}
                             </li>
-                            <li class="mb-2">SĐT: {{ $patient->phone }}</li>
+                            <li class="mb-2">SĐT: {{ $patient->user->phone }}</li>
                             <li class="mb-2">Địa chỉ: {{ $patient->address }}
                             </li>
                             <li class="mb-2">CCCD: {{ $patient->cccd }}</li>

@@ -27,74 +27,69 @@ class BenhAnController extends Controller
 
     public function benh_an_show($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         if (!$medical_record) {
             return redirect()->back()->with('error', 'Không tìm thấy bệnh án');
         }
-        $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('users.role_id', 4)
-            ->where('users.user_id', $medical_record->patient_id)
-            ->select('users.*', 'patients.*')
-            ->first();
-        $doctor = User::where('doctor_id', $medical_record->doctor_id)->first();
-        $services = Service::all()->take(4);
+        $patient = $medical_record->patient;
+        $doctor = $medical_record->doctor;
         $prescription = Prescription::where('record_id', $record_id)->first();
         if (!$prescription) {
-            return view('doctor.benh-an.benh-an-show', compact('medical_record', 'patient', 'doctor', 'services', 'prescription'))->with('error', 'Không tìm thấy đơn thuốc');
+            return view('doctor.benh-an.benh-an-show', compact('medical_record', 'patient', 'doctor'));
         }
         $prescription_details = Prescription_detail::where('prescription_id', $prescription->prescription_id)->get(); // Lấy danh sách thuốc theo bệnh án
-        return view('doctor.benh-an.benh-an-show', compact('medical_record', 'patient', 'doctor', 'services', 'prescription', 'prescription_details'));
+        return view('doctor.benh-an.benh-an-show', compact('medical_record', 'patient', 'doctor', 'prescription', 'prescription_details'));
     }
 
     public function benh_an_print($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         if (!$medical_record) {
             return redirect()->route('doctor/benh-an/benh-an')->with('error', 'Không tìm thấy bệnh án');
         }
-        $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('users.role_id', 4)
-            ->where('users.user_id', $medical_record->patient_id)
-            ->select('users.*', 'patients.*')
-            ->first();
-        $doctor = User::where('doctor_id', $medical_record->doctor_id)->first();
-        $services = Service::all()->take(4);
+        $patient = $medical_record->patient;
+        $doctor = $medical_record->doctor;
         $prescription = Prescription::where('record_id', $record_id)->first();
         if (!$prescription) {
-            return view('doctor.benh-an.benh-an-print', compact('medical_record', 'patient', 'doctor', 'services'))->with('error', 'Không tìm thấy đơn thuốc');
+            return view('doctor.benh-an.benh-an-print', compact('medical_record', 'patient', 'doctor'));
         }
         $prescription_details = Prescription_detail::where('prescription_id', $prescription->prescription_id)->get(); // Lấy danh sách thuốc theo bệnh án
-        return view('doctor.benh-an.benh-an-print', compact('medical_record', 'patient', 'doctor', 'services', 'prescription', 'prescription_details'));
+        return view('doctor.benh-an.benh-an-print', compact('medical_record', 'patient', 'doctor', 'prescription', 'prescription_details'));
     }
 
     public function benh_an_edit($record_id)
     {
         $services = Service::all();
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         if (!$medical_record) {
             return redirect()->route('doctor/benh-an/benh-an')->with('error', 'Không tìm thấy bệnh án');
         }
-        $medical_record_services = Medical_record_service::where('record_id', $record_id)->get()->pluck('service_id')->toArray();
+
+        $medical_record_services = $medical_record->medical_record_services->pluck('service_id')->toArray();
         if (!$medical_record_services) {
             return redirect()->route('doctor/benh-an/benh-an')->with('error', 'Không tìm thấy dịch vụ');
         }
-        $patient = DB::table('patients')
-        ->join('users', 'patients.patient_id', '=', 'users.user_id')
-        ->where('users.user_id', $medical_record->patient_id)
-        ->select('users.*', 'patients.*')
-        ->first();
+
+        $patient = $medical_record->patient;
         if (!$patient) {
             return redirect()->route('doctor/benh-an/benh-an')->with('error', 'Không tìm thấy bệnh nhân');
         }
+
         session(['previous_url' => url()->previous()]);
         return view('doctor.benh-an.benh-an-edit', compact('medical_record', 'medical_record_services', 'patient', 'services'));
     }
 
     public function benh_an_update(Request $request, $record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $request->validate([
+            'symptoms' => 'required',
+            'diagnosis' => 'required',
+            'services' => 'required|array',
+            'services.*' => 'integer|exists:services,service_id',
+            'treatment_plan' => 'required',
+        ]);
+
+        $medical_record = Medical_record::findOrFail($record_id);
         $medical_record->symptoms = $request->symptoms;
         $medical_record->diagnosis = $request->diagnosis;
         $medical_record->treatment_plan = $request->treatment_plan;

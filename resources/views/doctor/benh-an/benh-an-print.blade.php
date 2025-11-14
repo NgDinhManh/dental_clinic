@@ -112,7 +112,10 @@
             @endif
         </tbody>
     </table>
-    <p><strong>Lưu ý sử dụng thuốc: </strong>{{ $prescription->notes }}</p>
+    @if (!empty($prescription))
+        <p><strong>Lưu ý sử dụng thuốc:</strong></p>
+        <p class="treatment-content">{{ $prescription->notes }}</p>
+    @endif
 
     <!-- Ghi chú -->
     <div class="section-title">IV. GHI CHÚ</div>

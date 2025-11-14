@@ -65,7 +65,7 @@
         </div>
         <div class="row mb-2">
             <div class="col-6">Số CCCD: <strong>{{ $patient->cccd }}</strong></div>
-            <div class="col-6">Số điện thoại: <strong>{{ $patient->phone }}</strong></div>
+            <div class="col-6">Số điện thoại: <strong>{{ $patient->user->phone }}</strong></div>
         </div>
         <div class="row mb-2">
             <div class="col-12">Địa chỉ: <strong>{{ $patient->address }}</strong></div>
@@ -111,7 +111,7 @@
                 @endif
             </tbody>
         </table>
-        @if ($prescription)
+        @if (!empty($prescription))
             <p><strong>Lưu ý sử dụng thuốc:</strong></p>
             <p class="treatment-content">{{ $prescription->notes }}</p>
         @endif
@@ -133,5 +133,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

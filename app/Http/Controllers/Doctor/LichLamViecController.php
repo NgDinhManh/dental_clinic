@@ -44,17 +44,26 @@ class LichLamViecController extends Controller
 
     public function kham_benh_lich($appointment_id)
     {
-        $appointment = Appointment::where('appointment_id', $appointment_id)->first();
-
+        $appointment = Appointment::findOrFail($appointment_id);
         $services = Service::all();
-
         $patient = $appointment->patient;
-            session(['previous_url' => url()->previous()]);
+        session(['previous_url' => url()->previous()]);
         return view('doctor.lich-lam-viec.kham-benh', compact('appointment', 'services', 'patient'));
     }
 
     public function kham_benh_lich_store(Request $request)
     {
+        $request->validate([
+            'patient_id' => 'required',
+            'doctor_id' => 'required',
+            'appointment' => 'required',
+            'symptoms' => 'required',
+            'diagnosis' => 'required',
+            'services' => 'required|array',
+            'services.*' => 'integer|exists:services,service_id',
+            'treatment_plan' => 'required',
+        ]);
+
         // Lưu thông tin bệnh án
         $medical_record = new Medical_record();
         $medical_record->patient_id = $request->patient_id;

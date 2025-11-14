@@ -24,15 +24,11 @@ class DonThuocController extends Controller
 
     public function don_thuoc_create($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         if (!$medical_record) {
             return redirect()->route('doctor/benh-an/benh-an')->with('error', 'Không tìm thấy bệnh án');
         }
-        $patient = DB::table('patients')
-        ->join('users', 'patients.patient_id', '=', 'users.user_id')
-        ->where('users.user_id', $medical_record->patient_id)
-        ->select('users.*', 'patients.*')
-        ->first();
+        $patient = $medical_record->patient;
         if (!$patient) {
             return redirect()->back()->with('error', 'Không tìm thấy bệnh nhân');
         }
