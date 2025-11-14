@@ -32,11 +32,11 @@
                                 <tbody>
                                     @foreach ($invoices as $invoice)
                                         <tr>
-                                            <td>{{ $invoice->invoice_id }}</td>
-                                            <td>{{ $invoice->fullname }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $invoice->medical_record->patient->fullname }}</td>
                                             <td class="text-truncate" style="max-width: 200px;">
-                                                @foreach ($medical_record_services->where('record_id', $invoice->record_id) as $service)
-                                                    {{ $service->service_name . ', ' }}
+                                                @foreach ($invoice->medical_record->medical_record_services as $medical_record_service)
+                                                    {{ $medical_record_service->service->service_name . ', ' }}
                                                 @endforeach
                                             </td>
                                             <td>{{ $invoice->final_amount }}</td>

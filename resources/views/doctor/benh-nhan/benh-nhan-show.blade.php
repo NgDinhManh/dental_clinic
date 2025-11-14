@@ -57,13 +57,13 @@
         <div class="row mb-2">
             <div class="col-6">Họ và tên bệnh nhân: <strong>{{ $patient->fullname }}</strong></div>
             <div class="col-3">Giới tính: <strong>
-                @if($patient->gender == '0') Nam @else Nữ @endif
+                @if($patient->gender == 'Nam') Nam @elseif($patient->gender == 'Nữ') Nữ @else Khác @endif
             </strong></div>
             <div class="col-3">Ngày sinh: <strong>{{ Carbon\Carbon::parse($patient->birthday)->format('d/m/Y') }}</strong></div>
         </div>
         <div class="row mb-2">
             <div class="col-6">Số CCCD: <strong>{{ $patient->cccd }}</strong></div>
-            <div class="col-6">Số điện thoại: <strong>{{ $patient->phone }}</strong></div>
+            <div class="col-6">Số điện thoại: <strong>{{ $patient->user->phone }}</strong></div>
         </div>
         <div class="row mb-2">
             <div class="col-12">Địa chỉ: <strong>{{ $patient->address }}</strong></div>
@@ -82,5 +82,5 @@
         <p><strong>9. Địa chỉ người liên hệ khẩn cấp: </strong>{{ $patient->emergency_contact_address }}</p>
 
     </div>
-    
+
 @endsection

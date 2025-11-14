@@ -12,38 +12,32 @@ class BenhNhanController extends Controller
 {
     public function benh_nhan_tung_kham()
     {
-        $doctor = $user = Auth::user(); // Lấy bác sĩ đang đăng nhập
-        $patients = DB::table('patients')
-            ->join('medical_records', 'patients.patient_id', '=', 'medical_records.patient_id')
+        $doctor = Auth::user()->doctor; // Lấy bác sĩ đang đăng nhập
+        $patients = Patient::join('medical_records', 'patients.patient_id', '=', 'medical_records.patient_id')
             ->where('medical_records.doctor_id', $doctor->doctor_id)
             ->select('patients.*')
-            ->distinct('patients.patient_id') // Lấy danh sách bệnh nhân đã khám
-            ->get();
+            ->distinct()
+            ->get(); // Lấy danh sách bệnh nhân đã khám
+
         return view('doctor.benh-nhan.benh-nhan', compact('patients'));
     }
 
     public function benh_nhan()
     {
         $patients = Patient::all(); // Lấy danh sách bệnh nhân
-        $medical_records = Medical_record::select('record_id', 'patient_id')->get();
         return view('doctor.benh-nhan.benh-nhan', compact('patients'));
     }
 
     public function benh_nhan_benh_an($patient_id)
     {
-        $patient = Patient::where('patient_id', $patient_id)->first();
-        $medical_records = Medical_record::where('patient_id', $patient_id)->get();
+        $patient = Patient::findOrFail($patient_id);
+        $medical_records = $patient->medical_records;
         return view('doctor.benh-nhan.benh-nhan-benh-an', compact('patient', 'medical_records'));
     }
 
     public function benh_nhan_show($patient_id)
     {
-        $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('users.role_id', 4)
-            ->where('users.user_id', $patient_id)
-            ->select('users.*', 'patients.*')
-            ->first();
+        $patient = Patient::findOrFail($patient_id);
         return view('doctor.benh-nhan.benh-nhan-show', compact('patient'));
     }
 }

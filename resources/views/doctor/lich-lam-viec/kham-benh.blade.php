@@ -28,8 +28,8 @@
                     <div class="col-md-4 patient-info">
                         <!-- Header thông tin -->
                         <div class="d-flex align-items-center mb-4">
-                            <div class="avatar avatar-xxl">
-                                <img src="{{ asset('storage/images/' . $patient->avatar) }}"
+                            <div class="avatar avatar-xxl me-2">
+                                <img src="{{ asset('storage/images/avatar/' . $patient->user->avatar) }}"
                                     class="avatar-img rounded-circle me-3" alt="avatar">
                             </div>
                             <div>
@@ -37,10 +37,12 @@
                                 <p class="text-muted mb-0">ID: BN-{{ $patient->patient_id }}</p>
                                 <p class="text-muted">
                                     {{ \Carbon\Carbon::parse($patient->birthday)->age . ' tuổi | ' }}
-                                    @if ($patient->gender == '0')
+                                    @if ($patient->gender == 'Nam')
                                         Nam
-                                    @else
+                                    @elseif ($patient->gender == 'Nữ')
                                         Nữ
+                                    @else
+                                        Khác
                                     @endif
                                 </p>
                             </div>
@@ -56,11 +58,11 @@
                                     <li class="mb-2"><i class="bi bi-calendar me-2"></i>Ngày sinh:
                                         {{ \Carbon\Carbon::parse($patient->birthday)->format('d/m/Y') }}</li>
                                     </li>
-                                    <li class="mb-2"><i class="bi bi-phone me-2"></i>SĐT: {{ $patient->phone }}</li>
+                                    <li class="mb-2"><i class="bi bi-phone me-2"></i>SĐT: {{ $patient->user->phone }}</li>
                                     <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>Địa chỉ: {{ $patient->address }}
                                     </li>
-                                    <li class="mb-2"><i class="bi bi-phone me-2"></i>SĐT: {{ $patient->cccd }}</li>
-                                    <li class="mb-2"><i class="bi bi-phone me-2"></i>SĐT: {{ $patient->bhyt }}</li>
+                                    <li class="mb-2"><i class="bi bi-phone me-2"></i>CCCD: {{ $patient->cccd }}</li>
+                                    <li class="mb-2"><i class="bi bi-phone me-2"></i>BHYT: {{ $patient->bhyt }}</li>
                                     <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>Nhóm máu:
                                         {{ $patient->blood_type }}
                                     </li>
@@ -99,7 +101,7 @@
                 <div class="col-md-8 medical-record">
 
                     <input type="text" name="patient_id" value="{{ $patient->patient_id }}" hidden>
-                    <input type="text" name="doctor_id" value="{{ Auth::user()->user_id }}" hidden>
+                    <input type="text" name="doctor_id" value="{{ Auth::user()->doctor->doctor_id }}" hidden>
                     <input type="text" name="appointment_id" value="{{ $appointment->appointment_id }}" hidden>
 
                     <!-- Triệu chứng -->
@@ -108,20 +110,6 @@
                             <i class="bi bi-clipboard2-pulse me-2"></i>Triệu chứng
                         </div>
                         <div class="card-body">
-                            {{-- <div class="mb-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="pain">
-                                <label class="form-check-label" for="pain">Đau nhức</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="bleeding">
-                                <label class="form-check-label" for="bleeding">Chảy máu nướu</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="sensitive">
-                                <label class="form-check-label" for="sensitive">Ê buốt</label>
-                            </div>
-                        </div> --}}
                             <textarea class="form-control" name="symptoms" rows="2" placeholder="Mô tả triệu chứng chi tiết..." required></textarea>
                         </div>
                     </div>
@@ -133,19 +121,6 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                {{-- <div class="col-md-6">
-                                <label>Loại chẩn đoán</label>
-                                <select class="form-select">
-                                    <option>Sâu răng</option>
-                                    <option>Viêm nha chu</option>
-                                    <option>Viêm tủy</option>
-                                    <option>Răng khôn mọc lệch</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Răng liên quan</label>
-                                <input type="text" class="form-control" placeholder="VD: 16, 25, 36">
-                            </div> --}}
                                 <div class="col-12">
                                     <textarea class="form-control" name="diagnosis" rows="2" placeholder="Ghi chú chẩn đoán..." required></textarea>
                                 </div>
@@ -175,45 +150,6 @@
                     <div class="card mb-4 treatment-plan">
                         <div class="card-body">
                             <h5 class="mb-3"><i class="bi bi-clipboard2-plus me-2"></i>Kế hoạch điều trị</h5>
-                            {{-- <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Răng</th>
-                                        <th>Thủ thuật</th>
-                                        <th>Vật liệu</th>
-                                        <th>Ghi chú</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="form-control" value="36"></td>
-                                        <td>
-                                            <select class="form-select">
-                                                <option>Trám răng</option>
-                                                <option>Nhổ răng</option>
-                                                <option>Bọc răng sứ</option>
-                                                <option>Lấy tủy</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-select">
-                                                <option>Composite</option>
-                                                <option>Amalgam</option>
-                                                <option>GIC</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="text" class="form-control" placeholder="Ghi chú"></td>
-                                        <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button class="btn btn-sm btn-success">
-                            <i class="bi bi-plus-circle me-2"></i>Thêm thủ thuật
-                        </button> --}}
                             <div class="col-12">
                                 <textarea class="form-control" name="treatment_plan" rows="2" placeholder="Kế hoạch điều trị..." required></textarea>
                             </div>

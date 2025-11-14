@@ -48,12 +48,7 @@ class LichLamViecController extends Controller
 
         $services = Service::all();
 
-        $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('users.role_id', 4)
-            ->where('users.user_id', $appointment->patient_id)
-            ->select('users.*', 'patients.*')
-            ->first();
+        $patient = $appointment->patient;
             session(['previous_url' => url()->previous()]);
         return view('doctor.lich-lam-viec.kham-benh', compact('appointment', 'services', 'patient'));
     }

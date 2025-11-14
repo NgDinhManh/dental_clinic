@@ -16,27 +16,15 @@ class ReceptInvoiceController extends Controller
     // Quản lý hóa đơn
     public function invoice()
     {
-        $invoices = DB::table('invoices')
-        ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
-        ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
-        ->distinct()
-        ->get();
-
-        $medical_record_services = DB::table('medical_record_services')
-        ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
-        ->select('medical_record_services.*', 'services.service_name')
-        ->distinct()
-        ->get();
-
-        return view('receptionist.invoice.invoice', compact('invoices', 'medical_record_services'));
+        $invoices = Invoice::all();
+        return view('receptionist.invoice.invoice', compact('invoices'));
     }
 
     public function invoice_show($invoice_id)
     {
         $invoice = Invoice::findOrFail($invoice_id);
-        $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('user_id', $medical_record->patient_id)->first();
+        $medical_record = $invoice->medical_record;
+        $patient = $medical_record->patient;
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
@@ -50,8 +38,8 @@ class ReceptInvoiceController extends Controller
     public function invoice_print($invoice_id)
     {
         $invoice = Invoice::findOrFail($invoice_id);
-        $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('user_id', $medical_record->patient_id)->first();
+        $medical_record = $invoice->medical_record;
+        $patient = $medical_record->patient;
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
@@ -69,7 +57,7 @@ class ReceptInvoiceController extends Controller
         ->whereNotIn('record_id', $invoices_record_id)->get();
 
         if ($medical_records->isEmpty()) {
-            return redirect()->route('receptionist/invoice')->with('error', 'Không có hóa đơn mới.');
+            return redirect()->route('receptionist/invoice')->with('warning', 'Không có hóa đơn mới.');
         }
         else {
             foreach ($medical_records as $medical_record) {
@@ -89,27 +77,14 @@ class ReceptInvoiceController extends Controller
             }
         }
 
-        $invoices = DB::table('invoices')
-        ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
-        ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
-        ->distinct()
-        ->get();
-
-        $medical_record_services = DB::table('medical_record_services')
-        ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
-        ->select('medical_record_services.*', 'services.service_name')
-        ->distinct()
-        ->get();
-
-        return redirect()->route('receptionist/invoice')->with('success', 'Cập nhật thêm ' . $medical_records->count() . ' hóa đơn thành công.');
+        return redirect()->route('receptionist/invoice')->with('success', 'Cập nhật thêm ' . $medical_records->count() . ' hóa đơn mới.');
     }
 
     public function invoice_edit($invoice_id)
     {
         $invoice = Invoice::findOrFail($invoice_id);
-        $medical_record = Medical_record::where('record_id', $invoice->record_id)->first();
-        $patient = User::where('user_id', $medical_record->patient_id)->first();
+        $medical_record = $invoice->medical_record;
+        $patient = $medical_record->patient;
         $medical_record_services = DB::table('medical_record_services')
         ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
         ->where('medical_record_services.record_id', $invoice->record_id)
