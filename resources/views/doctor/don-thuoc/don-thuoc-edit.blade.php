@@ -10,98 +10,161 @@
 
     <div class="page-inner">
         <!-- Cột thông tin bệnh nhân -->
-        @if (isset($patient))
-            <div class="row">
-                <!-- Header thông tin -->
-                <div class="d-flex align-items-center card mb-4 p-0 col-md-6">
-                    <div class="avatar avatar-xxl">
-                        <img src="{{ asset('storage/images/' . $patient->avatar) }}" class="avatar-img rounded-circle me-3"
-                            alt="avatar">
-                    </div>
-                    <div>
-                        <h4 class="mb-0">{{ $patient->fullname }}</h4>
-                        <p class="text-muted mb-0">ID: BN-{{ $patient->patient_id }}</p>
-                        <p class="text-muted">
-                            {{ \Carbon\Carbon::parse($patient->birthday)->age . ' tuổi | ' }}
-                            @if ($patient->gender == '0')
-                                Nam
-                            @else
-                                Nữ
-                            @endif
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Thông tin cơ bản -->
-                <div class="card mb-4 p-0 col-md-6">
-                    <div class="card-header bg-primary text-white">
-                        Thông tin cơ bản
-                    </div>
+        <div class="row">
+            @if (isset($patient))
+                <div class="card col-md-6 p-0">
                     <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-2">Ngày sinh:
-                                {{ \Carbon\Carbon::parse($patient->birthday)->format('d/m/Y') }}
-                            </li>
-                            <li class="mb-2">SĐT: {{ $patient->phone }}</li>
-                            <li class="mb-2">Địa chỉ: {{ $patient->address }}
-                            </li>
-                            <li class="mb-2">CCCD: {{ $patient->cccd }}</li>
-                            <li class="mb-2">BHYT: {{ $patient->bhyt }}</li>
-                            <li class="mb-2">Nhóm máu:
-                                {{ $patient->blood_type }}
-                            </li>
-                        </ul>
+                        <div class="card">
+                            <div class="d-flex align-items-center p-3">
+                                <div class="avatar avatar-xxl me-3">
+                                    <img src="{{ asset('storage/images/avatar/' . $patient->avatar) }}" class="avatar-img rounded-circle"
+                                        alt="avatar">
+                                </div>
+                                <div>
+                                    <h4 class="mb-0">{{ $patient->fullname }}</h4>
+                                    <p class="text-muted mb-0">ID: BN-{{ $patient->patient_id }}</p>
+                                    <p class="text-muted">
+                                        {{ \Carbon\Carbon::parse($patient->birthday)->age . ' tuổi | ' }}
+                                        @if ($patient->gender == '0')
+                                            Nam
+                                        @else
+                                            Nữ
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Thông tin cơ bản
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Ngày sinh:
+                                    {{ \Carbon\Carbon::parse($patient->birthday)->format('d/m/Y') }}
+                                </li>
+                                <li class="list-group-item">SĐT: {{ $patient->phone }}</li>
+                                <li class="list-group-item">Địa chỉ: {{ $patient->address }}
+                                </li>
+                                <li class="list-group-item">CCCD: {{ $patient->cccd }}</li>
+                                <li class="list-group-item">BHYT: {{ $patient->bhyt }}</li>
+                                <li class="list-group-item">Nhóm máu:
+                                    {{ $patient->blood_type }}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Tiền sử bệnh, nha khoa
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @if ($patient->medical_history)
+                                    <li class="list-group-item"><strong>Tiền sử bệnh:</strong>{{ $patient->medical_history }}</li>
+                                @else
+                                    <li class="list-group-item">Không có tiền sử bệnh</li>
+                                @endif
+
+                                @if ($patient->dental_history)
+                                    <li class="list-group-item"><strong>Tiền sử nha khoa:</strong>{{ $patient->dental_history }}</li>
+                                @else
+                                    <li class="list-group-item">Không có tiền sử nha khoa</li>
+                                @endif
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Dị ứng
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @if ($patient->allergies)
+                                    {{ $patient->allergies }}
+                                @else
+                                    <p>Không có dị ứng</p>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Tiền sử bệnh -->
-                <div class="card mb-4 p-0 col-md-6">
-                    <div class="card-header bg-warning">
-                        Tiền sử bệnh, nha khoa
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            @if ($patient->medical_history)
-                                <li><strong>Tiền sử bệnh: </strong>{{ $patient->medical_history }}</li>
-                            @else
-                                <li>Không có tiền sử bệnh</li>
-                            @endif
-
-                            @if ($patient->dental_history)
-                                <li><strong>Tiền sử nha khoa: </strong>{{ $patient->dental_history }}</li>
-                            @else
-                                <li>Không có tiền sử nha khoa</li>
-                            @endif
-                        </ul>
-
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Triệu chứng
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    {{ $medical_record->symptoms }}
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Chuẩn đoán
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    {{ $medical_record->diagnosis }}
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Dịch vụ
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    @foreach ($medical_record->medical_record_services as $medical_record_service)
+                                        <li class="list-group-item">{{ $medical_record_service->service->service_name }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Kế hoạch điều trị
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    {{ $medical_record->treatment_plan ?? '' }}
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        Hướng dẫn sau điều trị
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    {{ $medical_record->note }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            @endif
+        </div>
 
-                <!-- Dị ứng -->
-                <div class="card col-md-6 mb-4 p-0">
-                    <div class="card-header bg-danger text-white">
-                        Dị ứng
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            @if ($patient->allergies)
-                                {{ $patient->allergies }}
-                            @else
-                                <p>Không có dị ứng</p>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        @endif
         <!-- Cột kê đơn thuốc -->
         <form action="{{ route('doctor/don-thuoc/don-thuoc-update', $medical_record->record_id) }}" method="POST"
-            class="card p-4 row" enctype="multipart/form-data">
+            class="card" enctype="multipart/form-data">
             @csrf @method('PUT')
-            <h4 class="card-title">Kê đơn thuốc</h4>
+
+            <div class="card-header">
+                <div class="card-title">Thông tin đơn thuốc</div>
+            </div>
 
             <!-- Kê đơn thuốc -->
-            <div class="card mb-4">
+            <div class="container">
                 <div class="card-header bg-success text-white">
                     <i class="fa fa-prescription-bottle-alt me-2"></i>Kê đơn thuốc
                 </div>
@@ -150,12 +213,13 @@
                         {{ $prescription->notes }}>
                 </div>
             </div>
+
             <!-- Nút hành động -->
-            <div class="my-4 text-start">
-                <a href="{{ url()->previous() }}" class="btn btn-lg btn-warning me-2">
+            <div class="card-action p-3 text-center">
+                <a href="{{ url()->previous() }}" class="btn btn-warning me-2">
                     <i class="fa fa-arrow-left me-2"></i>Trở lại
                 </a>
-                <button type="submit" class="btn btn-lg btn-primary me-2">
+                <button type="submit" class="btn btn-primary me-2">
                     <i class="fa fa-save me-2"></i>Lưu đơn thuốc
                 </button>
             </div>
