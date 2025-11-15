@@ -54,7 +54,7 @@
                                         <th scope="col" style="max-width:300px">Dịch vụ</th>
                                         <th scope="col" class="text-center">Giảm giá</th>
                                         <th scope="col" class="text-center">Phí khác</th>
-                                        <th scope="col" class="text-center">Tiền phải trả</th> 
+                                        <th scope="col" class="text-center">Tiền phải trả</th>
                                         <th scope="col" class="text-center">Phương thức</th>
                                         <th scope="col" class="text-center">Thời gian</th>
                                         <th scope="col" class="text-center">Trạng thái</th>
@@ -67,11 +67,11 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                {{ $invoice->fullname }}
+                                                {{ $invoice->medical_record->patient->fullname }}
                                             </th>
                                             <td class="text-truncate" style="max-width:300px;">
-                                                @foreach ($medical_record_services->where('record_id', $invoice->record_id) as $service)
-                                                    {{ $service->service_name . ', ' }}
+                                                @foreach ($invoice->medical_record->medical_record_services as $medical_record_service)
+                                                    {{ $medical_record_service->service->service_name . ', ' }}
                                                 @endforeach
                                             </td>
                                             <td class="text-center">{{ $invoice->discount }}</td>

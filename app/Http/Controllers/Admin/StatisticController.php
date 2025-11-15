@@ -69,20 +69,9 @@ class StatisticController extends Controller
         $data = $results->pluck('total');
         $selectedYear = $year;
         $selectedMonth = $month;
-        $invoices = DB::table('invoices')
-        ->join('medical_records', 'invoices.record_id', '=', 'medical_records.record_id')
-        ->join('users', 'medical_records.patient_id', '=', 'users.user_id')
-        ->select('invoices.*', 'medical_records.created_at as checkup_date', 'users.fullname')
-        ->orderBy('invoices.updated_at', 'desc')
-        ->distinct()
-        ->take(10) // Lấy 10 hóa đơn mới nhất
-        ->get();
+        $invoices = Invoice::orderBy('updated_at', 'desc')->take(10)->get();
 
-        $medical_record_services = DB::table('medical_record_services')
-        ->join('services', 'medical_record_services.service_id', '=', 'services.service_id')
-        ->select('medical_record_services.*', 'services.service_name')
-        ->distinct()
-        ->get();
+        $medical_record_services = $invoices;
 
         return view('admin.statistic.revenue', compact('labels', 'data', 'selectedYear', 'selectedMonth', 'invoices', 'medical_record_services'));
     }

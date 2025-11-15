@@ -101,7 +101,7 @@ class AuthContronller extends Controller
         $total_user = User::where('role_id', 4)->count();
         // $total_patient = User::whereIn('user_id', Medical_record::pluck('patient_id'))->count();
         $total_patient = Patient::count();
-        $total_doctor = User::where('role_id', 2)->count();
+        $total_doctor = Doctor::count();
         $total_medical_record = Medical_record::count();
         $new_users = User::where('role_id', 4)->orderBy('created_at', 'desc')->take(6)->get();
         $new_medical_records = Medical_record::orderBy('created_at', 'desc')->take(8)->get();

@@ -141,7 +141,7 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                {{ Auth::user()->where('user_id', $medical_record->patient_id)->first()->fullname }}
+                                                {{ $medical_record->patient->fullname }}
                                             </th>
                                             <td class="text-center">{{ $medical_record->created_at->format('d/m/Y') }}
                                             </td>
