@@ -1,4 +1,4 @@
-@extends('layouts.doctor')
+@extends('layouts.admin')
 
 @section('content')
     <style>
@@ -131,5 +131,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

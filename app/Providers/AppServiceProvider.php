@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function($view) {
             if(Auth::user()) {
-                $notifications = Notification::where('receiver_id', Auth::user()->userid)->where('is_deleted', 0)->orderBy('created_at', 'desc')->take(6)->get();
+                $notifications = Notification::where('receiver_id', Auth::user()->user_id)->where('is_deleted', 0)->orderBy('created_at', 'desc')->take(6)->get();
                 $view->with('notifications', $notifications);
             }
         });

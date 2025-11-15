@@ -48,4 +48,9 @@ class Medical_record extends Model
     {
         return $this->hasMany(Medical_record_service::class, 'record_id', 'record_id');
     }
+
+    public function prescription()
+    {
+        return $this->belongsTo(Prescription::class, 'record_id', 'record_id');
+    }
 }

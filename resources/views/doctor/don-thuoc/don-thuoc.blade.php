@@ -27,8 +27,8 @@
                                     @foreach ($prescriptions as $prescription)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $prescription->medicalRecord->patient->fullname }}</td>
-                                            <td>{{ $prescription->medicalRecord->diagnosis }}</td>
+                                            <td>{{ $prescription->medical_record->patient->fullname }}</td>
+                                            <td>{{ $prescription->medical_record->diagnosis }}</td>
                                             <td>{{ \Carbon\Carbon::parse($prescription->created_at)->format('d/m/Y') }}</td>
                                             <td>
                                                 <a class="btn btn-link btn-primary btn-lg"

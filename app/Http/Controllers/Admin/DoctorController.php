@@ -184,29 +184,21 @@ class DoctorController extends Controller
     public function benh_an()
     {
         $medical_records = Medical_record::all(); // Lấy danh sách bệnh án
-        $patients = User::where('role_id', 4)->get(); // Lấy danh sách bệnh nhân
-        $doctors = User::where('role_id', 2)->get(); // Lấy danh sách bác sĩ
-        $prescriptions = Prescription::all(); // Lấy danh sách đơn thuốc
-        return view('admin.doctor.benh-an', compact('medical_records', 'patients', 'doctors', 'prescriptions'));
+        return view('admin.doctor.benh-an', compact('medical_records'));
     }
 
     public function benh_an_show($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         if (!$medical_record) {
             return redirect()->back()->with('error', 'Không tìm thấy bệnh án');
         }
-        $patient = DB::table('patients')
-            ->join('users', 'patients.patient_id', '=', 'users.user_id')
-            ->where('users.role_id', 4)
-            ->where('users.user_id', $medical_record->patient_id)
-            ->select('users.*', 'patients.*')
-            ->first();
-        $doctor = User::where('doctor_id', $medical_record->doctor_id)->first();
+        $patient = $medical_record->patient;
+        $doctor = $medical_record->doctor;
         $services = Service::all()->take(4);
-        $prescription = Prescription::where('record_id', $record_id)->first();
+        $prescription = $medical_record->prescription;
         if (!$prescription) {
-            return view('doctor.benh-an.benh-an-show', compact('medical_record', 'patient', 'doctor', 'services', 'prescription'))->with('error', 'Không tìm thấy đơn thuốc');
+            return view('doctor.benh-an.benh-an-show', compact('medical_record', 'patient', 'doctor', 'services', 'prescription'));
         }
         $prescription_details = Prescription_detail::where('prescription_id', $prescription->prescription_id)->get(); // Lấy danh sách thuốc theo bệnh án
         return view('admin.doctor.benh-an-show', compact('medical_record', 'patient', 'doctor', 'services', 'prescription', 'prescription_details'));
@@ -214,12 +206,12 @@ class DoctorController extends Controller
 
     public function benh_an_reopen($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         $medical_record->status = 'Đang điều trị';
         $medical_record->save();
 
         $notification = new Notification();
-        $notification->receiver_id = $medical_record->doctor_id;
+        $notification->receiver_id = $medical_record->doctor->user->user_id;
         $notification->title = 'Chấp nhận mở lại bệnh án';
         $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->user->fullname . ' đã được chấp nhận mở lại';
         $notification->save();
@@ -229,10 +221,10 @@ class DoctorController extends Controller
 
     public function benh_an_decline($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
 
         $notification = new Notification();
-        $notification->receiver_id = $medical_record->doctor_id;
+        $notification->receiver_id = $medical_record->doctor->user->user_id;
         $notification->title = 'Từ chối mở lại bệnh án';
         $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->user->fullname . ' đã bị từ chối.';
         $notification->save();

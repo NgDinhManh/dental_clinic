@@ -18,7 +18,7 @@ class Prescription extends Model
         'updated_at'
     ];
 
-    public function medicalRecord()
+    public function medical_record()
     {
         return $this->belongsTo(Medical_record::class, 'record_id', 'record_id');
     }
@@ -26,5 +26,10 @@ class Prescription extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'doctor_id');
+    }
+
+    public function prescription_detail()
+    {
+        return $this->hasMany(Prescription_detail::class, 'prescription_id', 'prescription_id');
     }
 }

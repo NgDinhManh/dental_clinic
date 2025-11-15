@@ -116,7 +116,7 @@ class BenhAnController extends Controller
 
     public function hoan_tat_benh_an($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
         $medical_record->status = 'Hoàn tất';
         $medical_record->save();
         return redirect()->back()->with('success', 'Hoàn tất bệnh án thành công!');
@@ -144,7 +144,7 @@ class BenhAnController extends Controller
 
     public function benh_an_reopen($record_id)
     {
-        $medical_record = Medical_record::where('record_id', $record_id)->first();
+        $medical_record = Medical_record::findOrFail($record_id);
 
         $notification = new Notification();
         $notification->receiver_id = User::where('role_id', 1)->first()->user_id;

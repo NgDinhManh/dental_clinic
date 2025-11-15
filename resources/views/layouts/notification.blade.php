@@ -102,13 +102,13 @@
 
 
 <!-- Overlay mờ nền -->
-<div id="notificationOverlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" 
+<div id="notificationOverlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
      style="z-index:1999; display: none;"></div>
 
 <!-- Hộp thông báo chi tiết -->
-<div id="notificationDetail" class="p-4 border rounded shadow-lg bg-white col-10 col-md-6 col-lg-4" 
+<div id="notificationDetail" class="p-4 border rounded shadow-lg bg-white col-10 col-md-6 col-lg-4"
      style="z-index:2000; display: none; transition: all 0.3s ease; position: fixed; top: 10%; left: 50%; transform: translateX(-50%);">
-    
+
     <div class="d-flex justify-content-between align-items-start mb-3">
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-bell fa-lg text-primary me-2"></i>
@@ -120,7 +120,7 @@
 
     <div class="text-end">
         <small id="notificationDetailTime" class="text-muted">
-            <i class="fa-regular fa-clock me-1"></i> 
+            <i class="fa-regular fa-clock me-1"></i>
         </small>
     </div>
 </div>
@@ -159,6 +159,6 @@
             detailBox.style.display = 'none';
             overlay.style.display = 'none';
         }
-    }); 
+    });
 
 </script>
