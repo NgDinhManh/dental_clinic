@@ -19,7 +19,7 @@
                         <div class="table-responsive">
                             <table id="add-row" class="display table table-striped table-hover">
                                 <thead>
-                                    <tr> 
+                                    <tr>
                                         <th>#</th>
                                         <th>Tiêu đề</th>
                                         <th>Người nhận</th>
@@ -30,9 +30,9 @@
                                 <tbody>
                                     @foreach ($notificationss as $notification)
                                         <tr>
-                                            <td>{{ $notification->notification_id }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td> {{ $notification->title }}</td>
-                                            <td> {{ $notification->user->fullname }}</td>
+                                            <td> {{ $notification->user->name }}</td>
                                             <td>
                                                 @if($notification->is_read == 1)
                                                     <span class="badge badge-success fs-6 px-3">Đã đọc</span>

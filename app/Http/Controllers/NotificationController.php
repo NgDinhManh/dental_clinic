@@ -23,7 +23,11 @@ class NotificationController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->validate([
+            'receiver_id' => 'required|exists:users,user_id',
+            'title' => 'required|max:250',
+            'content' => 'required',
+        ]);
 
         Notification::create($data);
 
@@ -43,7 +47,13 @@ class NotificationController extends Controller
 
     public function update(Request $request, Notification $notification)
     {
-        $notification->update($request->all());
+        $data = $request->validate([
+            'receiver_id' => 'required|exists:users,user_id',
+            'title' => 'required|max:250',
+            'content' => 'required',
+        ]);
+
+        $notification->update($data);
         return redirect()->route('admin/notification')->with('success', 'Cập nhật thông báo thành công');
     }
 
@@ -53,7 +63,7 @@ class NotificationController extends Controller
         return redirect()->route('admin/notification')->with('success', 'Xóa thông báo thành công');
     }
 
-    public function sendNotification($receiver_id, $title, $content) 
+    public function sendNotification($receiver_id, $title, $content)
     {
         Notification::create([
             'receiver_id' => $receiver_id,
@@ -91,5 +101,5 @@ class NotificationController extends Controller
             'content' => $notification->content,
             'created_at' => $notification->created_at->toDateTimeString(),
         ]);
-    }  
+    }
 }
