@@ -183,7 +183,7 @@ class DoctorController extends Controller
 
     public function benh_an()
     {
-        $medical_records = Medical_record::all(); // Lấy danh sách bệnh án
+        $medical_records = Medical_record::where('request_open', true)->get(); // Lấy danh sách bệnh án yêu cầu mở lại
         return view('admin.doctor.benh-an', compact('medical_records'));
     }
 
@@ -208,12 +208,13 @@ class DoctorController extends Controller
     {
         $medical_record = Medical_record::findOrFail($record_id);
         $medical_record->status = 'Đang điều trị';
+        $medical_record->request_open = false;
         $medical_record->save();
 
         $notification = new Notification();
         $notification->receiver_id = $medical_record->doctor->user->user_id;
         $notification->title = 'Chấp nhận mở lại bệnh án';
-        $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->user->fullname . ' đã được chấp nhận mở lại';
+        $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->fullname . ' đã khám vào ngày ' . $medical_record->updated_at . ' đã được chấp nhận mở lại';
         $notification->save();
 
         return redirect()->route('admin/doctor/benh-an')->with('success', 'Bệnh án đã được mở lại');
@@ -222,11 +223,13 @@ class DoctorController extends Controller
     public function benh_an_decline($record_id)
     {
         $medical_record = Medical_record::findOrFail($record_id);
+        $medical_record->request_open = false;
+        $medical_record->save();
 
         $notification = new Notification();
         $notification->receiver_id = $medical_record->doctor->user->user_id;
         $notification->title = 'Từ chối mở lại bệnh án';
-        $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->user->fullname . ' đã bị từ chối.';
+        $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->fullname . ' đã khám vào ngày ' . $medical_record->updated_at . ' đã bị từ chối.';
         $notification->save();
 
         return redirect()->route('admin/doctor/benh-an')->with('success', 'Bệnh án đã bị từ chối');

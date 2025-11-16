@@ -21,6 +21,7 @@ class Medical_record extends Model
         'treatment_plan',
         'note',
         'status',
+        'request_open',
         'created_at',
         'updated_at',
     ];

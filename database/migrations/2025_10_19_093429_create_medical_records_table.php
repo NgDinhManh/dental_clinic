@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('treatment_plan');            // Phương án điều trị
             $table->text('notes')->nullable();         // Ghi chú thêm
             $table->enum('status', ['Đang điều trị', 'Hoàn tất']); // Trạng thái điều trị
+            $table->boolean('request_open')->default(false); // Trạng thái yêu cầu mở lại
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

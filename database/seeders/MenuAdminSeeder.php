@@ -125,7 +125,7 @@ class MenuAdminSeeder extends Seeder
                 'icon' => null,
             ],
             [
-                'menu_name' => 'Danh sách bệnh án',
+                'menu_name' => 'Bệnh án yêu cầu mởi lại',
                 'level' => 2,
                 'parent_id' => 10,
                 'route_name' => 'admin/doctor/benh-an',

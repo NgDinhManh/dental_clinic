@@ -6,9 +6,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex align-items-center">
-                            <h4 class="card-title
-                                ">Bệnh án</h3>
+                        <div class="card-title">
+                            Bệnh án yêu cầu mở lại
                         </div>
                     </div>
                     <div class="card-body">
@@ -17,7 +16,7 @@
                             <table id="add-row" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Mã số</th>
                                         <th>Bệnh nhân</th>
                                         <th>Ngày khám</th>
                                         <th>Chuẩn đoán</th>
@@ -28,7 +27,7 @@
                                 <tbody>
                                     @foreach ($medical_records as $record)
                                         <tr>
-                                            <td>{{ $record->record_id }}</td>
+                                            <td class="text-center">{{ $record->record_id }}</td>
                                             <td>{{ $record->patient->fullname }}</td>
                                             <td>{{ $record->created_at->format('d/m/Y') }}</td>
                                             <td>{{ $record->diagnosis }}</td>

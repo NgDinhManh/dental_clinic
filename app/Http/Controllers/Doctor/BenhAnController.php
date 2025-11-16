@@ -145,17 +145,22 @@ class BenhAnController extends Controller
     public function benh_an_reopen($record_id)
     {
         $medical_record = Medical_record::findOrFail($record_id);
+        $medical_record->request_open = true;
+        $medical_record->save();
 
         $notification = new Notification();
-        $notification->receiver_id = User::where('role_id', 1)->first()->user_id;
+        foreach (User::where('role_id', 1)->get() as $admin)
+        {
+            $notification->receiver_id = $admin->user_id;
+        }
         $notification->title = 'Yêu cầu mở lại bệnh án';
-        $notification->content = 'Yêu cầu mở lại bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->user->fullname;
+        $notification->content = 'Yêu cầu mở lại bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->fullname . ' đã khám vào ngày ' . $medical_record->updated_at;
         $notification->save();
 
         $notification = new Notification();
         $notification->receiver_id = Auth::user()->user_id;
         $notification->title = 'Yêu cầu mở lại bệnh án';
-        $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->user->fullname . ' đã được yêu cầu mở lại. Vui lòng chờ!';
+        $notification->content = 'Bệnh án ' . $medical_record->record_id . ' của bệnh nhân ' . $medical_record->patient->fullname . ' đã khám vào ngày ' . $medical_record->updated_at . ' đã được yêu cầu mở lại. Vui lòng chờ!';
         $notification->save();
 
         return redirect()->route('doctor/benh-an/benh-an')->with('success', 'Đã gửi yêu cầu mở lại bệnh án');
