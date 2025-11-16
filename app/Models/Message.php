@@ -12,11 +12,12 @@ class Message extends Model
 
     protected $fillable = [
         'name',
-        'user_id',
+        'sender_id',
+        'reply_id',
         'phone',
         'email',
         'subject',
-        'message',
+        'content',
         'reply',
         'created_at',
         'updated_at',

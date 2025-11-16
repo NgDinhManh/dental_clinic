@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id('message_id');
+            $table->unsignedBigInteger('sender_id');
+            $table->unsignedBigInteger('reply_id')->nullable();
             $table->string('name');
             $table->string('phone');
             $table->string('email')->nullable();
@@ -21,6 +23,9 @@ return new class extends Migration
             $table->text('reply')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            $table->foreignId('sender_id')->references('user_id')->on('users')->onDelete('restrict');
+            $table->foreignId('reply_id')->references('user_id')->on('users')->onDelete('restrict');
         });
     }
 

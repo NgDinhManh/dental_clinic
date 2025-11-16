@@ -20,36 +20,56 @@
                                         <th>Họ và tên</th>
                                         <th>Tiêu đề</th>
                                         <th>Phản hồi</th>
+                                        <th>Ngày gửi</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($messages as $message)
                                         <tr>
-                                            <td>{{ $message->message_id }}</td>
-                                            <td> <a href="{{ route('admin/message/show', $message->message_id) }}"
-                                                    class="text-primary">{{ $message->name }}</a></td>
-                                            <td>
-                                                {{ $message->subject }}
-                                            </td>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $message->name }}</td>
+                                            <td>{{ $message->subject }}</td>
                                             <td class="text-truncate" style="max-width:200px">
-                                                {{ $message->reply }}
+                                                @if (empty($message->reply))
+                                                    <span class="badge badge-warning fs-6 px-3">Chưa trả lời</span>
+                                                @else
+                                                    {{ $message->reply }}
+                                                @endif
                                             </td>
+                                            <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:m') }}</td>
                                             <td>
-                                                <form action="{{ route('admin/message/destroy', $message->message_id) }}"
-                                                    method="POST" class="d-flex align-items-center delete-form"
-                                                    id="delete-form-{{ $message->userid }}">
-                                                    @csrf @method('delete')
-                                                    <a class="btn btn-link btn-primary btn-lg"
-                                                        href="{{ route('admin/message/reply', $message->message_id) }}">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-link btn-danger delete-button"
-                                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                                        data-form-id="delete-form-{{ $message->userid }}">
-                                                        <i class="fa fa-trash"></i>
+                                                <div class="btn-group">
+                                                    <button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-ellipsis"></i>
                                                     </button>
-                                                </form>
+
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item text-info"
+                                                                href="{{ route('admin/message/show', $message->message_id) }}">Xem</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item text-primary"
+                                                            href="{{ route('admin/message/reply', $message->message_id) }}">Trả lời</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('admin/message/destroy', $message->message_id) }}"
+                                                                class="d-flex align-items-center delete-form" method="POST"
+                                                                id="delete-form-{{ $message->message_id }}">
+                                                                @csrf @method('delete')
+                                                                <button type="button"
+                                                                    class="dropdown-item text-danger delete-button"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#confirmDeleteModal"
+                                                                    data-form-id="delete-form-{{ $message->message_id }}">
+                                                                    Xóa
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -57,47 +77,6 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- Modal Xác Nhận Xóa -->
-                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Bạn có chắc chắn muốn xóa mục này không?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Xóa</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            let deleteFormId = '';
-
-                            // Lắng nghe sự kiện khi click vào nút xóa
-                            document.querySelectorAll('.delete-button').forEach(button => {
-                                button.addEventListener('click', function() {
-                                    deleteFormId = this.getAttribute('data-form-id');
-                                });
-                            });
-
-                            // Khi nhấn nút "Xóa" trong modal
-                            document.getElementById('confirmDeleteButton').addEventListener('click', function() {
-                                if (deleteFormId) {
-                                    document.getElementById(deleteFormId).submit();
-                                }
-                            });
-                        });
-                    </script>
                 </div>
             </div>
         </div>

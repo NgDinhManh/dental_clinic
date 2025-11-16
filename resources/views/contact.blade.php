@@ -63,26 +63,26 @@
                 @csrf
               <div class="row gy-4">
 
-                <input type="text" name="userid" value="{{ Auth::user()->userid ?? '' }}" hidden>
+                <input type="text" name="sender_id" value="{{ Auth::user()->user_id ?? '' }}" hidden>
 
                 <div class="col-md-4">
-                  <input type="text" name="name" class="form-control" placeholder="Họ và tên" value="{{ Auth::user()->fullname ?? '' }}" required="">
+                  <input type="text" name="name" class="form-control" placeholder="Họ và tên" value="{{ Auth::user()->patient->fullname ?? '' }}" required>
                 </div>
 
                 <div class="col-md-4">
-                  <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" value="{{ Auth::user()->phone ?? '' }}" required="">
+                  <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" value="{{ Auth::user()->phone ?? '' }}" required>
                 </div>
 
                 <div class="col-md-4">
-                  <input type="email" class="form-control" name="email" placeholder="Email" value="{{ Auth::user()->email ?? '' }}" required="">
+                  <input type="email" class="form-control" name="email" placeholder="Email" value="{{ Auth::user()->email ?? '' }}" required>
                 </div>
 
                 <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Tiêu đề" required="">
+                  <input type="text" class="form-control" name="subject" placeholder="Tiêu đề" required>
                 </div>
 
                 <div class="col-md-12">
-                  <textarea class="form-control" name="content" rows="6" placeholder="Nội dung" required=""></textarea>
+                  <textarea class="form-control" name="content" rows="6" placeholder="Nội dung" required></textarea>
                 </div>
 
                 <div class="col-md-12 text-center">

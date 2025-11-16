@@ -11,7 +11,7 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $notificationss = Notification::all();
+        $notificationss = Notification::all()->sortByDesc('created_at');
         return view('admin.notification.index', compact('notificationss'));
     }
 

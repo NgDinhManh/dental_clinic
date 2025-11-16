@@ -13,7 +13,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::all();
+        $messages = Message::all()->sortByDesc('created_at');
         return view('admin.message.index', compact('messages'));
     }
 

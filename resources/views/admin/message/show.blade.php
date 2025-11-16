@@ -2,35 +2,55 @@
 
 @section('content')
     <div class="page-inner">
-        <div class="page-header">
-            <h4 class="page-title">Chỉnh sửa câu hỏi thường gặp</h4>
-        </div>
-        <form action="{{ route('admin/message/update', $message->message_id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="question" class="form-label">Câu hỏi</label>
-                <textarea type="text" class="form-control" id="question" name="question" rows="8" required> {{ $message->question }}</textarea>
+        <form action="{{ route('admin/message/update', $message->message_id) }}" class="card" method="POST" enctype="multipart/form-data">
+            @csrf @method('PUT')
+
+            <div class="card-header">
+                <h4 class="page-title">Thông tin tin nhắn</h4>
             </div>
-            <div class="mb-3">
-                <label for="answer" class="form-label">Câu trả lời</label>
-                <textarea class="form-control" id="answer" name="answer" rows="8" required>{{ $message->answer }}</textarea>
+
+            <div class="card-body">
+                <div class="row p-3">
+                    <div class="form-group col-md-4">
+                        <label for="name" class="form-label fs-5">Họ và tên</label>
+                        <input type="text" class="form-control form-control-lg" id="name" name="name"
+                            value="{{ $message->name }}" readonly>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="phone" class="form-label fs-5">Số điện thoại</label>
+                        <input type="text" class="form-control form-control-lg" id="phone" name="phone"
+                            value="{{ $message->phone }}" readonly>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="email" class="form-label fs-5">Email</label>
+                        <input type="text" class="form-control form-control-lg" id="email" name="email"
+                            value="{{ $message->email }}" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="subject" class="form-label fs-5">Tiêu đề</label>
+                    <input type="text" class="form-control form-control-lg" id="subject" name="subject"
+                        value="{{ $message->subject }}" readonly>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="message" class="form-label fs-5">Nội dung</label>
+                    <textarea type="text" class="form-control form-control-lg" id="message" name="message" rows="8" readonly> {{ $message->message }}</textarea>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="reply" class="form-label fs-5">Phản hồi</label>
+                    <textarea class="form-control form-control-lg" id="reply" name="reply" rows="8" required>{{ $message->reply }}</textarea>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="status" class="form-label">Trạng thái</label>
-                <select class="form-select" id="is_active" name="is_active">
-                    <option value="1" {{ $message->status == 1 ? 'selected' : '' }}>Hiện</option>
-                    <option value="0" {{ $message->status == 0 ? 'selected' : '' }}>Ẩn</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="sort_order" class="form-label">Thứ tự</label>
-                <input type="number" class="form-control" id="sort_order" name="sort_order" value="{{ $message->sort_order }}">
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-success fs-5 col-2"><i class="fa fa-save mx-2"></i>Lưu</button>
-                <a class="btn btn-warning fs-5 col-2 mx-2" href="{{route('admin/message')}}"><i class="fa fa-arrow-left mx-2"></i>Trở về</a>
+
+            <div class="card-action p-3 text-center">
+                <a class="btn btn-warning me-2" href="{{ route('admin/message') }}"><i
+                        class="fa fa-arrow-left me-2"></i>Trở về</a>
             </div>
         </form>
-    </div>  
+    </div>
 @endsection

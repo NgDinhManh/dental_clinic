@@ -12,6 +12,7 @@ use App\Models\Appointment;
 use App\Models\Appointment_service;
 use App\Models\Faq;
 use App\Models\Message;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 
 
@@ -163,24 +164,26 @@ class HomeController extends Controller
 
     public function sendEmail(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
+            'sender_id' => 'required|exists:users,user_id',
             'name' => 'required',
             'phone' => 'required',
             'email' => 'required|email',
             'subject' => 'required',
-            'message' => 'required',
+            'content' => 'required',
         ]);
 
-        $data = [
-            'user_id' => $request->user_id,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'subject' => $request->subject,
-            'message' => $request->message,
-        ];
-
         Message::create($data);
+
+        $admins = User::where('role_id', 1)->get();
+        foreach($admins as $admin)
+        {
+            Notification::create([
+                'receiver_id' => $admin->user_id,
+                'title' => 'Câu hỏi thắc mắc',
+                'content' => 'Câu hỏi của bệnh nhân ' . $data['name'] . ' về ' . $data['subject'] . '.',
+            ]);
+        }
 
         return redirect()->route('home/contact')->with('success', 'Gửi tin nhắn thành công');
     }

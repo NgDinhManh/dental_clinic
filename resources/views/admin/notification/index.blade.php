@@ -24,6 +24,7 @@
                                         <th>Tiêu đề</th>
                                         <th>Người nhận</th>
                                         <th>Trạng thái</th>
+                                        <th>Ngày gửi</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
@@ -40,6 +41,7 @@
                                                     <span class="badge badge-warning fs-6 px-3">Chưa đọc</span>
                                                 @endif
                                             </td>
+                                            <td> {{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/Y H:m') }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button class="btn dropdown-toggle" data-bs-toggle="dropdown"
